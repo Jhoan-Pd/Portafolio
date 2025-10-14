@@ -1,0 +1,39 @@
+{
+  "sobreMi": {
+    "titulo": "SOBRE MI",
+    "estadisticas": [
+      {
+        "valor": "15+",
+        "descripcion": "PROYECTOS ACADÉMICOS",
+        "color": "blue"
+      },
+      {
+        "valor": "100%",
+        "descripcion": "COMPROMISO Y DEDICACIÓN",
+        "color": "red"
+      }
+    ],
+    "proyectos": {
+      "titulo": "Proyectos Académicos",
+      "descripcion": "Más de cinco proyectos desarrollados en mi formación, donde he aplicado conceptos de ingeniería a soluciones prácticas y funcionales."
+    },
+    "experienciaAcademica": {
+      "titulo": "Experiencia Académica",
+      "descripcion": "He participado en seminarios y actividades académicas que fortalecen mi visión profesional, desde la arquitectura de software hasta el desarrollo de aplicaciones prácticas.",
+      "tarjetas": [
+        {
+          "imagen": "/visto.png",
+          "titulo": "ARQUITECTURA DE SOFTWARE"
+        },
+        {
+          "imagen": "/codigo.png",
+          "titulo": "DESARROLLO EN JAVA Y PYTHON"
+        }
+      ]
+    },
+    "experienciaLaboral": {
+      "titulo": "Experiencia Laboral",
+      "descripcion": "He participado en seminarios y actividades académicas que fortalecen mi visión profesional, desde la arquitectura de software hasta el desarrollo de aplicaciones prácticas."
+    }
+  }
+}
