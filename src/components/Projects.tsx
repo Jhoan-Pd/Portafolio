@@ -3,16 +3,26 @@ import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 
-const projects = [
-  { id: 1, title: "Layouts", image: "/trabajo1.jpg" },
-  { id: 2, title: "Diseño de interfacez", image: "/trabajo2.jpg" },
-  { id: 3, title: "Diseño", image: "/trabajo3.jpg" },
-];
+interface Project {
+  id: number;
+  title: string;
+  image: string;
+}
 
 export default function Projects() {
+  const [projects, setProjects] = useState<Project[]>([]);
   const [active, setActive] = useState(0);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
+  // 🔹 Cargar datos desde data.json
+  useEffect(() => {
+    fetch("/data/data.json")
+      .then((res) => res.json())
+      .then((data) => setProjects(data.projects || []))
+      .catch((err) => console.error("Error cargando proyectos:", err));
+  }, []);
+
+  // 🔹 Actualizar proyecto activo según el scroll
   useEffect(() => {
     let rafId: number;
 
@@ -46,7 +56,15 @@ export default function Projects() {
       window.removeEventListener("scroll", handleScroll);
       cancelAnimationFrame(rafId);
     };
-  }, []);
+  }, [projects]);
+
+  if (projects.length === 0) {
+    return (
+      <section className="w-full h-screen flex items-center justify-center text-gray-500">
+        Cargando proyectos...
+      </section>
+    );
+  }
 
   return (
     <section className="w-full h-screen flex">

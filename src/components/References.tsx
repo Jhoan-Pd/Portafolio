@@ -1,11 +1,39 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import data from "@/data/data.json";
+
+interface Testimonio {
+  imagen: string;
+  nombre: string;
+  profesion: string;
+  mensaje: string;
+}
 
 const References: React.FC = () => {
-  const referencias = Array.isArray(data.testimonios) ? data.testimonios : [];
+  const [referencias, setReferencias] = useState<Testimonio[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("/data/data.json")
+      .then((res) => res.json())
+      .then((data) => {
+        setReferencias(Array.isArray(data.testimonios) ? data.testimonios : []);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error cargando testimonios:", error);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
+    return (
+      <section className="py-20 flex justify-center items-center text-gray-500">
+        Cargando testimonios...
+      </section>
+    );
+  }
 
   return (
     <section className="py-20 px-6 bg-[url('/paper-texture.jpg')] bg-cover bg-center relative overflow-hidden">
@@ -17,9 +45,16 @@ const References: React.FC = () => {
         <div className="flex flex-wrap justify-center gap-10 relative">
           {referencias.map((ref, index) => {
             const isEven = index % 2 === 0;
-            const rotation = isEven ? "-3deg" : "3deg";
+            const rotation = isEven ? "-5deg" : "5deg"; // torcidas más visibles
 
-            return <FlipCard key={index} refData={ref} rotation={rotation} isEven={isEven} />;
+            return (
+              <FlipCard
+                key={index}
+                refData={ref}
+                rotation={rotation}
+                isEven={isEven}
+              />
+            );
           })}
         </div>
       ) : (
@@ -32,12 +67,7 @@ const References: React.FC = () => {
 };
 
 interface FlipCardProps {
-  refData: {
-    imagen: string;
-    nombre: string;
-    profesion: string;
-    mensaje: string;
-  };
+  refData: Testimonio;
   rotation: string;
   isEven: boolean;
 }
@@ -49,22 +79,20 @@ const FlipCard: React.FC<FlipCardProps> = ({ refData, rotation, isEven }) => {
     <motion.div
       className="relative w-72 h-[400px] cursor-pointer [perspective:1000px]"
       style={{ rotate: rotation }}
-      whileHover={{ scale: 1.05, rotate: 0, zIndex: 20 }}
-      transition={{ type: "spring", stiffness: 150 }}
+      whileHover={{ scale: 1.05, rotate: 0, zIndex: 10 }}
+      transition={{ type: "spring", stiffness: 180 }}
       onMouseEnter={() => setFlipped(true)}
       onMouseLeave={() => setFlipped(false)}
     >
       <motion.div
         className="absolute inset-0 rounded-3xl shadow-2xl border-2 p-6 text-center"
-        style={{
-          transformStyle: "preserve-3d",
-        }}
+        style={{ transformStyle: "preserve-3d" }}
         animate={{ rotateY: flipped ? 180 : 0 }}
-        transition={{ duration: 0.6 }}
+        transition={{ duration: 0.7, ease: "easeInOut" }}
       >
         {/* Frente */}
         <div
-          className={`absolute inset-0 backface-hidden flex flex-col justify-center items-center rounded-3xl ${
+          className={`absolute inset-0 backface-hidden flex flex-col justify-center items-center rounded-3xl border-2 ${
             isEven
               ? "bg-white text-gray-800 border-blue-300"
               : "bg-cyan-700 text-white border-cyan-900"
