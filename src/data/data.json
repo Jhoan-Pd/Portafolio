@@ -1,0 +1,86 @@
+{
+  "hero": {
+    "titulo": "Hola, soy Jhoan Alexander Paredes",
+    "subtitulo": "Desarrollador de Software e Ingeniero en formación",
+    "descripcion": "Apasionado por crear soluciones tecnológicas que transformen ideas en productos funcionales, aplicando buenas prácticas de ingeniería y diseño moderno."
+  },
+
+  "sobreMi": {
+    "titulo": "SOBRE MI",
+
+    "estadisticas": [
+      {
+        "valor": "15+",
+        "descripcion": "PROYECTOS ACADÉMICOS",
+        "color": "blue"
+      },
+      {
+        "valor": "100%",
+        "descripcion": "COMPROMISO Y DEDICACIÓN",
+        "color": "red"
+      }
+    ],
+
+    "proyectos": {
+      "titulo": "Proyectos Académicos",
+      "descripcion": "Más de cinco proyectos desarrollados en mi formación, donde he aplicado conceptos de ingeniería a soluciones prácticas y funcionales."
+    },
+
+    "experienciaAcademica": {
+      "titulo": "Experiencia Académica",
+      "descripcion": "He participado en seminarios y actividades académicas que fortalecen mi visión profesional, desde la arquitectura de software hasta el desarrollo de aplicaciones prácticas.",
+      "tarjetas": [
+        {
+          "imagen": "/visto.png",
+          "titulo": "ARQUITECTURA DE SOFTWARE"
+        },
+        {
+          "imagen": "/codigo.png",
+          "titulo": "DESARROLLO EN JAVA Y PYTHON"
+        }
+      ]
+    },
+
+    "experienciaLaboral": {
+      "titulo": "Experiencia Laboral",
+      "descripcion": "He participado en proyectos que fortalecen mis habilidades técnicas y de liderazgo, aplicando metodologías ágiles y buenas prácticas de desarrollo."
+    }
+  },
+
+  "testimonios": [
+    {
+      "nombre": "Jaime Acosta",
+      "profesion": "Ingeniero en Sistemas",
+      "mensaje": "Trabajar con Jhoan fue una experiencia muy positiva. Siempre mostró iniciativa, dominio técnico y una gran capacidad para trabajar en equipo.",
+      "imagen": "/trabajo1.jpg"
+    },
+    {
+      "nombre": "Paul Frias",
+      "profesion": "Ingeniero en Sistemas",
+      "mensaje": "Jhoan es un profesional comprometido, siempre aporta soluciones y responde con calidad en cada proyecto.",
+      "imagen": "/trabajo2.jpg"
+    },
+    {
+      "nombre": "María Castillo",
+      "profesion": "Diseñadora UI/UX",
+      "mensaje": "Excelente compañero de trabajo, con ideas innovadoras y gran disposición para ayudar.",
+      "imagen": "/trabajo3.jpg"
+    },
+    {
+      "nombre": "Laura Benavides",
+      "profesion": "Scrum Master",
+      "mensaje": "Jhoan destaca por su responsabilidad, comunicación efectiva y capacidad de aprendizaje continuo, cualidades valiosas en cualquier equipo ágil.",
+      "imagen": "/trabajo4.jpg"
+    }
+  ],
+
+  "contacto": {
+    "titulo": "CONTACTO",
+    "descripcion": "¿Tienes una idea o proyecto? Estoy disponible para colaborar y aportar mi experiencia en desarrollo de software.",
+    "redes": {
+      "github": "https://github.com/Jhoan-Pd",
+      "linkedin": "https://www.linkedin.com/in/jhoanparedes",
+      "correo": "mailto:jhoanparedes@example.com"
+    }
+  }
+}
