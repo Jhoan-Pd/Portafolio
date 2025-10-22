@@ -37,7 +37,7 @@ export default function Hero() {
       .catch((e) => console.error("Error cargando Hero data:", e));
   }, []);
 
-  // Dark/light global (persistente)
+  // tema persistente
   useEffect(() => {
     const saved = (localStorage.getItem("theme") as "dark" | "light") || null;
     const sysDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
@@ -91,6 +91,68 @@ export default function Hero() {
         dark ? "bg-neutral-900 text-white" : "bg-[#F4F1EB] text-neutral-900"
       }`}
     >
+      {/* NAVBAR fijo (visible en todo el scroll) */}
+      <nav
+        className="fixed top-4 sm:top-6 left-1/2 -translate-x-1/2 z-[60] w-full max-w-5xl px-4 sm:px-6 pointer-events-none"
+        aria-label="Barra de acciones"
+      >
+        <div className="flex items-center justify-between gap-3 sm:gap-4">
+          <div
+            className="pointer-events-auto flex items-center gap-3 sm:gap-4 rounded-2xl px-4 sm:px-5 py-2.5 sm:py-3 shadow-lg backdrop-blur-sm ring-1 ring-white/10"
+            style={{ backgroundColor: pillDark }}
+          >
+            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full overflow-hidden bg-slate-800 ring-2 ring-white/10 shrink-0">
+              <Image
+                src={hero.author.photo}
+                alt={hero.author.firstName}
+                width={48}
+                height={48}
+                className="h-full w-full object-cover"
+              />
+            </div>
+            <div className="leading-tight text-white">
+              <div className="text-[11px] sm:text-sm font-semibold uppercase tracking-[0.08em]">
+                {hero.author.firstName}
+              </div>
+              <div className="text-[10px] sm:text-xs opacity-90 uppercase tracking-[0.12em]">
+                {hero.author.lastName}
+              </div>
+            </div>
+          </div>
+
+          <div
+            className="pointer-events-auto flex items-center gap-2 sm:gap-3 rounded-2xl px-2.5 sm:px-3 py-2 shadow-lg backdrop-blur-sm ring-1 ring-black/10"
+            style={{ backgroundColor: pillLight }}
+          >
+            <button
+              onClick={() => {}}
+              className="inline-flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-xl bg-white shadow hover:bg-neutral-100 transition"
+              aria-label="Cambiar idioma"
+              title="Idioma"
+            >
+              <Image src={hero.icons.language} alt="language" width={22} height={22} />
+            </button>
+            <button
+              onClick={toggleTheme}
+              className="inline-flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-xl bg-white shadow hover:bg-neutral-100 transition"
+              aria-label="Tema"
+              title="Tema"
+            >
+              <Image src={themeIcon} alt="theme" width={22} height={22} />
+            </button>
+            <button
+              onClick={() => {}}
+              className="inline-flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-xl bg-white shadow hover:bg-neutral-100 transition"
+              aria-label="Menú"
+              title="Menú"
+            >
+              <Image src={hero.icons.menu} alt="menu" width={22} height={22} />
+            </button>
+          </div>
+        </div>
+      </nav>
+
+      {/* HERO con imagen y curva inferior */}
       <div
         className="relative overflow-hidden"
         style={{
@@ -109,63 +171,6 @@ export default function Hero() {
         />
         <div className="absolute inset-0 bg-black/55" />
         <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/35 to-black/20" />
-
-        <nav className="absolute top-4 sm:top-6 left-1/2 -translate-x-1/2 z-20 w-full max-w-5xl px-4 sm:px-6">
-          <div className="flex items-center justify-between gap-3 sm:gap-4">
-            <div
-              className="flex items-center gap-3 sm:gap-4 rounded-2xl px-4 sm:px-5 py-2.5 sm:py-3 shadow-lg backdrop-blur-sm"
-              style={{ backgroundColor: pillDark }}
-            >
-              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full overflow-hidden bg-slate-800 ring-2 ring-white/10 shrink-0">
-                <Image
-                  src={hero.author.photo}
-                  alt={hero.author.firstName}
-                  width={48}
-                  height={48}
-                  className="h-full w-full object-cover"
-                />
-              </div>
-              <div className="leading-tight text-white">
-                <div className="text-[11px] sm:text-sm font-semibold uppercase tracking-[0.08em]">
-                  {hero.author.firstName}
-                </div>
-                <div className="text-[10px] sm:text-xs opacity-90 uppercase tracking-[0.12em]">
-                  {hero.author.lastName}
-                </div>
-              </div>
-            </div>
-
-            <div
-              className="flex items-center gap-2 sm:gap-3 rounded-2xl px-2.5 sm:px-3 py-2 shadow-lg backdrop-blur-sm"
-              style={{ backgroundColor: pillLight }}
-            >
-              <button
-                onClick={() => {}}
-                className="inline-flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-xl bg-white shadow hover:bg-neutral-100 transition"
-                aria-label="Cambiar idioma"
-                title="Idioma"
-              >
-                <Image src={hero.icons.language} alt="language" width={22} height={22} />
-              </button>
-              <button
-                onClick={toggleTheme}
-                className="inline-flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-xl bg-white shadow hover:bg-neutral-100 transition"
-                aria-label="Tema"
-                title="Tema"
-              >
-                <Image src={themeIcon} alt="theme" width={22} height={22} />
-              </button>
-              <button
-                onClick={() => {}}
-                className="inline-flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-xl bg-white shadow hover:bg-neutral-100 transition"
-                aria-label="Menú"
-                title="Menú"
-              >
-                <Image src={hero.icons.menu} alt="menu" width={22} height={22} />
-              </button>
-            </div>
-          </div>
-        </nav>
 
         <div className="absolute inset-0 z-10 flex items-center justify-center px-4 sm:px-6">
           <h1
@@ -204,6 +209,7 @@ export default function Hero() {
         </svg>
       </div>
 
+      {/* Card de introducción + botón CV */}
       <div className="relative z-20 -mt-14 sm:-mt-20">
         <div
           className={`mx-auto w-[min(94%,960px)] rounded-3xl border border-black/10 px-5 py-7 sm:px-10 sm:py-10 shadow-[0_12px_40px_rgba(0,0,0,.12)] ${
@@ -228,6 +234,7 @@ export default function Hero() {
         </div>
       </div>
 
+      {/* Badge inferior */}
       <div className="pointer-events-none absolute right-4 sm:right-6 bottom-4 sm:bottom-6 z-20">
         <div
           className={`flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full shadow-lg backdrop-blur ${
