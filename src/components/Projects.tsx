@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useRef, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import Image from "next/image";
 import { motion, cubicBezier } from "framer-motion";
 
@@ -12,7 +12,9 @@ interface Project {
 export default function Projects() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [active, setActive] = useState(0);
-  const listRef = useRef<HTMLDivElement | null>(null);
+
+  // sección para calcular progreso según scroll global
+  const sectionRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     fetch("/data/data.json")
@@ -21,65 +23,65 @@ export default function Projects() {
       .catch((e) => console.error("Error cargando proyectos:", e));
   }, []);
 
+  // Mapea el scroll global -> índice activo (sin useScroll)
   useEffect(() => {
-    let rafId = 0;
-    const compute = () => {
-      const el = listRef.current;
-      if (!el) return;
-      const center = el.getBoundingClientRect().top + el.clientHeight / 2;
-      const items = Array.from(el.children);
-      let idx = 0;
-      let min = Infinity;
-      items.forEach((child, i) => {
-        const r = (child as HTMLElement).getBoundingClientRect();
-        const d = Math.abs(r.top + r.height / 2 - center);
-        if (d < min) {
-          min = d;
-          idx = i;
-        }
-      });
-      setActive(idx);
-    };
-    const onScroll = () => {
-      cancelAnimationFrame(rafId);
-      rafId = requestAnimationFrame(compute);
-    };
-    const el = listRef.current;
-    if (!el) return;
-    el.addEventListener("scroll", onScroll, { passive: true });
-    compute();
-    return () => {
-      el.removeEventListener("scroll", onScroll);
-      cancelAnimationFrame(rafId);
-    };
-  }, [projects]);
+    if (!projects.length) return;
 
-  // hooks antes de cualquier return condicional
+    let raf = 0;
+    const compute = () => {
+      const sec = sectionRef.current;
+      if (!sec) return;
+
+      const rect = sec.getBoundingClientRect();
+      const viewportCenter = window.innerHeight / 2;
+      const sectionTopInViewport = rect.top;
+      const sectionHeight = rect.height;
+
+      // progreso 0..1 del centro del viewport a través de la sección
+      const progress = clamp(
+        (viewportCenter - sectionTopInViewport) / sectionHeight,
+        0,
+        1
+      );
+
+      const max = projects.length - 1;
+      const idx = Math.round(progress * max);
+      if (idx !== active) setActive(idx);
+    };
+
+    const onScroll = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(compute);
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    compute();
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      cancelAnimationFrame(raf);
+    };
+  }, [projects, active]);
+
   const staged = useMemo(() => projects.slice(0, 6), [projects]);
   const easeOutExpo = cubicBezier(0.22, 1, 0.36, 1);
 
-  // capa visual para cada card del escenario
+  // Capa visual de cada card: anterior desaparece, actual al frente, futuras detrás
   const layer = (i: number) => {
-    const depth = active - i;           // >0: quedó atrás, 0: foco, <0: por delante (futuras)
+    const depth = active - i; // >0 pasada, 0 actual, <0 futura
     const isPast = depth > 0;
     const isCurrent = depth === 0;
     const isFuture = depth < 0;
-    const backSteps = Math.min(3, Math.max(0, depth)); // limitar cuántas se apilan visibles
 
     return {
       animate: {
-        zIndex: 60 - i,
-        // Visibilidad: actual 1, pasadas 0.9..0.7, futuras 0.35 (para que se vean y “prometan”)
-        opacity: isCurrent ? 1 : isPast ? 0.95 - backSteps * 0.08 : 0.35,
-        // Escala: pasadas se van reduciendo, futuras un pelín más pequeñas
-        scale: isCurrent ? 1 : isPast ? Math.pow(0.94, backSteps) : 0.96,
-        // Offsets: pasadas bajan/izquierda, futuras arriba/derecha
-        y: isCurrent ? 0 : isPast ? backSteps * 24 : -18,
-        x: isCurrent ? 0 : isPast ? backSteps * -10 : 16,
-        // Ligero desenfoque en pasadas para dar profundidad
-        filter: isPast ? "saturate(0.9) blur(0px)" : "none",
-        // Pequeña rotación acumulada
-        rotate: isPast ? Math.min(3, backSteps) * 0.25 : isFuture ? -0.2 : 0,
+        zIndex: 100 - i,
+        opacity: isCurrent ? 1 : isPast ? 0 : 0.6, // la anterior desaparece
+        scale: isCurrent ? 1 : isPast ? 0.94 : 0.98,
+        y: isCurrent ? 0 : isPast ? 36 : -8,
+        x: isCurrent ? 0 : isPast ? -16 : 12,
+        rotate: isPast ? 0.3 : isFuture ? -0.15 : 0,
+        filter: isPast ? "blur(2px) saturate(0.9)" : "none",
         transition: { duration: 0.55, ease: easeOutExpo },
       } as const,
       style: {
@@ -97,17 +99,20 @@ export default function Projects() {
   }
 
   return (
-    <section className="w-full bg-[#F4F1EB] text-neutral-900 dark:bg-neutral-900 dark:text-white">
+    <section
+      ref={sectionRef}
+      className="w-full bg-[#F4F1EB] text-neutral-900 dark:bg-neutral-900 dark:text-white"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
         <h2 className="text-center text-3xl sm:text-4xl font-bold italic tracking-wide mb-6 sm:mb-8">
           MIS PROYECTOS
         </h2>
 
-        {/* en móvil solo el escenario; la lista aparece desde md */}
-        <div className="grid grid-cols-1 md:grid-cols-[1fr_280px] lg:grid-cols-[1fr_320px] gap-6 sm:gap-8">
+        {/* En móvil solo el escenario; la lista aparece desde md */}
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_260px] lg:grid-cols-[1fr_300px] gap-6 sm:gap-8">
           {/* Escenario */}
           <div className="relative rounded-[28px] bg-white dark:bg-neutral-950/70 border border-black/5 dark:border-white/10 p-3 sm:p-5 md:p-8 shadow-[0_14px_40px_rgba(0,0,0,.12)]">
-            <div className="relative h-[60svh] md:h-[68svh] overflow-hidden rounded-3xl bg-neutral-100 dark:bg-neutral-900">
+            <div className="relative h-[62svh] md:h-[68svh] overflow-hidden rounded-3xl bg-neutral-100 dark:bg-neutral-900">
               <div className="absolute inset-0 rounded-3xl ring-1 ring-black/5 dark:ring-white/10" />
               {staged.map((p, i) => {
                 const { animate, style } = layer(i);
@@ -119,14 +124,14 @@ export default function Projects() {
                     initial={{ opacity: 0, y: 60, scale: 0.98 }}
                     style={style}
                   >
-                    <div className="grid grid-cols-1 md:grid-cols-[240px_1fr] gap-4 md:gap-6 h-full p-4 sm:p-6 lg:p-7">
+                    <div className="grid grid-cols-1 md:grid-cols-[220px_1fr] gap-4 md:gap-6 h-full p-4 sm:p-6 lg:p-7">
                       <div className="relative rounded-2xl overflow-hidden bg-neutral-200">
                         <Image
                           src={p.image}
                           alt={p.title}
                           fill
                           className="object-cover"
-                          sizes="(min-width:1024px) 240px, 100vw"
+                          sizes="(min-width:1024px) 220px, 100vw"
                           priority={i === active}
                         />
                       </div>
@@ -152,12 +157,9 @@ export default function Projects() {
             </div>
           </div>
 
-          {/* Lista scrollable (miniaturas pequeñas) */}
-          <div
-            ref={listRef}
-            className="hidden md:block rounded-[24px] bg-white dark:bg-neutral-950/70 border border-black/5 dark:border-white/10 p-3 sm:p-4 shadow-[0_14px_40px_rgba(0,0,0,.12)] h-[68svh] overflow-y-auto"
-          >
-            <div className="space-y-3">
+          {/* Lista de vistas previas (mini) – oculta en móvil */}
+          <div className="hidden md:block rounded-[24px] bg-white dark:bg-neutral-950/70 border border-black/5 dark:border-white/10 p-3 sm:p-4 shadow-[0_14px_40px_rgba(0,0,0,.12)] h-[68svh] overflow-y-auto">
+            <div className="space-y-2.5">
               {projects.map((p, i) => {
                 const isActive = i === active;
                 return (
@@ -170,17 +172,11 @@ export default function Projects() {
                         : "border-black/5 dark:border-white/10 bg-white dark:bg-neutral-900"
                     }`}
                   >
-                    <div className="relative h-9 w-9 rounded-xl overflow-hidden bg-neutral-200 shrink-0">
-                      <Image
-                        src={p.image}
-                        alt={p.title}
-                        fill
-                        className="object-cover"
-                        sizes="36px"
-                      />
+                    <div className="relative h-8 w-8 rounded-lg overflow-hidden bg-neutral-200 shrink-0">
+                      <Image src={p.image} alt={p.title} fill className="object-cover" sizes="32px" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-[13px] font-semibold truncate">{p.title}</p>
+                      <p className="text-[12px] sm:text-[13px] font-semibold truncate">{p.title}</p>
                       <p className="text-[10px] opacity-70">#{String(i + 1).padStart(2, "0")}</p>
                     </div>
                     <span className="text-[10px] font-semibold opacity-60">
@@ -195,4 +191,9 @@ export default function Projects() {
       </div>
     </section>
   );
+}
+
+// util pequeño
+function clamp(v: number, min: number, max: number) {
+  return Math.max(min, Math.min(max, v));
 }
