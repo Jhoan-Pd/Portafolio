@@ -128,6 +128,15 @@
           "github": "https://github.com/tuusuario",
           "linkedin": "https://linkedin.com/in/tuusuario",
           "email": "mailto:tuemail@ejemplo.com"
-        }
-  }
-}
+        },
+        
+      "lenguajes": [
+        { "name": "C#", "icon": "/codigo.png" },
+        { "name": "JavaScript", "icon": "/Javascript.gif" },
+        { "name": "MySQL", "icon": "/Mysql.png" },
+        { "name": "Python", "icon": "/Python.gif" },
+        { "name": "Java", "icon": "/JavaCoffeeCup.gif" }
+      ]
+   }
+  
+  } 

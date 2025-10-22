@@ -14,7 +14,7 @@ export default function Projects() {
   const [active, setActive] = useState(0);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
-  // 🔹 Cargar datos desde data.json
+
   useEffect(() => {
     fetch("/data/data.json")
       .then((res) => res.json())
@@ -22,7 +22,6 @@ export default function Projects() {
       .catch((err) => console.error("Error cargando proyectos:", err));
   }, []);
 
-  // 🔹 Actualizar proyecto activo según el scroll
   useEffect(() => {
     let rafId: number;
 
