@@ -26,60 +26,59 @@ export default function Informacion() {
 
   if (infoBlocks.length === 0) {
     return (
-      <section className="w-full py-20 flex justify-center items-center text-gray-500">
+      <section className="w-full min-h-[40svh] grid place-items-center text-gray-500 dark:text-gray-400 bg-[#F4F1EB] dark:bg-neutral-900">
         Cargando información...
       </section>
     );
   }
 
+  const spanClass = (n?: number) =>
+    n === 2 ? "md:col-span-2" : n === 3 ? "md:col-span-3" : n === 4 ? "md:col-span-4" : "";
+
   return (
-    <section className="w-full py-20 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-6">
-        {/* Título general */}
-        <h2 className="text-center text-4xl font-bold text-gray-800 mb-12 tracking-wider">
+    <section className="w-full py-14 sm:py-20 bg-[#F4F1EB] text-neutral-900 dark:bg-neutral-900 dark:text-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 className="text-center text-3xl sm:text-4xl font-bold tracking-wider mb-10 sm:mb-12">
           SOBRE MI
         </h2>
 
-        {/* GRID */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-5 sm:gap-6 lg:gap-8">
           {infoBlocks.map((block) => (
             <motion.div
               key={block.id}
-              whileHover={{ scale: 1.05 }}
-              className={`bg-white shadow-lg rounded-xl p-10 flex flex-col items-center justify-center text-center min-h-[220px] ${
-                block.span ? `md:col-span-${block.span}` : ""
-              }`}
+              whileHover={{ scale: 1.03 }}
+              className={`rounded-xl p-6 sm:p-8 min-h-[200px] flex flex-col items-center justify-center text-center shadow-lg
+                          bg-white dark:bg-white/5 border border-black/5 dark:border-white/10
+                          ${spanClass(block.span)}`}
             >
-              {/* Mostrar valor numérico o ícono */}
               {block.icon ? (
                 <Image
                   src={block.icon}
-                  alt={block.title || "icono"}
-                  width={70}
-                  height={70}
-                  className="mb-4"
+                  alt={block.title || block.subtitle || "icono"}
+                  width={72}
+                  height={72}
+                  className="mb-4 sm:mb-5"
                 />
               ) : block.value ? (
-                <p className="text-red-500 font-bold text-6xl mb-2">{block.value}</p>
+                <p className="mb-2 text-4xl sm:text-5xl md:text-6xl font-extrabold text-red-500 dark:text-red-400">
+                  {block.value}
+                </p>
               ) : null}
 
-              {/* Subtítulo numérico o descriptivo */}
               {block.subtitle && (
-                <p className="uppercase font-bold text-xs text-red-400 tracking-wide leading-tight">
+                <p className="uppercase font-bold text-[10px] sm:text-xs tracking-wide leading-tight text-red-400 dark:text-red-300">
                   {block.subtitle}
                 </p>
               )}
 
-              {/* Título (cuando es bloque de texto largo) */}
               {block.title && (
-                <h3 className="text-2xl font-bold text-cyan-600 mb-4 italic mt-2">
+                <h3 className="mt-2 mb-3 sm:mb-4 text-xl sm:text-2xl font-bold italic text-cyan-600 dark:text-cyan-300">
                   {block.title}
                 </h3>
               )}
 
-              {/* Descripción */}
               {block.description && (
-                <p className="text-gray-700 text-sm leading-relaxed">
+                <p className="text-sm sm:text-[15px] leading-relaxed text-gray-700 dark:text-gray-300 max-w-prose">
                   {block.description}
                 </p>
               )}

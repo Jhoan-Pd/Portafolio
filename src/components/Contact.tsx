@@ -1,5 +1,4 @@
 "use client";
-
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Mail, Send, Linkedin, Github } from "lucide-react";
@@ -13,24 +12,18 @@ export default function Contact() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    // Validación básica
     if (!formData.name || !formData.email || !formData.message) {
       alert("Por favor completa todos los campos.");
       return;
     }
-
     alert(`✅ Gracias ${formData.name}, tu mensaje fue enviado correctamente.`);
     setFormData({ name: "", email: "", message: "" });
   };
 
   return (
-    <section
-      id="contact"
-      className="py-20 bg-gradient-to-br from-blue-50 to-gray-100 px-6 flex flex-col items-center"
-    >
+    <section id="contact" className="py-16 sm:py-20 px-4 sm:px-6 flex flex-col items-center bg-[#F4F1EB] text-neutral-900 dark:bg-neutral-900 dark:text-white">
       <motion.h2
-        className="text-4xl font-bold mb-8 text-gray-900"
+        className="text-3xl sm:text-4xl font-bold mb-6 sm:mb-8 text-center"
         initial={{ opacity: 0, y: -30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
@@ -39,7 +32,7 @@ export default function Contact() {
       </motion.h2>
 
       <motion.p
-        className="text-lg text-gray-700 mb-8 text-center max-w-xl"
+        className="text-base sm:text-lg mb-8 text-center max-w-xl text-gray-700 dark:text-gray-300"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2, duration: 0.6 }}
@@ -49,7 +42,7 @@ export default function Contact() {
 
       <motion.form
         onSubmit={handleSubmit}
-        className="bg-white shadow-lg rounded-2xl p-8 w-full max-w-md flex flex-col gap-4"
+        className="w-full max-w-md bg-white dark:bg-neutral-900 shadow-lg rounded-2xl p-6 sm:p-8 flex flex-col gap-4 border border-black/10 dark:border-white/10"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4, duration: 0.6 }}
@@ -60,7 +53,7 @@ export default function Contact() {
           placeholder="Tu nombre"
           value={formData.name}
           onChange={handleChange}
-          className="border rounded-lg px-4 py-2 w-full focus:ring-2 focus:ring-blue-400"
+          className="w-full rounded-lg px-4 py-2 bg-white dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 placeholder:text-neutral-400 border border-neutral-300 dark:border-neutral-700 focus:outline-none focus:ring-2 focus:ring-blue-400 dark:focus:ring-blue-500"
           required
         />
         <input
@@ -69,7 +62,7 @@ export default function Contact() {
           placeholder="Tu correo"
           value={formData.email}
           onChange={handleChange}
-          className="border rounded-lg px-4 py-2 w-full focus:ring-2 focus:ring-blue-400"
+          className="w-full rounded-lg px-4 py-2 bg-white dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 placeholder:text-neutral-400 border border-neutral-300 dark:border-neutral-700 focus:outline-none focus:ring-2 focus:ring-blue-400 dark:focus:ring-blue-500"
           required
         />
         <textarea
@@ -78,41 +71,30 @@ export default function Contact() {
           value={formData.message}
           onChange={handleChange}
           rows={4}
-          className="border rounded-lg px-4 py-2 w-full focus:ring-2 focus:ring-blue-400"
+          className="w-full rounded-lg px-4 py-2 bg-white dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 placeholder:text-neutral-400 border border-neutral-300 dark:border-neutral-700 focus:outline-none focus:ring-2 focus:ring-blue-400 dark:focus:ring-blue-500"
           required
-        ></textarea>
+        />
         <button
           type="submit"
-          className="flex items-center justify-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition"
+          className="inline-flex items-center justify-center gap-2 rounded-lg px-6 py-3 bg-blue-600 text-white hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-neutral-900 transition"
         >
           <Send size={18} /> Enviar
         </button>
       </motion.form>
 
       <motion.div
-        className="flex gap-6 mt-10"
+        className="flex gap-5 sm:gap-6 mt-8 sm:mt-10"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.8, duration: 0.6 }}
       >
-        <a
-          href="https://github.com/tuusuario"
-          target="_blank"
-          className="text-gray-700 hover:text-blue-600 transition"
-        >
+        <a href="https://github.com/tuusuario" target="_blank" rel="noreferrer" aria-label="GitHub" className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition">
           <Github size={28} />
         </a>
-        <a
-          href="https://linkedin.com/in/tuusuario"
-          target="_blank"
-          className="text-gray-700 hover:text-blue-600 transition"
-        >
+        <a href="https://linkedin.com/in/tuusuario" target="_blank" rel="noreferrer" aria-label="LinkedIn" className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition">
           <Linkedin size={28} />
         </a>
-        <a
-          href="mailto:tuemail@ejemplo.com"
-          className="text-gray-700 hover:text-blue-600 transition"
-        >
+        <a href="mailto:tuemail@ejemplo.com" aria-label="Email" className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition">
           <Mail size={28} />
         </a>
       </motion.div>
