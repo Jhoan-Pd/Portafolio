@@ -45,7 +45,6 @@ export default function Hero() {
     );
   }
 
-  const strokeBlue = "#2F80ED";
   const pillDark = "#102535";
   const pillLight = "#EFE6D2";
   const coral = "#E57F79";
@@ -66,16 +65,18 @@ export default function Hero() {
 
   return (
     <section className="relative w-full bg-[#F4F1EB] text-neutral-900 dark:bg-neutral-900 dark:text-white">
+      {/* NAVBAR fijo */}
       <nav
         className="fixed top-4 sm:top-6 left-1/2 -translate-x-1/2 z-[60] w-full max-w-5xl px-4 sm:px-6 pointer-events-none"
         aria-label="Barra de acciones"
       >
         <div className="flex items-center justify-between gap-3 sm:gap-4">
+          {/* Pastilla izquierda */}
           <div
-            className="pointer-events-auto flex items-center gap-3 sm:gap-4 rounded-2xl px-4 sm:px-5 py-2.5 sm:py-3 shadow-lg backdrop-blur-sm ring-1 ring-white/10"
+            className="pointer-events-auto flex items-center gap-3 sm:gap-4 rounded-2xl px-4 sm:px-5 py-2.5 sm:py-3 shadow-lg backdrop-blur-sm ring-1 ring-black/10 dark:ring-white/10"
             style={{ backgroundColor: pillDark }}
           >
-            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full overflow-hidden bg-slate-800 ring-2 ring-white/10 shrink-0">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full overflow-hidden bg-slate-200 dark:bg-slate-800 ring-2 ring-black/10 dark:ring-white/10 shrink-0">
               <Image
                 src={hero.author.photo}
                 alt={hero.author.firstName}
@@ -94,27 +95,27 @@ export default function Hero() {
             </div>
           </div>
 
+          {/* Pastilla derecha */}
           <div
-            className="pointer-events-auto flex items-center gap-2 sm:gap-3 rounded-2xl px-2.5 sm:px-3 py-2 shadow-lg backdrop-blur-sm ring-1 ring-black/10"
+            className="pointer-events-auto flex items-center gap-2 sm:gap-3 rounded-2xl px-2.5 sm:px-3 py-2 shadow-lg backdrop-blur-sm ring-1 ring-black/10 dark:ring-white/10"
             style={{ backgroundColor: pillLight }}
           >
             <button
               onClick={() => {}}
-              className="inline-flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-xl bg-white shadow hover:bg-neutral-100 transition"
+              className="inline-flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-xl bg-white dark:bg-white/90 text-neutral-900 shadow hover:bg-neutral-100 transition"
               aria-label="Cambiar idioma"
               title="Idioma"
             >
               <Image src={hero.icons.language} alt="language" width={22} height={22} />
             </button>
 
-            {/* Toggle de tema reutilizable (sigue sistema por defecto) */}
             <div className="h-9 w-9 sm:h-10 sm:w-10 grid place-items-center">
               <ThemeToggle />
             </div>
 
             <button
               onClick={() => {}}
-              className="inline-flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-xl bg-white shadow hover:bg-neutral-100 transition"
+              className="inline-flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-xl bg-white dark:bg-white/90 text-neutral-900 shadow hover:bg-neutral-100 transition"
               aria-label="Menú"
               title="Menú"
             >
@@ -124,7 +125,7 @@ export default function Hero() {
         </div>
       </nav>
 
-      {/* HERO con imagen y curva inferior */}
+      {/* HERO */}
       <div
         className="relative overflow-hidden"
         style={{
@@ -154,24 +155,11 @@ export default function Hero() {
             {renderHighlighted(hero.quote, hero.highlight)}
           </h1>
         </div>
-
-        <svg
-          className="pointer-events-none absolute inset-0 z-10"
-          viewBox="0 0 1440 800"
-          preserveAspectRatio="none"
-          aria-hidden="true"
-        >
-          <defs>
-            <clipPath id="show-bottom-only">
-              <rect x="0" y="640" width="1440" height="160" />
-            </clipPath>
-          </defs>
-        </svg>
       </div>
 
-      {/* Card de introducción + botón CV */}
+      {/* Card intro */}
       <div className="relative z-20 -mt-14 sm:-mt-20">
-        <div className="mx-auto w-[min(94%,960px)] rounded-3xl border border-black/10 px-5 py-7 sm:px-10 sm:py-10 shadow-[0_12px_40px_rgba(0,0,0,.12)] bg-white text-neutral-800 dark:bg-neutral-800 dark:text-white">
+        <div className="mx-auto w-[min(94%,960px)] rounded-3xl border border-black/10 dark:border-white/10 px-5 py-7 sm:px-10 sm:py-10 shadow-[0_12px_40px_rgba(0,0,0,.12)] bg-white text-neutral-800 dark:bg-neutral-950/70 dark:text-white">
           <p className="text-center text-[14px] sm:text-[16px] leading-relaxed sm:leading-8 tracking-[0.14em] sm:tracking-[0.18em] uppercase">
             {hero.intro}
           </p>
@@ -190,7 +178,7 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Badge inferior */}
+      {/* Badge */}
       <div className="pointer-events-none absolute right-4 sm:right-6 bottom-4 sm:bottom-6 z-20">
         <div className="flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full shadow-lg backdrop-blur bg-white/70 text-neutral-900 ring-1 ring-black/10 dark:bg-white/10 dark:text-white dark:ring-white/20">
           {hero.author.badge}
