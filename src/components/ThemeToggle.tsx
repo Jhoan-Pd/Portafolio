@@ -5,8 +5,14 @@ import { useTheme } from "@/hooks/useTheme";
 
 type Pref = "system" | "light" | "dark";
 
+declare global {
+  interface Window {
+    __setTheme?: (next: Pref) => void;
+  }
+}
+
 export default function ThemeToggle() {
-  const { theme, toggle } = useTheme(); // theme = resuelto (light|dark)
+  const { theme } = useTheme();
   const [open, setOpen] = useState(false);
   const [pref, setPref] = useState<Pref>("system");
   const btnRef = useRef<HTMLButtonElement | null>(null);
@@ -18,18 +24,7 @@ export default function ThemeToggle() {
 
   const select = (next: Pref) => {
     setPref(next);
-
-    // persist preference: remove key for system, otherwise store the chosen theme
-    if (next === "system") {
-      localStorage.removeItem("theme");
-    } else {
-      localStorage.setItem("theme", next);
-      // if current resolved theme differs from requested, toggle to apply change
-      if ((theme === "dark" && next === "light") || (theme === "light" && next === "dark")) {
-        toggle();
-      }
-    }
-
+    window.__setTheme?.(next);
     setOpen(false);
     btnRef.current?.focus();
   };
@@ -75,7 +70,6 @@ export default function ThemeToggle() {
         </div>
       )}
 
-      {/* Cierre por click fuera / Esc */}
       {open && (
         <>
           <button
