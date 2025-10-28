@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import ThemeToggle from "@/components/ThemeToggle";
 
 type HeroData = {
   backgroundImage: string;
@@ -28,7 +29,6 @@ type HeroData = {
 
 export default function Hero() {
   const [hero, setHero] = useState<HeroData | null>(null);
-  const [dark, setDark] = useState(false);
 
   useEffect(() => {
     fetch("/data/data.json")
@@ -36,23 +36,6 @@ export default function Hero() {
       .then((d) => setHero(d.hero as HeroData))
       .catch((e) => console.error("Error cargando Hero data:", e));
   }, []);
-
-  // tema persistente
-  useEffect(() => {
-    const saved = (localStorage.getItem("theme") as "dark" | "light") || null;
-    const sysDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    const initial = saved ?? (sysDark ? "dark" : "light");
-    setDark(initial === "dark");
-    document.documentElement.classList.toggle("dark", initial === "dark");
-  }, []);
-  const toggleTheme = () => {
-    setDark((v) => {
-      const next = !v;
-      document.documentElement.classList.toggle("dark", next);
-      localStorage.setItem("theme", next ? "dark" : "light");
-      return next;
-    });
-  };
 
   if (!hero) {
     return (
@@ -68,10 +51,6 @@ export default function Hero() {
   const coral = "#E57F79";
   const rounded = 140;
 
-  const themeIcon = dark
-    ? hero.icons.themeDark ?? hero.icons.theme ?? hero.icons.language
-    : hero.icons.themeLight ?? hero.icons.theme ?? hero.icons.language;
-
   const renderHighlighted = (text: string, hl?: string) => {
     if (!hl) return text;
     const i = text.indexOf(hl);
@@ -86,11 +65,7 @@ export default function Hero() {
   };
 
   return (
-    <section
-      className={`relative w-full ${
-        dark ? "bg-neutral-900 text-white" : "bg-[#F4F1EB] text-neutral-900"
-      }`}
-    >
+    <section className="relative w-full bg-[#F4F1EB] text-neutral-900 dark:bg-neutral-900 dark:text-white">
       {/* NAVBAR fijo (visible en todo el scroll) */}
       <nav
         className="fixed top-4 sm:top-6 left-1/2 -translate-x-1/2 z-[60] w-full max-w-5xl px-4 sm:px-6 pointer-events-none"
@@ -132,14 +107,12 @@ export default function Hero() {
             >
               <Image src={hero.icons.language} alt="language" width={22} height={22} />
             </button>
-            <button
-              onClick={toggleTheme}
-              className="inline-flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-xl bg-white shadow hover:bg-neutral-100 transition"
-              aria-label="Tema"
-              title="Tema"
-            >
-              <Image src={themeIcon} alt="theme" width={22} height={22} />
-            </button>
+
+            {/* Toggle de tema reutilizable (sigue sistema por defecto) */}
+            <div className="h-9 w-9 sm:h-10 sm:w-10 grid place-items-center">
+              <ThemeToggle />
+            </div>
+
             <button
               onClick={() => {}}
               className="inline-flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-xl bg-white shadow hover:bg-neutral-100 transition"
@@ -194,28 +167,12 @@ export default function Hero() {
               <rect x="0" y="640" width="1440" height="160" />
             </clipPath>
           </defs>
-          <rect
-            x="2"
-            y="2"
-            width="1436"
-            height="796"
-            rx={rounded}
-            ry={rounded}
-            fill="none"
-            stroke={strokeBlue}
-            strokeWidth="4"
-            clipPath="url(#show-bottom-only)"
-          />
         </svg>
       </div>
 
       {/* Card de introducción + botón CV */}
       <div className="relative z-20 -mt-14 sm:-mt-20">
-        <div
-          className={`mx-auto w-[min(94%,960px)] rounded-3xl border border-black/10 px-5 py-7 sm:px-10 sm:py-10 shadow-[0_12px_40px_rgba(0,0,0,.12)] ${
-            dark ? "bg-neutral-800 text-white" : "bg-white text-neutral-800"
-          }`}
-        >
+        <div className="mx-auto w-[min(94%,960px)] rounded-3xl border border-black/10 px-5 py-7 sm:px-10 sm:py-10 shadow-[0_12px_40px_rgba(0,0,0,.12)] bg-white text-neutral-800 dark:bg-neutral-800 dark:text-white">
           <p className="text-center text-[14px] sm:text-[16px] leading-relaxed sm:leading-8 tracking-[0.14em] sm:tracking-[0.18em] uppercase">
             {hero.intro}
           </p>
@@ -236,13 +193,7 @@ export default function Hero() {
 
       {/* Badge inferior */}
       <div className="pointer-events-none absolute right-4 sm:right-6 bottom-4 sm:bottom-6 z-20">
-        <div
-          className={`flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full shadow-lg backdrop-blur ${
-            dark
-              ? "bg-white/10 text-white ring-1 ring-white/20"
-              : "bg-white/70 text-neutral-900 ring-1 ring-black/10"
-          }`}
-        >
+        <div className="flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full shadow-lg backdrop-blur bg-white/70 text-neutral-900 ring-1 ring-black/10 dark:bg-white/10 dark:text-white dark:ring-white/20">
           {hero.author.badge}
         </div>
       </div>

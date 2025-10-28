@@ -33,12 +33,22 @@ export default function Informacion() {
   }
 
   const spanClass = (n?: number) =>
-    n === 2 ? "md:col-span-2" : n === 3 ? "md:col-span-3" : n === 4 ? "md:col-span-4" : "";
+    n === 4 ? "md:col-span-4"
+    : n === 3 ? "md:col-span-3"
+    : n === 2 ? "md:col-span-2"
+    : "";
 
   return (
-    <section className="w-full py-14 sm:py-20 bg-[#F4F1EB] text-neutral-900 dark:bg-neutral-900 dark:text-white">
+    <section
+      id="sobre-mi"
+      className="w-full py-14 sm:py-20 bg-[#F4F1EB] text-neutral-900 dark:bg-neutral-900 dark:text-white"
+      aria-labelledby="sobre-mi-title"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-center text-3xl sm:text-4xl font-bold tracking-wider mb-10 sm:mb-12">
+        <h2
+          id="sobre-mi-title"
+          className="text-center text-3xl sm:text-4xl font-bold tracking-wider mb-10 sm:mb-12"
+        >
           SOBRE MI
         </h2>
 
@@ -46,10 +56,14 @@ export default function Informacion() {
           {infoBlocks.map((block) => (
             <motion.div
               key={block.id}
-              whileHover={{ scale: 1.03 }}
-              className={`rounded-xl p-6 sm:p-8 min-h-[200px] flex flex-col items-center justify-center text-center shadow-lg
-                          bg-white dark:bg-white/5 border border-black/5 dark:border-white/10
-                          ${spanClass(block.span)}`}
+              initial={{ opacity: 0, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-10% 0px -10% 0px" }}
+              transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+              whileHover={{ scale: 1.02 }}
+              className={`rounded-2xl p-6 sm:p-8 min-h-[200px] flex flex-col items-center justify-center text-center
+                          bg-white dark:bg-neutral-950/60 border border-black/5 dark:border-white/10
+                          shadow-[0_14px_40px_rgba(0,0,0,.12)] ${spanClass(block.span)}`}
             >
               {block.icon ? (
                 <Image
@@ -58,6 +72,7 @@ export default function Informacion() {
                   width={72}
                   height={72}
                   className="mb-4 sm:mb-5"
+                  loading="lazy"
                 />
               ) : block.value ? (
                 <p className="mb-2 text-4xl sm:text-5xl md:text-6xl font-extrabold text-red-500 dark:text-red-400">

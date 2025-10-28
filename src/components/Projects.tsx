@@ -12,8 +12,6 @@ interface Project {
 export default function Projects() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [active, setActive] = useState(0);
-
-  // sección para calcular progreso según scroll global
   const sectionRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -23,7 +21,7 @@ export default function Projects() {
       .catch((e) => console.error("Error cargando proyectos:", e));
   }, []);
 
-  // Mapea el scroll global -> índice activo (sin useScroll)
+  // Scroll global → índice activo (sin useScroll para evitar problemas de hidratación)
   useEffect(() => {
     if (!projects.length) return;
 
@@ -31,21 +29,10 @@ export default function Projects() {
     const compute = () => {
       const sec = sectionRef.current;
       if (!sec) return;
-
       const rect = sec.getBoundingClientRect();
       const viewportCenter = window.innerHeight / 2;
-      const sectionTopInViewport = rect.top;
-      const sectionHeight = rect.height;
-
-      // progreso 0..1 del centro del viewport a través de la sección
-      const progress = clamp(
-        (viewportCenter - sectionTopInViewport) / sectionHeight,
-        0,
-        1
-      );
-
-      const max = projects.length - 1;
-      const idx = Math.round(progress * max);
+      const progress = clamp((viewportCenter - rect.top) / rect.height, 0, 1);
+      const idx = Math.round(progress * Math.max(0, projects.length - 1));
       if (idx !== active) setActive(idx);
     };
 
@@ -55,18 +42,21 @@ export default function Projects() {
     };
 
     window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
     compute();
 
     return () => {
       window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
       cancelAnimationFrame(raf);
     };
-  }, [projects, active]);
+    // dep: solo cambia cuando hay datos; no dependas de `active` para no re-suscribir
+  }, [projects.length]);
 
   const staged = useMemo(() => projects.slice(0, 6), [projects]);
   const easeOutExpo = cubicBezier(0.22, 1, 0.36, 1);
 
-  // Capa visual de cada card: anterior desaparece, actual al frente, futuras detrás
+  // Carta actual al frente; la anterior desaparece; siguientes semi-visibles detrás
   const layer = (i: number) => {
     const depth = active - i; // >0 pasada, 0 actual, <0 futura
     const isPast = depth > 0;
@@ -76,7 +66,7 @@ export default function Projects() {
     return {
       animate: {
         zIndex: 100 - i,
-        opacity: isCurrent ? 1 : isPast ? 0 : 0.6, // la anterior desaparece
+        opacity: isCurrent ? 1 : isPast ? 0 : 0.6,
         scale: isCurrent ? 1 : isPast ? 0.94 : 0.98,
         y: isCurrent ? 0 : isPast ? 36 : -8,
         x: isCurrent ? 0 : isPast ? -16 : 12,
@@ -193,7 +183,6 @@ export default function Projects() {
   );
 }
 
-// util pequeño
 function clamp(v: number, min: number, max: number) {
   return Math.max(min, Math.min(max, v));
 }
