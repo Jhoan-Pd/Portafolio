@@ -66,7 +66,6 @@ export default function Hero() {
 
   return (
     <section className="relative w-full bg-[#F4F1EB] text-neutral-900 dark:bg-neutral-900 dark:text-white">
-      {/* NAVBAR fijo (visible en todo el scroll) */}
       <nav
         className="fixed top-4 sm:top-6 left-1/2 -translate-x-1/2 z-[60] w-full max-w-5xl px-4 sm:px-6 pointer-events-none"
         aria-label="Barra de acciones"
