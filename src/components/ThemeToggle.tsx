@@ -5,14 +5,8 @@ import { useTheme } from "@/hooks/useTheme";
 
 type Pref = "system" | "light" | "dark";
 
-declare global {
-  interface Window {
-    __setTheme?: (next: Pref) => void;
-  }
-}
-
 export default function ThemeToggle() {
-  const { theme } = useTheme();
+  const { theme, setTheme } = useTheme();
   const [open, setOpen] = useState(false);
   const [pref, setPref] = useState<Pref>("system");
   const btnRef = useRef<HTMLButtonElement | null>(null);
@@ -24,7 +18,7 @@ export default function ThemeToggle() {
 
   const select = (next: Pref) => {
     setPref(next);
-    window.__setTheme?.(next);
+    setTheme(next);     // ← fuerza light/dark/system vía window.__setTheme
     setOpen(false);
     btnRef.current?.focus();
   };

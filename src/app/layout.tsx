@@ -12,20 +12,23 @@ const ThemeScript = () => (
   <>
     <meta name="color-scheme" content="light dark" />
     <script
+      // Aplica tema antes de hidratar y expone window.__setTheme
       dangerouslySetInnerHTML={{
         __html: `
-(function() {
+(function () {
   try {
     var mql = window.matchMedia('(prefers-color-scheme: dark)');
+
     function apply(pref) {
       var mode = pref;
       if (!pref || pref === 'system') {
         mode = mql.matches ? 'dark' : 'light';
       }
       document.documentElement.classList.toggle('dark', mode === 'dark');
+      // Notificar a React (useTheme) que el tema cambió
+      window.dispatchEvent(new CustomEvent('themechange', { detail: mode }));
     }
 
-    // API global para forzar tema desde cualquier botón
     window.__setTheme = function(next) {
       if (next === 'system') {
         localStorage.removeItem('theme');
@@ -35,17 +38,15 @@ const ThemeScript = () => (
       apply(next);
     };
 
-    // Inicial: respeta preferencia guardada o sistema
     var stored = localStorage.getItem('theme'); // 'light' | 'dark' | null
     apply(stored || 'system');
 
-    // Si no hay preferencia guardada, seguir cambios del sistema
     if (!stored) {
-      var handler = function(e){ apply('system'); };
+      var handler = function(){ apply('system'); };
       if (mql.addEventListener) mql.addEventListener('change', handler);
       else mql.addListener(handler);
     }
-  } catch(_) {}
+  } catch (_) {}
 })();`.trim(),
       }}
     />
@@ -53,7 +54,7 @@ const ThemeScript = () => (
       <style>{`
         @media (prefers-color-scheme: dark) {
           html { color-scheme: dark; }
-          body { background-color: #0a0a0a; color: #fff; }
+          body { background:#0a0a0a; color:#fff; }
         }
       `}</style>
     </noscript>
