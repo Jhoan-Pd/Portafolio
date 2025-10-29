@@ -1,24 +1,15 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { Sun, Moon, Monitor } from "lucide-react";
-import { useTheme } from "@/hooks/useTheme";
-
-type Pref = "system" | "light" | "dark";
+import { useTheme, type Pref } from "@/hooks/useTheme";
 
 export default function ThemeToggle() {
-  const { theme, setTheme } = useTheme();
+  const { theme, pref, setTheme } = useTheme();
   const [open, setOpen] = useState(false);
-  const [pref, setPref] = useState<Pref>("system");
   const btnRef = useRef<HTMLButtonElement | null>(null);
 
-  useEffect(() => {
-    const stored = (localStorage.getItem("theme") as "light" | "dark" | null) ?? null;
-    setPref(stored ? (stored as Pref) : "system");
-  }, [theme]);
-
   const select = (next: Pref) => {
-    setPref(next);
-    setTheme(next);     // ← fuerza light/dark/system vía window.__setTheme
+    setTheme(next);
     setOpen(false);
     btnRef.current?.focus();
   };

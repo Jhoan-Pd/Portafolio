@@ -2,7 +2,7 @@
 "use client";
 import { useCallback, useEffect, useState } from "react";
 
-type Pref = "system" | "light" | "dark";
+export type Pref = "system" | "light" | "dark";
 
 declare global {
   interface Window {
@@ -18,28 +18,36 @@ export function useTheme() {
       : "light"
   );
 
+  const [pref, setPref] = useState<Pref>("system");
+
   useEffect(() => {
+    // Leer preferencia guardada
+    const stored = localStorage.getItem("theme") as "light" | "dark" | null;
+    setPref(stored || "system");
+
     const onChange = () => {
       const t = document.documentElement.classList.contains("dark")
         ? "dark"
         : "light";
       setThemeState(t);
     };
-    // Inicial
+    
     onChange();
-    // Escuchar evento global del layout
     window.addEventListener("themechange", onChange as EventListener);
     return () => window.removeEventListener("themechange", onChange as EventListener);
   }, []);
 
   const toggle = useCallback(() => {
     const isDark = document.documentElement.classList.contains("dark");
-    window.__setTheme?.(isDark ? "light" : "dark");
+    const next = isDark ? "light" : "dark";
+    window.__setTheme?.(next);
+    setPref(next);
   }, []);
 
   const setTheme = useCallback((next: Pref) => {
     window.__setTheme?.(next);
+    setPref(next);
   }, []);
 
-  return { theme, toggle, setTheme };
+  return { theme, pref, toggle, setTheme };
 }
