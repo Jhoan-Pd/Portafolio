@@ -15,7 +15,6 @@ export default function Home() {
       <Lenguajes />
       <References />
       <Contact />
-      
     </main>
   );
 }
