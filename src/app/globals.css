@@ -1,18 +1,22 @@
 @import "tailwindcss";
 
-:root {
-  --page-bg: #F4F1EB; 
-  --page-fg: #111827;  
-}
-.dark {
-  --page-bg: #0A0A0A;
-  --page-fg: #FFFFFF;
-}
+@layer base {
+  :root {
+    --page-bg: #F4F1EB;
+    --page-fg: #111827;
+  }
+  .dark {
+    --page-bg: #0A0A0A;
+    --page-fg: #FFFFFF;
+  }
 
-html, body { min-height: 100%; }
+  html, body { min-height: 100%; }
 
-body {
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  body {
+    background-color: var(--page-bg);
+    color: var(--page-fg);
+    font-family: Arial, Helvetica, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 }
