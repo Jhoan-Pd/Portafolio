@@ -1,6 +1,3 @@
-// src/components/SobreMi.tsx (puedes mantener el nombre que usabas)
-// Si tu archivo se llama Informacion.tsx, solo cambia el nombre del archivo.
-// El export default se llama Informacion para no romper imports existentes.
 'use client';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
@@ -65,10 +62,11 @@ export default function Informacion() {
               transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
               whileHover={{ scale: 1.02 }}
               className={`rounded-2xl p-6 sm:p-8 min-h-[200px] flex flex-col items-center justify-center text-center
-                          bg-white/95 dark:bg-neutral-950/75
-                          border border-black/10 dark:border-white/10
+                          bg-white text-neutral-900
+                          border border-black/10
                           shadow-[0_14px_40px_rgba(0,0,0,.12)]
-                          backdrop-blur-sm transition-colors ${spanClass(block.span)}`}
+                          dark:bg-neutral-950 dark:text-white dark:border-white/10
+                          transition-colors ${spanClass(block.span)}`}
             >
               {block.icon ? (
                 <Image

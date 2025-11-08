@@ -1,7 +1,9 @@
-"use client";
-import { useEffect, useState } from "react";
-import { motion, useReducedMotion } from "framer-motion";
-import { Mail, Send, Linkedin, Github } from "lucide-react";
+// src/components/Contact.tsx
+'use client';
+
+import { useEffect, useState } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
+import { Mail, Send, Linkedin, Github, Check } from 'lucide-react';
 
 type ContactJson = {
   titulo?: string;
@@ -11,39 +13,45 @@ type ContactJson = {
 };
 
 export default function Contact() {
-  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+  const [formData, setFormData] = useState({ name: '', email: '', message: '', hp: '' }); // hp = honeypot
   const [copy, setCopy] = useState<ContactJson | null>(null);
+  const [sent, setSent] = useState<null | 'ok' | 'error'>(null);
   const prefersReduced = useReducedMotion();
 
   useEffect(() => {
-    fetch("/data/data.json")
+    fetch('/data/data.json')
       .then((r) => r.json())
       .then((d) => setCopy(d?.contacto ?? null))
       .catch(() => setCopy(null));
   }, []);
 
-  const title = copy?.titulo ?? "Contacto";
+  const title = copy?.titulo ?? 'Contacto';
   const desc =
     copy?.descripcion ??
-    "Si tienes un proyecto o quieres colaborar, completa el formulario o envíame un correo.";
-  const gh = copy?.redes?.github ?? "https://github.com/tuusuario";
-  const ln = copy?.redes?.linkedin ?? "https://linkedin.com/in/tuusuario";
-  const em = copy?.redes?.email ?? `mailto:${copy?.correo ?? "tuemail@ejemplo.com"}`;
+    'Si tienes un proyecto o quieres colaborar, completa el formulario o envíame un correo.';
+  const gh = copy?.redes?.github ?? 'https://github.com/tuusuario';
+  const ln = copy?.redes?.linkedin ?? 'https://linkedin.com/in/tuusuario';
+  const em = copy?.redes?.email ?? `mailto:${copy?.correo ?? 'tuemail@ejemplo.com'}`;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     setFormData((s) => ({ ...s, [e.target.name]: e.target.value }));
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.name || !formData.email || !formData.message) return alert("Completa todos los campos.");
-    alert(`✅ Gracias ${formData.name}, tu mensaje fue enviado correctamente.`);
-    setFormData({ name: "", email: "", message: "" });
+    if (formData.hp) return; // bots out
+    if (!formData.name || !formData.email || !formData.message) {
+      alert('Completa todos los campos.');
+      return;
+    }
+    // Aquí enviarías a tu backend/servicio. Por ahora simulamos éxito:
+    setSent('ok');
+    setFormData({ name: '', email: '', message: '', hp: '' });
   };
 
   return (
     <section
       id="contact"
-      className="py-16 sm:py-20 px-4 sm:px-6 flex flex-col items-center bg-[#F4F1EB] text-neutral-900 dark:bg-neutral-900 dark:text-white"
+      className="py-16 sm:py-20 px-4 sm:px-6 flex flex-col items-center bg-[var(--page-bg)] text-[var(--page-fg)] transition-colors"
       aria-labelledby="contact-title"
     >
       <motion.h2
@@ -65,13 +73,32 @@ export default function Contact() {
         {desc}
       </motion.p>
 
+      {/* Mensaje de éxito */}
+      {sent === 'ok' && (
+        <div className="mb-4 inline-flex items-center gap-2 rounded-lg px-3 py-2 bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-200">
+          <Check size={18} />
+          <span>¡Gracias! Tu mensaje fue enviado.</span>
+        </div>
+      )}
+
       <motion.form
         onSubmit={handleSubmit}
-        className="w-full max-w-md bg-white dark:bg-neutral-900 shadow-lg rounded-2xl p-6 sm:p-8 flex flex-col gap-4 border border-black/10 dark:border-white/10"
+        className="w-full max-w-md bg-white text-neutral-900 dark:bg-neutral-950 dark:text-white shadow-lg rounded-2xl p-6 sm:p-8 flex flex-col gap-4 border border-black/10 dark:border-white/10 transition-colors"
         initial={prefersReduced ? false : { opacity: 0, y: 20 }}
         animate={prefersReduced ? {} : { opacity: 1, y: 0 }}
         transition={{ delay: 0.4, duration: 0.6 }}
       >
+        {/* Honeypot */}
+        <input
+          type="text"
+          name="hp"
+          value={formData.hp}
+          onChange={handleChange}
+          className="hidden"
+          tabIndex={-1}
+          autoComplete="off"
+        />
+
         <label className="sr-only" htmlFor="name">Nombre</label>
         <input
           id="name"
@@ -81,9 +108,10 @@ export default function Contact() {
           value={formData.name}
           onChange={handleChange}
           autoComplete="name"
-          className="w-full rounded-lg px-4 py-2 bg-white dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 placeholder:text-neutral-400 border border-neutral-300 dark:border-neutral-700 focus:outline-none focus:ring-2 focus:ring-blue-400 dark:focus:ring-blue-500"
+          className="w-full rounded-lg px-4 py-2 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 placeholder:text-neutral-400 border border-neutral-300 dark:border-neutral-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
           required
         />
+
         <label className="sr-only" htmlFor="email">Correo</label>
         <input
           id="email"
@@ -93,9 +121,10 @@ export default function Contact() {
           value={formData.email}
           onChange={handleChange}
           autoComplete="email"
-          className="w-full rounded-lg px-4 py-2 bg-white dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 placeholder:text-neutral-400 border border-neutral-300 dark:border-neutral-700 focus:outline-none focus:ring-2 focus:ring-blue-400 dark:focus:ring-blue-500"
+          className="w-full rounded-lg px-4 py-2 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 placeholder:text-neutral-400 border border-neutral-300 dark:border-neutral-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
           required
         />
+
         <label className="sr-only" htmlFor="message">Mensaje</label>
         <textarea
           id="message"
@@ -104,12 +133,13 @@ export default function Contact() {
           value={formData.message}
           onChange={handleChange}
           rows={4}
-          className="w-full rounded-lg px-4 py-2 bg-white dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 placeholder:text-neutral-400 border border-neutral-300 dark:border-neutral-700 focus:outline-none focus:ring-2 focus:ring-blue-400 dark:focus:ring-blue-500"
+          className="w-full rounded-lg px-4 py-2 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 placeholder:text-neutral-400 border border-neutral-300 dark:border-neutral-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
           required
         />
+
         <button
           type="submit"
-          className="inline-flex items-center justify-center gap-2 rounded-lg px-6 py-3 bg-blue-600 text-white hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-neutral-900 transition"
+          className="inline-flex items-center justify-center gap-2 rounded-lg px-6 py-3 bg-blue-600 text-white hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-neutral-950 transition"
         >
           <Send size={18} /> Enviar
         </button>
@@ -122,34 +152,34 @@ export default function Contact() {
         transition={{ delay: 0.8, duration: 0.6 }}
         aria-label="Redes"
       >
-                <a
-                  href={gh}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="GitHub"
-                  className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition"
-                >
-                  <Github size={24} />
-                </a>
-                <a
-                  href={ln}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="LinkedIn"
-                  className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition"
-                >
-                  <Linkedin size={24} />
-                </a>
-                <a
-                  href={em}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="Email"
-                  className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition"
-                >
-                  <Mail size={24} />
-                </a>
-              </motion.div>
-            </section>
-          );
-        }
+        <a
+          href={gh}
+          target="_blank"
+          rel="noreferrer"
+          aria-label="GitHub"
+          className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition"
+        >
+          <Github size={24} />
+        </a>
+        <a
+          href={ln}
+          target="_blank"
+          rel="noreferrer"
+          aria-label="LinkedIn"
+          className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition"
+        >
+          <Linkedin size={24} />
+        </a>
+        <a
+          href={em}
+          target="_blank"
+          rel="noreferrer"
+          aria-label="Email"
+          className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition"
+        >
+          <Mail size={24} />
+        </a>
+      </motion.div>
+    </section>
+  );
+}

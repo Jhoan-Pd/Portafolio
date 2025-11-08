@@ -1,7 +1,7 @@
-"use client";
-import React, { useState, useEffect } from "react";
-import { motion, useReducedMotion } from "framer-motion";
-import Image from "next/image";
+'use client';
+import React, { useState, useEffect } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
+import Image from 'next/image';
 
 interface Testimonio {
   imagen: string;
@@ -15,28 +15,28 @@ const References: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/data/data.json")
+    fetch('/data/data.json')
       .then((res) => res.json())
       .then((data) => {
         setReferencias(Array.isArray(data.testimonios) ? data.testimonios : []);
         setLoading(false);
       })
       .catch((error) => {
-        console.error("Error cargando testimonios:", error);
+        console.error('Error cargando testimonios:', error);
         setLoading(false);
       });
   }, []);
 
   if (loading) {
     return (
-      <section className="py-16 sm:py-20 grid place-items-center text-gray-500 dark:text-gray-400 bg-[#F4F1EB] dark:bg-neutral-900">
+      <section className="py-16 sm:py-20 grid place-items-center text-gray-500 dark:text-gray-400 bg-[var(--page-bg)]">
         Cargando testimonios...
       </section>
     );
   }
 
   return (
-    <section className="relative overflow-hidden py-14 sm:py-20 px-4 sm:px-6 bg-[#F4F1EB] text-neutral-900 dark:bg-neutral-900 dark:text-white">
+    <section className="relative overflow-hidden py-14 sm:py-20 px-4 sm:px-6 bg-[var(--page-bg)] text-[var(--page-fg)] transition-colors">
       <h2 className="text-3xl sm:text-4xl font-bold text-center mb-10 sm:mb-16 italic tracking-wide">
         TESTIMONIOS
       </h2>
@@ -45,7 +45,7 @@ const References: React.FC = () => {
         <div className="flex flex-wrap justify-center gap-6 sm:gap-8 lg:gap-10">
           {referencias.map((ref, index) => {
             const isEven = index % 2 === 0;
-            const rotation = isEven ? "-5deg" : "5deg";
+            const rotation = isEven ? '-5deg' : '5deg';
             return (
               <FlipCard
                 key={index}
@@ -71,13 +71,13 @@ interface FlipCardProps {
   isEven: boolean;
 }
 
-const FlipCard: React.FC<FlipCardProps> = ({ refData, rotation, isEven }) => {
+const FlipCard: React.FC<FlipCardProps> = ({ refData, rotation }) => {
   const [flipped, setFlipped] = useState(false);
   const prefersReduced = useReducedMotion();
 
   const toggle = () => setFlipped((v) => !v);
   const onKey = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (e.key === "Enter" || e.key === " ") {
+    if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
       toggle();
     }
@@ -85,10 +85,10 @@ const FlipCard: React.FC<FlipCardProps> = ({ refData, rotation, isEven }) => {
 
   return (
     <motion.div
-      className="relative w-64 sm:w-72 h-[360px] sm:h-[400px] cursor-pointer"
+      className="relative w-64 sm:w-72 h-[360px] sm:h-[400px] cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:focus-visible:ring-blue-400 rounded-3xl"
       style={{ perspective: 1000, rotate: rotation }}
       whileHover={{ scale: 1.05, rotate: 0, zIndex: 10 }}
-      transition={{ type: "spring", stiffness: 180 }}
+      transition={{ type: 'spring', stiffness: 180 }}
       onMouseEnter={() => !prefersReduced && setFlipped(true)}
       onMouseLeave={() => !prefersReduced && setFlipped(false)}
       onClick={toggle}
@@ -99,53 +99,47 @@ const FlipCard: React.FC<FlipCardProps> = ({ refData, rotation, isEven }) => {
       onKeyDown={onKey}
     >
       <motion.div
-        className="absolute inset-0 rounded-3xl border-2 p-5 sm:p-6 text-center shadow-2xl"
-        style={{ transformStyle: "preserve-3d" as const }}
+        className="absolute inset-0 rounded-3xl p-5 sm:p-6 text-center shadow-2xl"
+        style={{ transformStyle: 'preserve-3d' as const }}
         animate={{ rotateY: flipped && !prefersReduced ? 180 : 0 }}
-        transition={{ duration: prefersReduced ? 0 : 0.7, ease: "easeInOut" }}
+        transition={{ duration: prefersReduced ? 0 : 0.7, ease: 'easeInOut' }}
       >
-        {/* Frente */}
+        {/* Frente: blanco en light, oscuro en dark */}
         <div
-          className={`absolute inset-0 flex flex-col justify-center items-center rounded-3xl border-2`}
-          style={{ backfaceVisibility: "hidden" }}
+          className="
+            absolute inset-0 flex flex-col justify-center items-center
+            rounded-3xl border bg-white text-neutral-900
+            border-black/10
+            dark:bg-neutral-950 dark:text-white dark:border-white/10
+            transition-colors
+          "
+          style={{ backfaceVisibility: 'hidden' }}
         >
-          <div
-            className={
-              isEven
-                ? "bg-white text-gray-800 border-blue-300 dark:bg-white/5 dark:text-gray-100 dark:border-blue-500/40"
-                : "bg-cyan-700 text-white border-cyan-900 dark:bg-cyan-900 dark:border-cyan-700"
-            }
-            style={{ position: "absolute", inset: 0, borderRadius: "1.5rem" }}
-          />
-          <div className="relative z-[1] flex flex-col items-center">
-            <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden shadow-md mb-3 sm:mb-4 ring-1 ring-black/10 dark:ring-white/10">
-              <Image
-                src={refData.imagen || "/avatar-placeholder.png"}
-                alt={refData.nombre}
-                width={120}
-                height={120}
-                className="object-cover rounded-full"
-                loading="lazy"
-              />
-            </div>
-            <h3 className="font-bold text-base sm:text-lg">{refData.nombre}</h3>
-            <p className="text-xs sm:text-sm font-medium opacity-80">{refData.profesion}</p>
+          <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden shadow-md mb-3 sm:mb-4 ring-1 ring-black/10 dark:ring-white/10">
+            <Image
+              src={refData.imagen || '/avatar-placeholder.png'}
+              alt={refData.nombre}
+              width={120}
+              height={120}
+              className="object-cover rounded-full"
+              loading="lazy"
+            />
           </div>
+          <h3 className="font-bold text-base sm:text-lg">{refData.nombre}</h3>
+          <p className="text-xs sm:text-sm font-medium opacity-80">{refData.profesion}</p>
         </div>
 
-        {/* Reverso */}
+        {/* Reverso: claro en light, más oscuro en dark */}
         <div
-          className="absolute inset-0 flex items-center justify-center rounded-3xl px-5 sm:px-6 text-center"
-          style={{ transform: "rotateY(180deg)", backfaceVisibility: "hidden" }}
+          className="
+            absolute inset-0 flex items-center justify-center rounded-3xl px-5 sm:px-6 text-center
+            bg-neutral-50 text-neutral-900 border border-black/10
+            dark:bg-neutral-900 dark:text-white dark:border-white/10
+            transition-colors
+          "
+          style={{ transform: 'rotateY(180deg)', backfaceVisibility: 'hidden' }}
         >
-          <div
-            className={`absolute inset-0 rounded-3xl border-2 ${
-              isEven
-                ? "bg-blue-200 text-gray-800 border-blue-300 dark:bg-blue-500/15 dark:text-gray-100 dark:border-blue-500/40"
-                : "bg-cyan-800 text-white border-cyan-900 dark:bg-cyan-950 dark:border-cyan-800"
-            }`}
-          />
-          <p className="relative z-[1] italic text-sm sm:text-[15px] leading-relaxed max-w-prose">
+          <p className="italic text-sm sm:text-[15px] leading-relaxed max-w-prose">
             “{refData.mensaje}”
           </p>
         </div>
