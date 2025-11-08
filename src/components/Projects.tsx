@@ -1,7 +1,7 @@
-"use client";
-import { useState, useEffect, useMemo, useRef } from "react";
-import Image from "next/image";
-import { motion, cubicBezier } from "framer-motion";
+'use client';
+import { useState, useEffect, useMemo, useRef } from 'react';
+import Image from 'next/image';
+import { motion, cubicBezier } from 'framer-motion';
 
 interface Project {
   id: number;
@@ -15,13 +15,13 @@ export default function Projects() {
   const sectionRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    fetch("/data/data.json")
+    fetch('/data/data.json')
       .then((r) => r.json())
       .then((d) => setProjects(d.projects || []))
-      .catch((e) => console.error("Error cargando proyectos:", e));
+      .catch((e) => console.error('Error cargando proyectos:', e));
   }, []);
 
-  // Scroll global → índice activo (sin useScroll para evitar problemas de hidratación)
+  // Scroll global → índice activo
   useEffect(() => {
     if (!projects.length) return;
 
@@ -41,22 +41,20 @@ export default function Projects() {
       raf = requestAnimationFrame(compute);
     };
 
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
     compute();
 
     return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
       cancelAnimationFrame(raf);
     };
-    // dep: solo cambia cuando hay datos; no dependas de `active` para no re-suscribir
   }, [projects.length]);
 
   const staged = useMemo(() => projects.slice(0, 6), [projects]);
   const easeOutExpo = cubicBezier(0.22, 1, 0.36, 1);
 
-  // Carta actual al frente; la anterior desaparece; siguientes semi-visibles detrás
   const layer = (i: number) => {
     const depth = active - i; // >0 pasada, 0 actual, <0 futura
     const isPast = depth > 0;
@@ -71,18 +69,19 @@ export default function Projects() {
         y: isCurrent ? 0 : isPast ? 36 : -8,
         x: isCurrent ? 0 : isPast ? -16 : 12,
         rotate: isPast ? 0.3 : isFuture ? -0.15 : 0,
-        filter: isPast ? "blur(2px) saturate(0.9)" : "none",
+        filter: isPast ? 'blur(2px) saturate(0.9)' : 'none',
         transition: { duration: 0.55, ease: easeOutExpo },
       } as const,
       style: {
-        boxShadow: "0 18px 40px rgba(0,0,0,.18), 0 4px 10px rgba(0,0,0,.08)",
+        boxShadow:
+          '0 18px 40px rgba(0,0,0,.18), 0 4px 10px rgba(0,0,0,.08)',
       } as const,
     };
   };
 
   if (!projects.length) {
     return (
-      <section className="w-full min-h-[60svh] grid place-items-center text-gray-500 dark:text-gray-400 bg-[#F4F1EB] dark:bg-neutral-900">
+      <section className="w-full min-h-[60svh] grid place-items-center text-gray-500 dark:text-gray-400 bg-[var(--page-bg)]">
         Cargando proyectos...
       </section>
     );
@@ -91,25 +90,29 @@ export default function Projects() {
   return (
     <section
       ref={sectionRef}
-      className="w-full bg-[#F4F1EB] text-neutral-900 dark:bg-neutral-900 dark:text-white"
+      className="w-full bg-[var(--page-bg)] text-[var(--page-fg)] transition-colors"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
         <h2 className="text-center text-3xl sm:text-4xl font-bold italic tracking-wide mb-6 sm:mb-8">
           MIS PROYECTOS
         </h2>
 
-        {/* En móvil solo el escenario; la lista aparece desde md */}
         <div className="grid grid-cols-1 md:grid-cols-[1fr_260px] lg:grid-cols-[1fr_300px] gap-6 sm:gap-8">
           {/* Escenario */}
-          <div className="relative rounded-[28px] bg-white dark:bg-neutral-950/70 border border-black/5 dark:border-white/10 p-3 sm:p-5 md:p-8 shadow-[0_14px_40px_rgba(0,0,0,.12)]">
-            <div className="relative h-[62svh] md:h-[68svh] overflow-hidden rounded-3xl bg-neutral-100 dark:bg-neutral-900">
+          <div className="relative rounded-[28px] bg-white/95 dark:bg-neutral-950/75 border border-black/10 dark:border-white/10 p-3 sm:p-5 md:p-8 shadow-[0_14px_40px_rgba(0,0,0,.12)] backdrop-blur-sm transition-colors">
+            <div className="relative h-[62svh] md:h-[68svh] overflow-hidden rounded-3xl bg-neutral-100 dark:bg-neutral-900 transition-colors">
               <div className="absolute inset-0 rounded-3xl ring-1 ring-black/5 dark:ring-white/10" />
               {staged.map((p, i) => {
                 const { animate, style } = layer(i);
                 return (
                   <motion.article
                     key={p.id}
-                    className="absolute inset-0 m-auto w-[92%] md:w-[88%] h-[86%] rounded-3xl bg-white dark:bg-neutral-950 border border-black/5 dark:border-white/10 overflow-hidden"
+                    className="
+                      absolute inset-0 m-auto w-[92%] md:w-[88%] h-[86%]
+                      rounded-3xl bg-white/98 dark:bg-neutral-950
+                      border border-black/5 dark:border-white/10 overflow-hidden
+                      transition-colors
+                    "
                     animate={animate}
                     initial={{ opacity: 0, y: 60, scale: 0.98 }}
                     style={style}
@@ -129,7 +132,7 @@ export default function Projects() {
                         <h3 className="text-lg sm:text-xl font-semibold leading-snug mb-2">
                           {p.title}
                         </h3>
-                        <p className="text-neutral-600 dark:text-neutral-300 text-sm sm:text-[15px] leading-relaxed">
+                        <p className="text-neutral-700 dark:text-neutral-300 text-sm sm:text-[15px] leading-relaxed">
                           Breve descripción del proyecto. Tecnologías, objetivo y
                           resultado principal.
                         </p>
@@ -147,8 +150,8 @@ export default function Projects() {
             </div>
           </div>
 
-          {/* Lista de vistas previas (mini) – oculta en móvil */}
-          <div className="hidden md:block rounded-[24px] bg-white dark:bg-neutral-950/70 border border-black/5 dark:border-white/10 p-3 sm:p-4 shadow-[0_14px_40px_rgba(0,0,0,.12)] h-[68svh] overflow-y-auto">
+          {/* Lista de vistas previas (mini) */}
+          <div className="hidden md:block rounded-[24px] bg-white/95 dark:bg-neutral-950/75 border border-black/10 dark:border-white/10 p-3 sm:p-4 shadow-[0_14px_40px_rgba(0,0,0,.12)] h-[68svh] overflow-y-auto backdrop-blur-sm transition-colors">
             <div className="space-y-2.5">
               {projects.map((p, i) => {
                 const isActive = i === active;
@@ -156,10 +159,10 @@ export default function Projects() {
                   <button
                     key={p.id}
                     onClick={() => setActive(i)}
-                    className={`group relative w-full flex items-center gap-3 rounded-2xl p-2 border transition ${
+                    className={`group relative w-full flex items-center gap-3 rounded-2xl p-2 border transition-colors ${
                       isActive
-                        ? "border-blue-400 ring-1 ring-blue-300/60 dark:ring-blue-500/40 bg-blue-50/60 dark:bg-blue-500/10"
-                        : "border-black/5 dark:border-white/10 bg-white dark:bg-neutral-900"
+                        ? 'border-blue-400 ring-1 ring-blue-300/60 dark:ring-blue-500/40 bg-blue-50/80 dark:bg-blue-500/10'
+                        : 'border-black/10 dark:border-white/10 bg-white/90 dark:bg-neutral-900/60'
                     }`}
                   >
                     <div className="relative h-8 w-8 rounded-lg overflow-hidden bg-neutral-200 shrink-0">
@@ -167,10 +170,10 @@ export default function Projects() {
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-[12px] sm:text-[13px] font-semibold truncate">{p.title}</p>
-                      <p className="text-[10px] opacity-70">#{String(i + 1).padStart(2, "0")}</p>
+                      <p className="text-[10px] opacity-70">#{String(i + 1).padStart(2, '0')}</p>
                     </div>
                     <span className="text-[10px] font-semibold opacity-60">
-                      ({String(i + 1).padStart(2, "0")})
+                      ({String(i + 1).padStart(2, '0')})
                     </span>
                   </button>
                 );

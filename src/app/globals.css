@@ -2,12 +2,36 @@
 
 @layer base {
   :root {
+    color-scheme: light;
+
+  
     --page-bg: #F4F1EB;
     --page-fg: #111827;
+
+    --card-bg: #ffffff;
+    --card-foreground: #111827;
+    --card-border: rgba(0, 0, 0, 0.10);
+
+    --glass-bg: rgba(255, 255, 255, 0.65);
+
+    --pill-left: #102535;
+    --pill-right: #EFE6D2;
   }
+
   .dark {
+    color-scheme: dark;
+
     --page-bg: #0A0A0A;
-    --page-fg: #FFFFFF;
+    --page-fg: #ffffff;
+
+    --card-bg: rgba(17, 24, 39, 0.72);
+    --card-foreground: #ffffff;
+    --card-border: rgba(255, 255, 255, 0.10);
+
+    --glass-bg: rgba(255, 255, 255, 0.08);
+
+    --pill-left: #0B2837;
+    --pill-right: rgba(255, 255, 255, 0.08);
   }
 
   html, body { min-height: 100%; }
