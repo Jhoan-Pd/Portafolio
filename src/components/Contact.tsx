@@ -51,7 +51,7 @@ export default function Contact() {
   return (
     <section
       id="contact"
-      className="py-16 sm:py-20 px-4 sm:px-6 flex flex-col items-center bg-[var(--page-bg)] text-[var(--page-fg)] transition-colors"
+      className="py-16 sm:py-20 px-4 sm:px-6 flex flex-col items-center theme-page transition-colors"
       aria-labelledby="contact-title"
     >
       <motion.h2
@@ -83,7 +83,7 @@ export default function Contact() {
 
       <motion.form
         onSubmit={handleSubmit}
-        className="w-full max-w-md bg-white text-neutral-900 dark:bg-neutral-950 dark:text-white shadow-lg rounded-2xl p-6 sm:p-8 flex flex-col gap-4 border border-black/10 dark:border-white/10 transition-colors"
+        className="w-full max-w-md border theme-card shadow-lg rounded-2xl p-6 sm:p-8 flex flex-col gap-4 transition-colors"
         initial={prefersReduced ? false : { opacity: 0, y: 20 }}
         animate={prefersReduced ? {} : { opacity: 1, y: 0 }}
         transition={{ delay: 0.4, duration: 0.6 }}

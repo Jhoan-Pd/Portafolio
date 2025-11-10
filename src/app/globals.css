@@ -44,3 +44,26 @@
     -moz-osx-font-smoothing: grayscale;
   }
 }
+
+@layer components {
+  .theme-page {
+    background-color: var(--page-bg);
+    color: var(--page-fg);
+  }
+
+  .theme-card {
+    background-color: var(--card-bg);
+    color: var(--card-foreground);
+    border-color: var(--card-border);
+  }
+
+  .theme-glass {
+    background-color: var(--glass-bg);
+    color: var(--card-foreground);
+  }
+
+  .theme-pill {
+    background-image: linear-gradient(120deg, var(--pill-left), var(--pill-right));
+    color: var(--card-foreground);
+  }
+}

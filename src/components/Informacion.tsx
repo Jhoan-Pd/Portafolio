@@ -26,7 +26,7 @@ export default function Informacion() {
 
   if (infoBlocks.length === 0) {
     return (
-      <section className="w-full min-h-[40svh] grid place-items-center text-gray-500 dark:text-gray-400 bg-[var(--page-bg)]">
+      <section className="w-full min-h-[40svh] grid place-items-center text-gray-500 dark:text-gray-400 theme-page">
         Cargando información...
       </section>
     );
@@ -41,7 +41,7 @@ export default function Informacion() {
   return (
     <section
       id="sobre-mi"
-      className="w-full py-14 sm:py-20 bg-[var(--page-bg)] text-[var(--page-fg)] transition-colors"
+      className="w-full py-14 sm:py-20 theme-page transition-colors"
       aria-labelledby="sobre-mi-title"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -62,10 +62,8 @@ export default function Informacion() {
               transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
               whileHover={{ scale: 1.02 }}
               className={`rounded-2xl p-6 sm:p-8 min-h-[200px] flex flex-col items-center justify-center text-center
-                          bg-white text-neutral-900
-                          border border-black/10
+                          border theme-card
                           shadow-[0_14px_40px_rgba(0,0,0,.12)]
-                          dark:bg-neutral-950 dark:text-white dark:border-white/10
                           transition-colors ${spanClass(block.span)}`}
             >
               {block.icon ? (

@@ -12,7 +12,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="es" suppressHydrationWarning>
       <body>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          <div className="min-h-screen bg-[var(--page-bg)] text-[var(--page-fg)] transition-colors duration-300">
+          <div className="min-h-screen theme-page transition-colors duration-300">
             {children}
           </div>
         </ThemeProvider>
