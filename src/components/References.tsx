@@ -86,7 +86,7 @@ const FlipCard: React.FC<FlipCardProps> = ({ refData, rotation }) => {
         animate={{ rotateY: flipped && !prefersReduced ? 180 : 0 }}
         transition={{ duration: prefersReduced ? 0 : 0.7, ease: 'easeInOut' }}
       >
-        {/* Frente: blanco en light, oscuro en dark */}
+        {/* Frente */}
         <div
           className="
             absolute inset-0 flex flex-col justify-center items-center
@@ -109,7 +109,7 @@ const FlipCard: React.FC<FlipCardProps> = ({ refData, rotation }) => {
           <p className="text-xs sm:text-sm font-medium opacity-80">{refData.profesion}</p>
         </div>
 
-        {/* Reverso: claro en light, más oscuro en dark */}
+        {/* Reverso */}
         <div
           className="
             absolute inset-0 flex items-center justify-center rounded-3xl px-5 sm:px-6 text-center

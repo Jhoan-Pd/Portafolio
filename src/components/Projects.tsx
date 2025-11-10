@@ -65,6 +65,7 @@ export default function Projects() {
     };
   };
 
+  // ✅ Nos quedamos con este efecto de la IA
   useEffect(() => {
     setActive(0);
   }, [projects]);
