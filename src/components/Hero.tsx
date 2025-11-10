@@ -2,37 +2,13 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
 import ThemeToggle from '@/components/ThemeToggle';
-
-type HeroData = {
-  backgroundImage: string;
-  quote: string;
-  highlight?: string;
-  intro: string;
-  cvLink: string;
-  cvLabel?: string;
-  author: { firstName: string; lastName: string; photo: string; badge: string };
-  icons: { language: string; menu: string };
-};
+import LanguageToggle from '@/components/LanguageToggle';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function Hero() {
-  const [hero, setHero] = useState<HeroData | null>(null);
-
-  useEffect(() => {
-    fetch('/data/data.json')
-      .then((r) => r.json())
-      .then((d) => setHero(d.hero as HeroData))
-      .catch((e) => console.error('Error cargando Hero data:', e));
-  }, []);
-
-  if (!hero) {
-    return (
-      <section className="h-[60svh] min-h-[420px] grid place-items-center text-neutral-400">
-        Cargando información…
-      </section>
-    );
-  }
+  const { content } = useLanguage();
+  const hero = content.hero;
 
   const rounded = 140;
 
@@ -57,13 +33,8 @@ export default function Hero() {
         aria-label="Barra de acciones"
       >
         <div className="flex items-center justify-between gap-3 sm:gap-4">
-          {/* Pastilla izquierda (autor) — CLARA en light / OSCURA en dark */}
           <div
-            className="
-              pointer-events-auto flex items-center gap-3 sm:gap-4 rounded-2xl
-              px-4 sm:px-5 py-2.5 sm:py-3 shadow-lg backdrop-blur-sm
-              border theme-card transition-colors
-            "
+            className="pointer-events-auto flex items-center gap-3 sm:gap-4 rounded-2xl border theme-card px-4 sm:px-5 py-2.5 sm:py-3 shadow-lg backdrop-blur-sm transition-colors"
           >
             <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full overflow-hidden bg-slate-200 ring-2 ring-black/10 dark:ring-white/10 shrink-0">
               <Image
@@ -84,43 +55,11 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Pastilla derecha (acciones) — CLARA en light / OSCURA en dark */}
           <div
-            className="
-              pointer-events-auto flex items-center gap-2 sm:gap-3 rounded-2xl
-              px-2.5 sm:px-3 py-2 shadow-lg backdrop-blur-sm
-              border theme-card transition-colors
-            "
+            className="pointer-events-auto flex items-center gap-2 sm:gap-3 rounded-2xl border theme-card px-2.5 sm:px-3 py-2 shadow-lg backdrop-blur-sm transition-colors"
           >
-            <button
-              onClick={() => {}}
-              className="
-                inline-flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center
-                rounded-xl bg-neutral-100 text-neutral-900 shadow hover:bg-neutral-200 transition
-                dark:bg-neutral-800 dark:text-white dark:hover:bg-neutral-700
-              "
-              aria-label="Cambiar idioma"
-              title="Idioma"
-            >
-              <Image src={hero.icons.language} alt="language" width={22} height={22} />
-            </button>
-
-            <div className="h-9 w-9 sm:h-10 sm:w-10 grid place-items-center">
-              <ThemeToggle />
-            </div>
-
-            <button
-              onClick={() => {}}
-              className="
-                inline-flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center
-                rounded-xl bg-neutral-100 text-neutral-900 shadow hover:bg-neutral-200 transition
-                dark:bg-neutral-800 dark:text-white dark:hover:bg-neutral-700
-              "
-              aria-label="Menú"
-              title="Menú"
-            >
-              <Image src={hero.icons.menu} alt="menu" width={22} height={22} />
-            </button>
+            <LanguageToggle />
+            <ThemeToggle />
           </div>
         </div>
       </nav>

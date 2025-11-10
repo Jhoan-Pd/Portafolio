@@ -1,42 +1,16 @@
 'use client';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import Image from 'next/image';
 import { motion, useAnimationControls } from 'framer-motion';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 type Lang = { name: string; icon: string };
 
 export default function Lenguajes() {
-  const [items, setItems] = useState<Lang[]>([]);
+  const { content } = useLanguage();
+  const items = content.languages.items as Lang[];
   const controls = useAnimationControls();
   const mounted = useRef(false);
-
-  useEffect(() => {
-    fetch('/data/data.json')
-      .then((r) => r.json())
-      .then((d) => {
-        const fromJson: Lang[] = d?.lenguajes ?? [];
-        setItems(
-          fromJson.length
-            ? fromJson
-            : [
-                { name: 'C#', icon: '/codigo.png' },
-                { name: 'JavaScript', icon: '/Javascript.gif' },
-                { name: 'MySQL', icon: '/Mysql.png' },
-                { name: 'Python', icon: '/Python.gif' },
-                { name: 'Java', icon: '/JavaCoffeeCup.gif' },
-              ],
-        );
-      })
-      .catch(() => {
-        setItems([
-          { name: 'C#', icon: '/codigo.png' },
-          { name: 'JavaScript', icon: '/Javascript.gif' },
-          { name: 'MySQL', icon: '/Mysql.png' },
-          { name: 'Python', icon: '/Python.gif' },
-          { name: 'Java', icon: '/JavaCoffeeCup.gif' },
-        ]);
-      });
-  }, []);
 
   const track = useMemo(() => [...items, ...items], [items]);
 
@@ -91,18 +65,10 @@ export default function Lenguajes() {
     };
   }, [controls, items.length]);
 
-  if (!items.length) {
-    return (
-      <section className="w-full min-h-[30svh] grid place-items-center text-gray-500 dark:text-gray-400 theme-page">
-        Cargando lenguajes...
-      </section>
-    );
-  }
-
   return (
     <section id="lenguajes" className="space-y-6 py-10 theme-page transition-colors">
       <h2 className="text-center text-2xl sm:text-3xl font-bold italic tracking-wide">
-        LENGUAJES TRABAJADOS
+        {content.languages.title.toUpperCase()}
       </h2>
 
       <div className="relative overflow-hidden">
