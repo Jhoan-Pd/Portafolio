@@ -1,37 +1,23 @@
 // src/components/Contact.tsx
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Mail, Send, Linkedin, Github, Check } from 'lucide-react';
-
-type ContactJson = {
-  titulo?: string;
-  descripcion?: string;
-  correo?: string;
-  redes?: { github?: string; linkedin?: string; email?: string };
-};
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function Contact() {
+  const { content } = useLanguage();
+  const copy = content.contact;
   const [formData, setFormData] = useState({ name: '', email: '', message: '', hp: '' }); // hp = honeypot
-  const [copy, setCopy] = useState<ContactJson | null>(null);
   const [sent, setSent] = useState<null | 'ok' | 'error'>(null);
   const prefersReduced = useReducedMotion();
 
-  useEffect(() => {
-    fetch('/data/data.json')
-      .then((r) => r.json())
-      .then((d) => setCopy(d?.contacto ?? null))
-      .catch(() => setCopy(null));
-  }, []);
-
-  const title = copy?.titulo ?? 'Contacto';
-  const desc =
-    copy?.descripcion ??
-    'Si tienes un proyecto o quieres colaborar, completa el formulario o envíame un correo.';
-  const gh = copy?.redes?.github ?? 'https://github.com/tuusuario';
-  const ln = copy?.redes?.linkedin ?? 'https://linkedin.com/in/tuusuario';
-  const em = copy?.redes?.email ?? `mailto:${copy?.correo ?? 'tuemail@ejemplo.com'}`;
+  const title = copy.title;
+  const desc = copy.description;
+  const gh = copy.social.github;
+  const ln = copy.social.linkedin;
+  const em = copy.social.email ?? `mailto:${copy.email}`;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     setFormData((s) => ({ ...s, [e.target.name]: e.target.value }));
@@ -40,7 +26,7 @@ export default function Contact() {
     e.preventDefault();
     if (formData.hp) return; // bots out
     if (!formData.name || !formData.email || !formData.message) {
-      alert('Completa todos los campos.');
+      alert(copy.form.validationError);
       return;
     }
     // Aquí enviarías a tu backend/servicio. Por ahora simulamos éxito:
@@ -77,7 +63,7 @@ export default function Contact() {
       {sent === 'ok' && (
         <div className="mb-4 inline-flex items-center gap-2 rounded-lg px-3 py-2 bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-200">
           <Check size={18} />
-          <span>¡Gracias! Tu mensaje fue enviado.</span>
+          <span>{copy.form.success}</span>
         </div>
       )}
 
@@ -99,12 +85,12 @@ export default function Contact() {
           autoComplete="off"
         />
 
-        <label className="sr-only" htmlFor="name">Nombre</label>
+        <label className="sr-only" htmlFor="name">{copy.form.nameLabel}</label>
         <input
           id="name"
           type="text"
           name="name"
-          placeholder="Tu nombre"
+          placeholder={copy.form.namePlaceholder}
           value={formData.name}
           onChange={handleChange}
           autoComplete="name"
@@ -112,12 +98,12 @@ export default function Contact() {
           required
         />
 
-        <label className="sr-only" htmlFor="email">Correo</label>
+        <label className="sr-only" htmlFor="email">{copy.form.emailLabel}</label>
         <input
           id="email"
           type="email"
           name="email"
-          placeholder="Tu correo"
+          placeholder={copy.form.emailPlaceholder}
           value={formData.email}
           onChange={handleChange}
           autoComplete="email"
@@ -125,11 +111,11 @@ export default function Contact() {
           required
         />
 
-        <label className="sr-only" htmlFor="message">Mensaje</label>
+        <label className="sr-only" htmlFor="message">{copy.form.messageLabel}</label>
         <textarea
           id="message"
           name="message"
-          placeholder="Tu mensaje"
+          placeholder={copy.form.messagePlaceholder}
           value={formData.message}
           onChange={handleChange}
           rows={4}
@@ -141,7 +127,7 @@ export default function Contact() {
           type="submit"
           className="inline-flex items-center justify-center gap-2 rounded-lg px-6 py-3 bg-blue-600 text-white hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-neutral-950 transition"
         >
-          <Send size={18} /> Enviar
+          <Send size={18} /> {copy.form.submit}
         </button>
       </motion.form>
 

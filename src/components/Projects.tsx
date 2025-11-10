@@ -2,6 +2,7 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
 import Image from 'next/image';
 import { motion, cubicBezier } from 'framer-motion';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface Project {
   id: number;
@@ -11,16 +12,11 @@ interface Project {
 }
 
 export default function Projects() {
-  const [projects, setProjects] = useState<Project[]>([]);
+  const { content } = useLanguage();
+  const projects = content.projects.items as Project[];
+  const defaultDescription = content.projects.defaultDescription;
   const [active, setActive] = useState(0);
   const sectionRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    fetch('/data/data.json')
-      .then((r) => r.json())
-      .then((d) => setProjects(d.projects || []))
-      .catch((e) => console.error('Error cargando proyectos:', e));
-  }, []);
 
   useEffect(() => {
     if (!projects.length) return;
@@ -69,19 +65,16 @@ export default function Projects() {
     };
   };
 
-  if (!projects.length) {
-    return (
-      <section className="w-full min-h-[60svh] grid place-items-center text-gray-500 dark:text-gray-400 theme-page">
-        Cargando proyectos...
-      </section>
-    );
-  }
+  // ✅ Nos quedamos con este efecto de la IA
+  useEffect(() => {
+    setActive(0);
+  }, [projects]);
 
   return (
     <section ref={sectionRef} className="w-full theme-page transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
         <h2 className="text-center text-3xl sm:text-4xl font-bold italic tracking-wide mb-6 sm:mb-8">
-          MIS PROYECTOS
+          {content.projects.title.toUpperCase()}
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-[1fr_260px] lg:grid-cols-[1fr_300px] gap-6 sm:gap-8">
@@ -151,7 +144,7 @@ export default function Projects() {
                     <div className="flex-1 min-w-0">
                       <p className="text-[13px] sm:text-[14px] font-semibold truncate">{p.title}</p>
                       <p className="mt-0.5 text-[11px] sm:text-[12px] text-neutral-600 dark:text-neutral-300 line-clamp-2">
-                        {p.description ?? 'Breve descripción del proyecto, tecnologías y objetivo.'}
+                        {p.description ?? defaultDescription}
                       </p>
                     </div>
                     <span className="ml-2 text-[10px] font-semibold opacity-60 shrink-0">
