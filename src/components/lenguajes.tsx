@@ -1,42 +1,16 @@
 'use client';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import Image from 'next/image';
 import { motion, useAnimationControls } from 'framer-motion';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 type Lang = { name: string; icon: string };
 
 export default function Lenguajes() {
-  const [items, setItems] = useState<Lang[]>([]);
+  const { content } = useLanguage();
+  const items = content.languages.items as Lang[];
   const controls = useAnimationControls();
   const mounted = useRef(false);
-
-  useEffect(() => {
-    fetch('/data/data.json')
-      .then((r) => r.json())
-      .then((d) => {
-        const fromJson: Lang[] = d?.lenguajes ?? [];
-        setItems(
-          fromJson.length
-            ? fromJson
-            : [
-                { name: 'C#', icon: '/codigo.png' },
-                { name: 'JavaScript', icon: '/Javascript.gif' },
-                { name: 'MySQL', icon: '/Mysql.png' },
-                { name: 'Python', icon: '/Python.gif' },
-                { name: 'Java', icon: '/JavaCoffeeCup.gif' },
-              ],
-        );
-      })
-      .catch(() => {
-        setItems([
-          { name: 'C#', icon: '/codigo.png' },
-          { name: 'JavaScript', icon: '/Javascript.gif' },
-          { name: 'MySQL', icon: '/Mysql.png' },
-          { name: 'Python', icon: '/Python.gif' },
-          { name: 'Java', icon: '/JavaCoffeeCup.gif' },
-        ]);
-      });
-  }, []);
 
   const track = useMemo(() => [...items, ...items], [items]);
 
@@ -91,18 +65,10 @@ export default function Lenguajes() {
     };
   }, [controls, items.length]);
 
-  if (!items.length) {
-    return (
-      <section className="w-full min-h-[30svh] grid place-items-center text-gray-500 dark:text-gray-400 bg-[var(--page-bg)]">
-        Cargando lenguajes...
-      </section>
-    );
-  }
-
   return (
-    <section id="lenguajes" className="space-y-6 py-10 bg-[var(--page-bg)] text-[var(--page-fg)] transition-colors">
+    <section id="lenguajes" className="space-y-6 py-10 theme-page transition-colors">
       <h2 className="text-center text-2xl sm:text-3xl font-bold italic tracking-wide">
-        LENGUAJES TRABAJADOS
+        {content.languages.title.toUpperCase()}
       </h2>
 
       <div className="relative overflow-hidden">
@@ -124,9 +90,9 @@ function Card({ name, icon }: Lang) {
   return (
     <div className="shrink-0">
       {/* Pastilla exterior */}
-      <div className="rounded-[26px] bg-[#2A3340] dark:bg-[#0B2837] p-3 sm:p-4 shadow-xl w-[200px] sm:w-[220px] md:w-[240px] transition-colors">
+      <div className="rounded-[26px] theme-pill p-3 sm:p-4 shadow-xl w-[200px] sm:w-[220px] md:w-[240px] transition-colors">
         {/* Panel interior */}
-        <div className="rounded-2xl bg-white dark:bg-neutral-900 p-4 sm:p-5 ring-1 ring-black/10 dark:ring-white/10 transition-colors">
+        <div className="rounded-2xl border theme-card p-4 sm:p-5 ring-1 ring-black/10 dark:ring-white/10 transition-colors">
           <div className="relative aspect-square">
             <Image
               src={icon}

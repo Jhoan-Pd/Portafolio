@@ -1,0 +1,153 @@
+{
+  "nav": {
+    "languageLabel": "Switch language",
+    "themeLabel": "Toggle theme",
+    "languageNames": {
+      "es": "ES",
+      "en": "EN"
+    }
+  },
+  "hero": {
+    "backgroundImage": "/cielo.jpg",
+    "quote": "The secret of happiness is not in doing what you like, but in liking what you do",
+    "highlight": "happiness",
+    "intro": "Software architecture is where I blend creativity with logic. I enjoy designing technological structures and planning each layer of a system as if it were a digital building, caring about every detail so applications grow solidly and deliver real value to the people who use them.",
+    "cvLink": "/cv.pdf",
+    "cvLabel": "Download CV",
+    "author": {
+      "firstName": "Jhoan Alexander",
+      "lastName": "Paredes Delgado",
+      "photo": "/JPD.jpg",
+      "badge": "JPD"
+    }
+  },
+  "information": {
+    "title": "About me",
+    "blocks": [
+      {
+        "id": 1,
+        "type": "metric",
+        "value": "15+",
+        "subtitle": "ACADEMIC PROJECTS"
+      },
+      {
+        "id": 2,
+        "type": "text",
+        "span": 3,
+        "title": "Academic Projects",
+        "description": "Over five projects completed during my studies, applying engineering concepts to practical, functional solutions."
+      },
+      {
+        "id": 3,
+        "type": "metric",
+        "value": "100%",
+        "subtitle": "COMMITMENT AND DEDICATION"
+      },
+      {
+        "id": 4,
+        "type": "text",
+        "span": 2,
+        "title": "Academic Experience",
+        "description": "I have joined seminars and academic activities that strengthen my professional vision, from software architecture to building real applications."
+      },
+      {
+        "id": 5,
+        "type": "icon",
+        "icon": "/visto.png",
+        "subtitle": "SOFTWARE ARCHITECTURE"
+      },
+      {
+        "id": 6,
+        "type": "text",
+        "span": 3,
+        "title": "Work Experience",
+        "description": "I have worked on real projects applying technical knowledge in collaborative environments focused on quality results."
+      },
+      {
+        "id": 7,
+        "type": "icon",
+        "icon": "/codigo.png",
+        "subtitle": "JAVA AND PYTHON DEVELOPMENT"
+      }
+    ]
+  },
+  "projects": {
+    "title": "My projects",
+    "defaultDescription": "Brief overview of the project, its technologies and goal.",
+    "items": [
+      {
+        "id": 1,
+        "title": "Layouts",
+        "image": "/trabajo1.jpg",
+        "description": "Responsive layout systems for modern web applications."
+      },
+      {
+        "id": 2,
+        "title": "Interface design",
+        "image": "/trabajo2.jpg",
+        "description": "User-centered prototypes focused on accessibility."
+      },
+      {
+        "id": 3,
+        "title": "UX/UI design",
+        "image": "/trabajo3.jpg",
+        "description": "Consistent design systems aimed at usability."
+      }
+    ]
+  },
+  "languages": {
+    "title": "Languages I work with",
+    "items": [
+      { "name": "C#", "icon": "/codigo.png" },
+      { "name": "JavaScript", "icon": "/Javascript.gif" },
+      { "name": "MySQL", "icon": "/Mysql.png" },
+      { "name": "Python", "icon": "/Python.gif" },
+      { "name": "Java", "icon": "/JavaCoffeeCup.gif" }
+    ]
+  },
+  "testimonials": {
+    "title": "Testimonials",
+    "empty": "No testimonials available.",
+    "items": [
+      {
+        "imagen": "/persona1.jpg",
+        "nombre": "Paul Frias",
+        "profesion": "Systems Engineer",
+        "mensaje": "Working with Jhoan was an enriching experience. His focus and creativity made the difference."
+      },
+      {
+        "imagen": "/persona2.jpg",
+        "nombre": "Jaime Acosta",
+        "profesion": "Systems Engineer",
+        "mensaje": "His commitment and passion for technology make every project a success."
+      },
+      {
+        "imagen": "/persona3.jpg",
+        "nombre": "María López",
+        "profesion": "Project Manager",
+        "mensaje": "Jhoan shows great professionalism and skill in solving complex problems."
+      }
+    ]
+  },
+  "contact": {
+    "title": "Contact",
+    "description": "If you have a project or want to collaborate, fill out the form or send me an email.",
+    "email": "tuemail@ejemplo.com",
+    "social": {
+      "github": "https://github.com/tuusuario",
+      "linkedin": "https://linkedin.com/in/tuusuario",
+      "email": "mailto:tuemail@ejemplo.com"
+    },
+    "form": {
+      "nameLabel": "Name",
+      "emailLabel": "Email",
+      "messageLabel": "Message",
+      "namePlaceholder": "Your name",
+      "emailPlaceholder": "Your email",
+      "messagePlaceholder": "Your message",
+      "submit": "Send",
+      "success": "Thanks! Your message was sent.",
+      "validationError": "Please complete every field."
+    }
+  }
+}
