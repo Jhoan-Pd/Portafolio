@@ -1,19 +1,16 @@
 'use client';
+
 import { useEffect, useMemo, useRef } from 'react';
 import Image from 'next/image';
 import { motion, useAnimationControls } from 'framer-motion';
 import { usePortfolioSection, type LanguageItem } from '@/hooks/usePortfolioSection';
 import { useLanguage } from '@/contexts/LanguageContext';
 
-type Lang = { name: string; icon: string };
-
-export default function Lenguajes() {
+export default function Languages() {
   const languages = usePortfolioSection('languages');
   const { language } = useLanguage();
   const rawItems = languages?.items as LanguageItem[] | undefined;
   const items = useMemo(() => rawItems ?? [], [rawItems]);
-  const { content } = useLanguage();
-  const items = content.languages.items as Lang[];
   const controls = useAnimationControls();
   const mounted = useRef(false);
 
@@ -70,21 +67,19 @@ export default function Lenguajes() {
     };
   }, [controls, items.length]);
 
+  const title = languages?.title?.toUpperCase() ?? (language === 'es' ? 'LENGUAJES' : 'LANGUAGES');
+
   return (
-    <section id="lenguajes" className="space-y-6 py-10 theme-page transition-colors">
-      <h2 className="text-center text-2xl sm:text-3xl font-bold italic tracking-wide">
-        {languages?.title?.toUpperCase() ?? (language === 'es' ? 'LENGUAJES' : 'LANGUAGES')}
-        {content.languages.title.toUpperCase()}
-      </h2>
+    <section id="languages" className="space-y-6 py-10 theme-page transition-colors">
+      <h2 className="text-center text-2xl sm:text-3xl font-bold italic tracking-wide">{title}</h2>
 
       <div className="relative overflow-hidden">
         <motion.div className="flex gap-6 sm:gap-8 w-[200%] will-change-transform" animate={controls}>
           {track.map((lang, i) => (
-            <Card key={`${lang.name}-${i}`} {...lang} />
+            <Card key={`${lang.name}-${i}`} name={lang.name} icon={lang.icon} />
           ))}
         </motion.div>
 
-        {/* Fades laterales que “se mezclan” con el fondo actual */}
         <div className="pointer-events-none absolute inset-y-0 left-0 w-12 sm:w-20 md:w-28 bg-gradient-to-r from-[var(--page-bg)] to-transparent" />
         <div className="pointer-events-none absolute inset-y-0 right-0 w-12 sm:w-20 md:w-28 bg-gradient-to-l from-[var(--page-bg)] to-transparent" />
       </div>
@@ -92,12 +87,10 @@ export default function Lenguajes() {
   );
 }
 
-function Card({ name, icon }: Lang) {
+function Card({ name, icon }: LanguageItem) {
   return (
     <div className="shrink-0">
-      {/* Pastilla exterior */}
       <div className="rounded-[26px] theme-pill p-3 sm:p-4 shadow-xl w-[200px] sm:w-[220px] md:w-[240px] transition-colors">
-        {/* Panel interior */}
         <div className="rounded-2xl border theme-card p-4 sm:p-5 ring-1 ring-black/10 dark:ring-white/10 transition-colors">
           <div className="relative aspect-square">
             <Image
@@ -106,7 +99,6 @@ function Card({ name, icon }: Lang) {
               fill
               sizes="(min-width:1024px) 240px, (min-width:640px) 220px, 200px"
               className="object-contain"
-              priority={false}
             />
           </div>
         </div>

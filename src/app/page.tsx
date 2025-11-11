@@ -4,7 +4,7 @@ import Projects from "@/components/Projects";
 import Informacion from "@/components/Informacion";
 import References from "@/components/References";
 import Contact from "@/components/Contact";
-import Lenguajes from "@/components/lenguajes";
+import Languages from "@/components/Languages";
 
 export default function Home() {
   return (
@@ -12,7 +12,7 @@ export default function Home() {
       <Hero />
       <Projects />
       <Informacion />
-      <Lenguajes />
+      <Languages />
       <References />
       <Contact />
     </main>
