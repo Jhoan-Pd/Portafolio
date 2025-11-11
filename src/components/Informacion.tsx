@@ -1,36 +1,14 @@
 'use client';
-import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-
-interface InfoBlock {
-  id: number;
-  type: string;
-  title?: string;
-  value?: string;
-  subtitle?: string;
-  description?: string;
-  icon?: string;
-  span?: number;
-}
+import { usePortfolioSection } from '@/hooks/usePortfolioSection';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function Informacion() {
-  const [infoBlocks, setInfoBlocks] = useState<InfoBlock[]>([]);
-
-  useEffect(() => {
-    fetch('/data/data.json')
-      .then((res) => res.json())
-      .then((data) => setInfoBlocks(data.informacion || []))
-      .catch((err) => console.error('Error cargando información:', err));
-  }, []);
-
-  if (infoBlocks.length === 0) {
-    return (
-      <section className="w-full min-h-[40svh] grid place-items-center text-gray-500 dark:text-gray-400 bg-[var(--page-bg)]">
-        Cargando información...
-      </section>
-    );
-  }
+  const information = usePortfolioSection('information');
+  const { language } = useLanguage();
+  const infoBlocks = information?.blocks ?? [];
+  const title = information?.title ?? (language === 'es' ? 'Sobre mí' : 'About me');
 
   const spanClass = (n?: number) =>
     n === 4 ? 'md:col-span-4'
@@ -41,7 +19,7 @@ export default function Informacion() {
   return (
     <section
       id="sobre-mi"
-      className="w-full py-14 sm:py-20 bg-[var(--page-bg)] text-[var(--page-fg)] transition-colors"
+      className="w-full py-14 sm:py-20 theme-page transition-colors"
       aria-labelledby="sobre-mi-title"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -49,7 +27,7 @@ export default function Informacion() {
           id="sobre-mi-title"
           className="text-center text-3xl sm:text-4xl font-bold tracking-wider mb-10 sm:mb-12"
         >
-          SOBRE MI
+          {title.toUpperCase()}
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-5 sm:gap-6 lg:gap-8">
@@ -62,10 +40,8 @@ export default function Informacion() {
               transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
               whileHover={{ scale: 1.02 }}
               className={`rounded-2xl p-6 sm:p-8 min-h-[200px] flex flex-col items-center justify-center text-center
-                          bg-white text-neutral-900
-                          border border-black/10
+                          border theme-card
                           shadow-[0_14px_40px_rgba(0,0,0,.12)]
-                          dark:bg-neutral-950 dark:text-white dark:border-white/10
                           transition-colors ${spanClass(block.span)}`}
             >
               {block.icon ? (

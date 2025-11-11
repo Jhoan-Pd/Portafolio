@@ -1,44 +1,22 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import Image from 'next/image';
-
-interface Testimonio {
-  imagen: string;
-  nombre: string;
-  profesion: string;
-  mensaje: string;
-}
+import { useLanguage } from '@/contexts/LanguageContext';
+import { usePortfolioSection, type Testimonial } from '@/hooks/usePortfolioSection';
 
 const References: React.FC = () => {
-  const [referencias, setReferencias] = useState<Testimonio[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetch('/data/data.json')
-      .then((res) => res.json())
-      .then((data) => {
-        setReferencias(Array.isArray(data.testimonios) ? data.testimonios : []);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error('Error cargando testimonios:', error);
-        setLoading(false);
-      });
-  }, []);
-
-  if (loading) {
-    return (
-      <section className="py-16 sm:py-20 grid place-items-center text-gray-500 dark:text-gray-400 bg-[var(--page-bg)]">
-        Cargando testimonios...
-      </section>
-    );
-  }
+  const { language } = useLanguage();
+  const testimonials = usePortfolioSection('testimonials');
+  const referencias = (testimonials?.items as Testimonial[]) ?? [];
+  const title = testimonials?.title ?? (language === 'es' ? 'Testimonios' : 'Testimonials');
+  const emptyLabel = testimonials?.empty ?? (language === 'es' ? 'No hay testimonios disponibles.' : 'No testimonials available.');
+  const ariaPrefix = language === 'es' ? 'Testimonio de' : 'Testimonial from';
 
   return (
-    <section className="relative overflow-hidden py-14 sm:py-20 px-4 sm:px-6 bg-[var(--page-bg)] text-[var(--page-fg)] transition-colors">
+    <section className="relative overflow-hidden py-14 sm:py-20 px-4 sm:px-6 theme-page transition-colors">
       <h2 className="text-3xl sm:text-4xl font-bold text-center mb-10 sm:mb-16 italic tracking-wide">
-        TESTIMONIOS
+        {title.toUpperCase()}
       </h2>
 
       {referencias.length > 0 ? (
@@ -52,13 +30,14 @@ const References: React.FC = () => {
                 refData={ref}
                 rotation={rotation}
                 isEven={isEven}
+                ariaPrefix={ariaPrefix}
               />
             );
           })}
         </div>
       ) : (
         <p className="text-center text-gray-500 dark:text-gray-400 mt-8">
-          No hay testimonios disponibles.
+          {emptyLabel}
         </p>
       )}
     </section>
@@ -66,12 +45,13 @@ const References: React.FC = () => {
 };
 
 interface FlipCardProps {
-  refData: Testimonio;
+  refData: Testimonial;
   rotation: string;
   isEven: boolean;
+  ariaPrefix: string;
 }
 
-const FlipCard: React.FC<FlipCardProps> = ({ refData, rotation }) => {
+const FlipCard: React.FC<FlipCardProps> = ({ refData, rotation, ariaPrefix }) => {
   const [flipped, setFlipped] = useState(false);
   const prefersReduced = useReducedMotion();
 
@@ -95,7 +75,7 @@ const FlipCard: React.FC<FlipCardProps> = ({ refData, rotation }) => {
       role="button"
       tabIndex={0}
       aria-pressed={flipped}
-      aria-label={`Testimonio de ${refData.nombre}`}
+      aria-label={`${ariaPrefix} ${refData.nombre}`}
       onKeyDown={onKey}
     >
       <motion.div
@@ -108,9 +88,7 @@ const FlipCard: React.FC<FlipCardProps> = ({ refData, rotation }) => {
         <div
           className="
             absolute inset-0 flex flex-col justify-center items-center
-            rounded-3xl border bg-white text-neutral-900
-            border-black/10
-            dark:bg-neutral-950 dark:text-white dark:border-white/10
+            rounded-3xl border theme-card
             transition-colors
           "
           style={{ backfaceVisibility: 'hidden' }}
@@ -133,9 +111,7 @@ const FlipCard: React.FC<FlipCardProps> = ({ refData, rotation }) => {
         <div
           className="
             absolute inset-0 flex items-center justify-center rounded-3xl px-5 sm:px-6 text-center
-            bg-neutral-50 text-neutral-900 border border-black/10
-            dark:bg-neutral-900 dark:text-white dark:border-white/10
-            transition-colors
+            border theme-card transition-colors
           "
           style={{ transform: 'rotateY(180deg)', backfaceVisibility: 'hidden' }}
         >

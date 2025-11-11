@@ -1,37 +1,41 @@
 // src/components/Contact.tsx
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Mail, Send, Linkedin, Github, Check } from 'lucide-react';
-
-type ContactJson = {
-  titulo?: string;
-  descripcion?: string;
-  correo?: string;
-  redes?: { github?: string; linkedin?: string; email?: string };
-};
+import { usePortfolioSection, type ContactCopy } from '@/hooks/usePortfolioSection';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function Contact() {
+  const contact = usePortfolioSection('contact') as ContactCopy | null;
+  const { language } = useLanguage();
   const [formData, setFormData] = useState({ name: '', email: '', message: '', hp: '' }); // hp = honeypot
-  const [copy, setCopy] = useState<ContactJson | null>(null);
   const [sent, setSent] = useState<null | 'ok' | 'error'>(null);
   const prefersReduced = useReducedMotion();
 
-  useEffect(() => {
-    fetch('/data/data.json')
-      .then((r) => r.json())
-      .then((d) => setCopy(d?.contacto ?? null))
-      .catch(() => setCopy(null));
-  }, []);
+  const title = contact?.titulo ?? contact?.title ?? (language === 'es' ? 'Contacto' : 'Contact');
+  const desc = contact?.descripcion ?? contact?.description ??
+    (language === 'es'
+      ? 'Si tienes un proyecto o quieres colaborar, completa el formulario o envíame un correo.'
+      : 'If you have a project or want to collaborate, fill out the form or send me an email.');
 
-  const title = copy?.titulo ?? 'Contacto';
-  const desc =
-    copy?.descripcion ??
-    'Si tienes un proyecto o quieres colaborar, completa el formulario o envíame un correo.';
-  const gh = copy?.redes?.github ?? 'https://github.com/tuusuario';
-  const ln = copy?.redes?.linkedin ?? 'https://linkedin.com/in/tuusuario';
-  const em = copy?.redes?.email ?? `mailto:${copy?.correo ?? 'tuemail@ejemplo.com'}`;
+  const social = contact?.redes ?? contact?.social ?? {};
+  const gh = social.github ?? 'https://github.com/tuusuario';
+  const ln = social.linkedin ?? 'https://linkedin.com/in/tuusuario';
+  const em = social.email ?? `mailto:${contact?.correo ?? contact?.email ?? 'tuemail@ejemplo.com'}`;
+
+  const formCopy = contact?.form ?? {
+    nameLabel: language === 'es' ? 'Nombre' : 'Name',
+    emailLabel: language === 'es' ? 'Correo' : 'Email',
+    messageLabel: language === 'es' ? 'Mensaje' : 'Message',
+    namePlaceholder: language === 'es' ? 'Tu nombre' : 'Your name',
+    emailPlaceholder: language === 'es' ? 'Tu correo' : 'Your email',
+    messagePlaceholder: language === 'es' ? 'Tu mensaje' : 'Your message',
+    submit: language === 'es' ? 'Enviar' : 'Send',
+    success: language === 'es' ? '¡Gracias! Tu mensaje fue enviado.' : 'Thanks! Your message was sent.',
+    validationError: language === 'es' ? 'Completa todos los campos.' : 'Please complete every field.',
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     setFormData((s) => ({ ...s, [e.target.name]: e.target.value }));
@@ -40,7 +44,7 @@ export default function Contact() {
     e.preventDefault();
     if (formData.hp) return; // bots out
     if (!formData.name || !formData.email || !formData.message) {
-      alert('Completa todos los campos.');
+      alert(formCopy.validationError);
       return;
     }
     // Aquí enviarías a tu backend/servicio. Por ahora simulamos éxito:
@@ -51,7 +55,7 @@ export default function Contact() {
   return (
     <section
       id="contact"
-      className="py-16 sm:py-20 px-4 sm:px-6 flex flex-col items-center bg-[var(--page-bg)] text-[var(--page-fg)] transition-colors"
+      className="py-16 sm:py-20 px-4 sm:px-6 flex flex-col items-center theme-page transition-colors"
       aria-labelledby="contact-title"
     >
       <motion.h2
@@ -77,13 +81,13 @@ export default function Contact() {
       {sent === 'ok' && (
         <div className="mb-4 inline-flex items-center gap-2 rounded-lg px-3 py-2 bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-200">
           <Check size={18} />
-          <span>¡Gracias! Tu mensaje fue enviado.</span>
+          <span>{formCopy.success}</span>
         </div>
       )}
 
       <motion.form
         onSubmit={handleSubmit}
-        className="w-full max-w-md bg-white text-neutral-900 dark:bg-neutral-950 dark:text-white shadow-lg rounded-2xl p-6 sm:p-8 flex flex-col gap-4 border border-black/10 dark:border-white/10 transition-colors"
+        className="w-full max-w-md border theme-card shadow-lg rounded-2xl p-6 sm:p-8 flex flex-col gap-4 transition-colors"
         initial={prefersReduced ? false : { opacity: 0, y: 20 }}
         animate={prefersReduced ? {} : { opacity: 1, y: 0 }}
         transition={{ delay: 0.4, duration: 0.6 }}
@@ -99,12 +103,12 @@ export default function Contact() {
           autoComplete="off"
         />
 
-        <label className="sr-only" htmlFor="name">Nombre</label>
+        <label className="sr-only" htmlFor="name">{formCopy.nameLabel}</label>
         <input
           id="name"
           type="text"
           name="name"
-          placeholder="Tu nombre"
+          placeholder={formCopy.namePlaceholder}
           value={formData.name}
           onChange={handleChange}
           autoComplete="name"
@@ -112,12 +116,12 @@ export default function Contact() {
           required
         />
 
-        <label className="sr-only" htmlFor="email">Correo</label>
+        <label className="sr-only" htmlFor="email">{formCopy.emailLabel}</label>
         <input
           id="email"
           type="email"
           name="email"
-          placeholder="Tu correo"
+          placeholder={formCopy.emailPlaceholder}
           value={formData.email}
           onChange={handleChange}
           autoComplete="email"
@@ -125,11 +129,11 @@ export default function Contact() {
           required
         />
 
-        <label className="sr-only" htmlFor="message">Mensaje</label>
+        <label className="sr-only" htmlFor="message">{formCopy.messageLabel}</label>
         <textarea
           id="message"
           name="message"
-          placeholder="Tu mensaje"
+          placeholder={formCopy.messagePlaceholder}
           value={formData.message}
           onChange={handleChange}
           rows={4}
@@ -141,7 +145,7 @@ export default function Contact() {
           type="submit"
           className="inline-flex items-center justify-center gap-2 rounded-lg px-6 py-3 bg-blue-600 text-white hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-neutral-950 transition"
         >
-          <Send size={18} /> Enviar
+          <Send size={18} /> {formCopy.submit}
         </button>
       </motion.form>
 
@@ -150,7 +154,7 @@ export default function Contact() {
         initial={prefersReduced ? false : { opacity: 0 }}
         animate={prefersReduced ? {} : { opacity: 1 }}
         transition={{ delay: 0.8, duration: 0.6 }}
-        aria-label="Redes"
+        aria-label={language === 'es' ? 'Redes' : 'Social links'}
       >
         <a
           href={gh}
