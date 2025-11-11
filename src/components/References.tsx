@@ -3,6 +3,15 @@ import React, { useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import Image from 'next/image';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { usePortfolioSection, type Testimonial } from '@/hooks/usePortfolioSection';
+
+const References: React.FC = () => {
+  const { language } = useLanguage();
+  const testimonials = usePortfolioSection('testimonials');
+  const referencias = (testimonials?.items as Testimonial[]) ?? [];
+  const title = testimonials?.title ?? (language === 'es' ? 'Testimonios' : 'Testimonials');
+  const emptyLabel = testimonials?.empty ?? (language === 'es' ? 'No hay testimonios disponibles.' : 'No testimonials available.');
+  const ariaPrefix = language === 'es' ? 'Testimonio de' : 'Testimonial from';
 
 interface Testimonio {
   imagen: string;
@@ -34,6 +43,7 @@ const References: React.FC = () => {
                 refData={ref}
                 rotation={rotation}
                 isEven={isEven}
+                ariaPrefix={ariaPrefix}
               />
             );
           })}
@@ -48,12 +58,13 @@ const References: React.FC = () => {
 };
 
 interface FlipCardProps {
-  refData: Testimonio;
+  refData: Testimonial;
   rotation: string;
   isEven: boolean;
+  ariaPrefix: string;
 }
 
-const FlipCard: React.FC<FlipCardProps> = ({ refData, rotation }) => {
+const FlipCard: React.FC<FlipCardProps> = ({ refData, rotation, ariaPrefix }) => {
   const [flipped, setFlipped] = useState(false);
   const prefersReduced = useReducedMotion();
 
@@ -77,7 +88,7 @@ const FlipCard: React.FC<FlipCardProps> = ({ refData, rotation }) => {
       role="button"
       tabIndex={0}
       aria-pressed={flipped}
-      aria-label={`Testimonio de ${refData.nombre}`}
+      aria-label={`${ariaPrefix} ${refData.nombre}`}
       onKeyDown={onKey}
     >
       <motion.div

@@ -2,6 +2,10 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import ThemeToggle from '@/components/ThemeToggle';
+import LanguageToggle from '@/components/LanguageToggle';
+import { usePortfolioSection } from '@/hooks/usePortfolioSection';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { useEffect, useState, useRef } from 'react';
 import { useTheme } from 'next-themes';
 
@@ -180,22 +184,8 @@ function ThemeMenu() {
 
 /* =================== HERO =================== */
 export default function Hero() {
-  const [hero, setHero] = useState<HeroData | null>(null);
-
-  useEffect(() => {
-    fetch('/data/data.json')
-      .then((r) => r.json())
-      .then((d) => setHero(d.hero as HeroData))
-      .catch((e) => console.error('Error cargando Hero data:', e));
-  }, []);
-
-  if (!hero) {
-    return (
-      <section className="h-[60svh] min-h-[420px] grid place-items-center text-neutral-400">
-        Cargando información…
-      </section>
-    );
-  }
+  const hero = usePortfolioSection('hero');
+  const { language } = useLanguage();
 
   const rounded = 140;
 
@@ -212,8 +202,16 @@ export default function Hero() {
     );
   };
 
+  if (!hero) {
+    return (
+      <section className="h-[60svh] min-h-[420px] grid place-items-center text-neutral-400">
+        {language === 'es' ? 'Cargando información…' : 'Loading information…'}
+      </section>
+    );
+  }
+
   return (
-    <section className="relative w-full bg-[var(--page-bg)] text-[var(--page-fg)] transition-colors duration-300">
+    <section className="relative w-full theme-page transition-colors duration-300">
       {/* NAVBAR */}
       <nav
         className="fixed top-4 sm:top-6 left-1/2 -translate-x-1/2 z-[60] w-full max-w-5xl px-4 sm:px-6 pointer-events-none"
@@ -222,13 +220,7 @@ export default function Hero() {
         <div className="flex items-center justify-between gap-3 sm:gap-4">
           {/* Pastilla izquierda (autor) */}
           <div
-            className="
-              pointer-events-auto flex items-center gap-3 sm:gap-4 rounded-2xl
-              px-4 sm:px-5 py-2.5 sm:py-3 shadow-lg backdrop-blur-sm
-              bg-white text-neutral-900 border border-black/10
-              dark:bg-neutral-900 dark:text-white dark:border-white/10
-              transition-colors
-            "
+            className="pointer-events-auto flex items-center gap-3 sm:gap-4 rounded-2xl border theme-card px-4 sm:px-5 py-2.5 sm:py-3 shadow-lg backdrop-blur-sm transition-colors"
           >
             <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full overflow-hidden bg-slate-200 ring-2 ring-black/10 dark:ring-white/10 shrink-0">
               <Image
@@ -249,6 +241,11 @@ export default function Hero() {
             </div>
           </div>
 
+          <div
+            className="pointer-events-auto flex items-center gap-2 sm:gap-3 rounded-2xl border theme-card px-2.5 sm:px-3 py-2 shadow-lg backdrop-blur-sm transition-colors"
+          >
+            <LanguageToggle />
+            <ThemeToggle />
           {/* Pastilla derecha: SOLO Idioma + Tema */}
           <div
             className="
@@ -305,8 +302,7 @@ export default function Hero() {
         <div
           className="
             mx-auto w-[min(94%,960px)] rounded-3xl
-            bg-white text-neutral-900 border border-black/10
-            dark:bg-neutral-900 dark:text-white dark:border-white/10
+            border theme-card
             px-5 py-7 sm:px-10 sm:py-10
             shadow-[0_12px_40px_rgba(0,0,0,.18)]
             transition-colors
@@ -336,10 +332,7 @@ export default function Hero() {
 
       {/* Badge */}
       <div className="pointer-events-none absolute right-4 sm:right-6 bottom-4 sm:bottom-6 z-20">
-        <div className="flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full shadow-lg backdrop-blur
-                        bg-white text-neutral-900 ring-1 ring-black/10
-                        dark:bg-neutral-900 dark:text-white dark:ring-white/10
-                        transition-colors">
+        <div className="flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full shadow-lg backdrop-blur ring-1 ring-black/10 dark:ring-white/10 theme-card transition-colors">
           {hero.author.badge}
         </div>
       </div>

@@ -1,142 +1,348 @@
 {
-  "hero": {
-    "backgroundImage": "/cielo.jpg",
-    "quote": "El secreto de la felicidad no es hacer siempre lo que se quiere, sino querer siempre lo que se hace",
-    "highlight": "felicidad",
-    "intro": "La arquitectura de software es el espacio donde combino creatividad y lógica. Me inspira diseñar estructuras tecnológicas y planear cada capa de un sistema como si fuera un edificio digital, cuidando cada detalle para que las aplicaciones crezcan de manera sólida y ofrezcan soluciones reales a quienes las usan.",
-    "cvLink": "/cv.pdf",
-    "author": {
-      "firstName": "Jhoan Alexander",
-      "lastName": "Paredes Delgado",
-      "photo": "/JPD.jpg",
-      "badge": "JPD"
+  "nav": {
+    "es": {
+      "languageLabel": "Cambiar idioma",
+      "themeLabel": "Cambiar tema",
+      "languageNames": {
+        "es": "ES",
+        "en": "EN"
+      }
     },
-    "icons": {
-      "language": "/CambiarIdioma.png",
-      "theme": "/AlternarEncendido.png",
-      "menu": "/Menú.gif"
+    "en": {
+      "languageLabel": "Switch language",
+      "themeLabel": "Toggle theme",
+      "languageNames": {
+        "es": "ES",
+        "en": "EN"
+      }
     }
   },
-
-  "projects": [
-    { "id": 1, "title": "Layouts", "image": "/trabajo1.jpg" },
-    { "id": 2, "title": "Diseño de interfaces", "image": "/trabajo2.jpg" },
-    { "id": 3, "title": "Diseño UX/UI", "image": "/trabajo3.jpg" }
-  ],
-
-
-  "informacion": [
-    {
-      "id": 1,
-      "type": "metric",
-      "value": "15+",
-      "subtitle": "PROYECTOS ACADÉMICOS"
+  "hero": {
+    "es": {
+      "backgroundImage": "/cielo.jpg",
+      "quote": "El secreto de la felicidad no es hacer siempre lo que se quiere, sino querer siempre lo que se hace",
+      "highlight": "felicidad",
+      "intro": "La arquitectura de software es el espacio donde combino creatividad y lógica. Me inspira diseñar estructuras tecnológicas y planear cada capa de un sistema como si fuera un edificio digital, cuidando cada detalle para que las aplicaciones crezcan de manera sólida y ofrezcan soluciones reales a quienes las usan.",
+      "cvLink": "/cv.pdf",
+      "cvLabel": "Descargar CV",
+      "author": {
+        "firstName": "Jhoan Alexander",
+        "lastName": "Paredes Delgado",
+        "photo": "/JPD.jpg",
+        "badge": "JPD"
+      }
     },
-    {
-      "id": 2,
-      "type": "text",
-      "span": 3,
-      "title": "Proyectos Académicos",
-      "description": "Más de cinco proyectos desarrollados en mi formación, donde he aplicado conceptos de ingeniería a soluciones prácticas y funcionales."
-    },
-    {
-      "id": 3,
-      "type": "metric",
-      "value": "100%",
-      "subtitle": "COMPROMISO Y DEDICACIÓN"
-    },
-    {
-      "id": 4,
-      "type": "text",
-      "span": 2,
-      "title": "Experiencia Académica",
-      "description": "He participado en seminarios y actividades académicas que fortalecen mi visión profesional, desde la arquitectura de software hasta el desarrollo de aplicaciones prácticas."
-    },
-    {
-      "id": 5,
-      "type": "icon",
-      "icon": "/visto.png",
-      "subtitle": "ARQUITECTURA DE SOFTWARE"
-    },
-    {
-      "id": 6,
-      "type": "text",
-      "span": 3,
-      "title": "Experiencia Laboral",
-      "description": "He trabajado en proyectos reales aplicando conocimientos técnicos en entornos colaborativos, enfocándome en resultados de calidad."
-    },
-    {
-      "id": 7,
-      "type": "icon",
-      "icon": "/codigo.png",
-      "subtitle": "DESARROLLO EN JAVA Y PYTHON"
+    "en": {
+      "backgroundImage": "/cielo.jpg",
+      "quote": "The secret of happiness is not in doing what you like, but in liking what you do",
+      "highlight": "happiness",
+      "intro": "Software architecture is where I blend creativity with logic. I enjoy designing technological structures and planning each layer of a system as if it were a digital building, caring about every detail so applications grow solidly and deliver real value to the people who use them.",
+      "cvLink": "/cv.pdf",
+      "cvLabel": "Download CV",
+      "author": {
+        "firstName": "Jhoan Alexander",
+        "lastName": "Paredes Delgado",
+        "photo": "/JPD.jpg",
+        "badge": "JPD"
+      }
     }
-  ],
-
-
-    "proyectos": {
-      "titulo": "Proyectos Académicos",
-      "descripcion": "Más de cinco proyectos desarrollados en mi formación, donde he aplicado conceptos de ingeniería a soluciones prácticas y funcionales."
-    },
-
-    "experienciaAcademica": {
-      "titulo": "Experiencia Académica",
-      "descripcion": "He participado en seminarios y actividades académicas que fortalecen mi visión profesional, desde la arquitectura de software hasta el desarrollo de aplicaciones prácticas.",
-      "tarjetas": [
+  },
+  "information": {
+    "es": {
+      "title": "Sobre mí",
+      "blocks": [
         {
-          "imagen": "/visto.png",
-          "titulo": "ARQUITECTURA DE SOFTWARE"
+          "id": 1,
+          "type": "metric",
+          "value": "15+",
+          "subtitle": "PROYECTOS ACADÉMICOS"
         },
         {
-          "imagen": "/codigo.png",
-          "titulo": "DESARROLLO EN JAVA Y PYTHON"
+          "id": 2,
+          "type": "text",
+          "span": 3,
+          "title": "Proyectos Académicos",
+          "description": "Más de cinco proyectos desarrollados en mi formación, donde he aplicado conceptos de ingeniería a soluciones prácticas y funcionales."
+        },
+        {
+          "id": 3,
+          "type": "metric",
+          "value": "100%",
+          "subtitle": "COMPROMISO Y DEDICACIÓN"
+        },
+        {
+          "id": 4,
+          "type": "text",
+          "span": 2,
+          "title": "Experiencia Académica",
+          "description": "He participado en seminarios y actividades académicas que fortalecen mi visión profesional, desde la arquitectura de software hasta el desarrollo de aplicaciones prácticas."
+        },
+        {
+          "id": 5,
+          "type": "icon",
+          "icon": "/visto.png",
+          "subtitle": "ARQUITECTURA DE SOFTWARE"
+        },
+        {
+          "id": 6,
+          "type": "text",
+          "span": 3,
+          "title": "Experiencia Laboral",
+          "description": "He trabajado en proyectos reales aplicando conocimientos técnicos en entornos colaborativos, enfocándome en resultados de calidad."
+        },
+        {
+          "id": 7,
+          "type": "icon",
+          "icon": "/codigo.png",
+          "subtitle": "DESARROLLO EN JAVA Y PYTHON"
         }
       ]
     },
-
-  "experienciaLaboral": {
-    "titulo": "Experiencia Laboral",
-    "descripcion": "He participado en proyectos que fortalecen mis habilidades técnicas y de liderazgo, aplicando metodologías ágiles y buenas prácticas de desarrollo."
-  },
-  
-  "testimonios": [
-    {
-      "imagen": "/persona1.jpg",
-      "nombre": "Paul Frias",
-      "profesion": "Ingeniero de Sistemas",
-      "mensaje": "Trabajar con Jhoan fue una experiencia enriquecedora. Su enfoque y creatividad marcaron la diferencia."
-    },
-    {
-      "imagen": "/persona2.jpg",
-      "nombre": "Jaime Acosta",
-      "profesion": "Ingeniero de Sistemas",
-      "mensaje": "Su compromiso y pasión por la tecnología hacen que cada proyecto sea exitoso."
-    },
-    {
-      "imagen": "/persona3.jpg",
-      "nombre": "María López",
-      "profesion": "Gestora de Proyectos",
-      "mensaje": "Jhoan demuestra un gran profesionalismo y capacidad para resolver problemas complejos."
-    }
-  ],
-
-    "contacto": {
-        "titulo": "Contacto",
-        "descripcion": "Si tienes un proyecto o quieres colaborar, completa el formulario o envíame un correo.",
-        "correo": "tuemail@ejemplo.com",
-        "redes": {
-          "github": "https://github.com/tuusuario",
-          "linkedin": "https://linkedin.com/in/tuusuario",
-          "email": "mailto:tuemail@ejemplo.com"
+    "en": {
+      "title": "About me",
+      "blocks": [
+        {
+          "id": 1,
+          "type": "metric",
+          "value": "15+",
+          "subtitle": "ACADEMIC PROJECTS"
         },
-        
-      "lenguajes": [
-        { "name": "C#", "icon": "/codigo.png" },
-        { "name": "JavaScript", "icon": "/Javascript.gif" },
-        { "name": "MySQL", "icon": "/Mysql.png" },
-        { "name": "Python", "icon": "/Python.gif" },
-        { "name": "Java", "icon": "/JavaCoffeeCup.gif" }
+        {
+          "id": 2,
+          "type": "text",
+          "span": 3,
+          "title": "Academic Projects",
+          "description": "Over five projects completed during my studies, applying engineering concepts to practical, functional solutions."
+        },
+        {
+          "id": 3,
+          "type": "metric",
+          "value": "100%",
+          "subtitle": "COMMITMENT AND DEDICATION"
+        },
+        {
+          "id": 4,
+          "type": "text",
+          "span": 2,
+          "title": "Academic Experience",
+          "description": "I have joined seminars and academic activities that strengthen my professional vision, from software architecture to building real applications."
+        },
+        {
+          "id": 5,
+          "type": "icon",
+          "icon": "/visto.png",
+          "subtitle": "SOFTWARE ARCHITECTURE"
+        },
+        {
+          "id": 6,
+          "type": "text",
+          "span": 3,
+          "title": "Work Experience",
+          "description": "I have worked on real projects applying technical knowledge in collaborative environments focused on quality results."
+        },
+        {
+          "id": 7,
+          "type": "icon",
+          "icon": "/codigo.png",
+          "subtitle": "JAVA AND PYTHON DEVELOPMENT"
+        }
       ]
-   }
-  
-  } 
+    }
+  },
+  "projects": {
+    "es": {
+      "title": "Mis proyectos",
+      "defaultDescription": "Breve descripción del proyecto, tecnologías y objetivo.",
+      "items": [
+        {
+          "id": 1,
+          "title": "Layouts",
+          "image": "/trabajo1.jpg",
+          "description": "Diseño de estructuras responsivas para aplicaciones web modernas."
+        },
+        {
+          "id": 2,
+          "title": "Diseño de interfaces",
+          "image": "/trabajo2.jpg",
+          "description": "Prototipos centrados en la experiencia del usuario y la accesibilidad."
+        },
+        {
+          "id": 3,
+          "title": "Diseño UX/UI",
+          "image": "/trabajo3.jpg",
+          "description": "Sistemas de diseño consistentes enfocados en la usabilidad."
+        }
+      ]
+    },
+    "en": {
+      "title": "My projects",
+      "defaultDescription": "Brief overview of the project, its technologies and goal.",
+      "items": [
+        {
+          "id": 1,
+          "title": "Layouts",
+          "image": "/trabajo1.jpg",
+          "description": "Responsive layout systems for modern web applications."
+        },
+        {
+          "id": 2,
+          "title": "Interface design",
+          "image": "/trabajo2.jpg",
+          "description": "User-centered prototypes focused on accessibility."
+        },
+        {
+          "id": 3,
+          "title": "UX/UI design",
+          "image": "/trabajo3.jpg",
+          "description": "Consistent design systems aimed at usability."
+        }
+      ]
+    }
+  },
+  "languages": {
+    "es": {
+      "title": "Lenguajes trabajados",
+      "items": [
+        {
+          "name": "C#",
+          "icon": "/codigo.png"
+        },
+        {
+          "name": "JavaScript",
+          "icon": "/Javascript.gif"
+        },
+        {
+          "name": "MySQL",
+          "icon": "/Mysql.png"
+        },
+        {
+          "name": "Python",
+          "icon": "/Python.gif"
+        },
+        {
+          "name": "Java",
+          "icon": "/JavaCoffeeCup.gif"
+        }
+      ]
+    },
+    "en": {
+      "title": "Languages I work with",
+      "items": [
+        {
+          "name": "C#",
+          "icon": "/codigo.png"
+        },
+        {
+          "name": "JavaScript",
+          "icon": "/Javascript.gif"
+        },
+        {
+          "name": "MySQL",
+          "icon": "/Mysql.png"
+        },
+        {
+          "name": "Python",
+          "icon": "/Python.gif"
+        },
+        {
+          "name": "Java",
+          "icon": "/JavaCoffeeCup.gif"
+        }
+      ]
+    }
+  },
+  "testimonials": {
+    "es": {
+      "title": "Testimonios",
+      "empty": "No hay testimonios disponibles.",
+      "items": [
+        {
+          "imagen": "/persona1.jpg",
+          "nombre": "Paul Frias",
+          "profesion": "Ingeniero de Sistemas",
+          "mensaje": "Trabajar con Jhoan fue una experiencia enriquecedora. Su enfoque y creatividad marcaron la diferencia."
+        },
+        {
+          "imagen": "/persona2.jpg",
+          "nombre": "Jaime Acosta",
+          "profesion": "Ingeniero de Sistemas",
+          "mensaje": "Su compromiso y pasión por la tecnología hacen que cada proyecto sea exitoso."
+        },
+        {
+          "imagen": "/persona3.jpg",
+          "nombre": "María López",
+          "profesion": "Gestora de Proyectos",
+          "mensaje": "Jhoan demuestra un gran profesionalismo y capacidad para resolver problemas complejos."
+        }
+      ]
+    },
+    "en": {
+      "title": "Testimonials",
+      "empty": "No testimonials available.",
+      "items": [
+        {
+          "imagen": "/persona1.jpg",
+          "nombre": "Paul Frias",
+          "profesion": "Systems Engineer",
+          "mensaje": "Working with Jhoan was an enriching experience. His focus and creativity made the difference."
+        },
+        {
+          "imagen": "/persona2.jpg",
+          "nombre": "Jaime Acosta",
+          "profesion": "Systems Engineer",
+          "mensaje": "His commitment and passion for technology make every project a success."
+        },
+        {
+          "imagen": "/persona3.jpg",
+          "nombre": "María López",
+          "profesion": "Project Manager",
+          "mensaje": "Jhoan shows great professionalism and skill in solving complex problems."
+        }
+      ]
+    }
+  },
+  "contact": {
+    "es": {
+      "title": "Contacto",
+      "description": "Si tienes un proyecto o quieres colaborar, completa el formulario o envíame un correo.",
+      "email": "tuemail@ejemplo.com",
+      "social": {
+        "github": "https://github.com/tuusuario",
+        "linkedin": "https://linkedin.com/in/tuusuario",
+        "email": "mailto:tuemail@ejemplo.com"
+      },
+      "form": {
+        "nameLabel": "Nombre",
+        "emailLabel": "Correo",
+        "messageLabel": "Mensaje",
+        "namePlaceholder": "Tu nombre",
+        "emailPlaceholder": "Tu correo",
+        "messagePlaceholder": "Tu mensaje",
+        "submit": "Enviar",
+        "success": "¡Gracias! Tu mensaje fue enviado.",
+        "validationError": "Completa todos los campos."
+      }
+    },
+    "en": {
+      "title": "Contact",
+      "description": "If you have a project or want to collaborate, fill out the form or send me an email.",
+      "email": "tuemail@ejemplo.com",
+      "social": {
+        "github": "https://github.com/tuusuario",
+        "linkedin": "https://linkedin.com/in/tuusuario",
+        "email": "mailto:tuemail@ejemplo.com"
+      },
+      "form": {
+        "nameLabel": "Name",
+        "emailLabel": "Email",
+        "messageLabel": "Message",
+        "namePlaceholder": "Your name",
+        "emailPlaceholder": "Your email",
+        "messagePlaceholder": "Your message",
+        "submit": "Send",
+        "success": "Thanks! Your message was sent.",
+        "validationError": "Please complete every field."
+      }
+    }
+  }
+}

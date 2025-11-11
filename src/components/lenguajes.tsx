@@ -2,11 +2,16 @@
 import { useEffect, useMemo, useRef } from 'react';
 import Image from 'next/image';
 import { motion, useAnimationControls } from 'framer-motion';
+import { usePortfolioSection, type LanguageItem } from '@/hooks/usePortfolioSection';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 type Lang = { name: string; icon: string };
 
 export default function Lenguajes() {
+  const languages = usePortfolioSection('languages');
+  const { language } = useLanguage();
+  const rawItems = languages?.items as LanguageItem[] | undefined;
+  const items = useMemo(() => rawItems ?? [], [rawItems]);
   const { content } = useLanguage();
   const items = content.languages.items as Lang[];
   const controls = useAnimationControls();
@@ -68,6 +73,7 @@ export default function Lenguajes() {
   return (
     <section id="lenguajes" className="space-y-6 py-10 theme-page transition-colors">
       <h2 className="text-center text-2xl sm:text-3xl font-bold italic tracking-wide">
+        {languages?.title?.toUpperCase() ?? (language === 'es' ? 'LENGUAJES' : 'LANGUAGES')}
         {content.languages.title.toUpperCase()}
       </h2>
 

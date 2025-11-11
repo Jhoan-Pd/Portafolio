@@ -1,6 +1,13 @@
 'use client';
 
 import { useLanguage } from '@/contexts/LanguageContext';
+import { usePortfolioSection } from '@/hooks/usePortfolioSection';
+
+export default function LanguageToggle() {
+  const { language, toggleLanguage } = useLanguage();
+  const nav = usePortfolioSection('nav');
+  const label = nav?.languageLabel ?? (language === 'es' ? 'Cambiar idioma' : 'Switch language');
+  const names = nav?.languageNames ?? { es: 'ES', en: 'EN' };
 
 export default function LanguageToggle() {
   const { language, toggleLanguage, content } = useLanguage();
@@ -11,6 +18,8 @@ export default function LanguageToggle() {
       type="button"
       onClick={toggleLanguage}
       className="inline-flex h-10 items-center gap-1 rounded-2xl border border-black/10 bg-white/80 px-1 text-[11px] font-semibold uppercase tracking-[0.18em] shadow-sm transition hover:bg-white dark:border-white/10 dark:bg-neutral-900/70 dark:hover:bg-neutral-800/80"
+      aria-label={label}
+      title={label}
       aria-label={languageLabel}
       title={languageLabel}
     >
@@ -21,6 +30,7 @@ export default function LanguageToggle() {
             : 'text-neutral-600 dark:text-neutral-300'
         }`}
       >
+        {names.es}
         {languageNames.es}
       </span>
       <span
@@ -30,6 +40,7 @@ export default function LanguageToggle() {
             : 'text-neutral-600 dark:text-neutral-300'
         }`}
       >
+        {names.en}
         {languageNames.en}
       </span>
     </button>

@@ -2,6 +2,15 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
 import Image from 'next/image';
 import { motion, cubicBezier } from 'framer-motion';
+import { usePortfolioSection, type Project as ProjectItem } from '@/hooks/usePortfolioSection';
+import { useLanguage } from '@/contexts/LanguageContext';
+
+export default function Projects() {
+  const copy = usePortfolioSection('projects');
+  const { language } = useLanguage();
+  const items = copy?.items as ProjectItem[] | undefined;
+  const projects = useMemo(() => items ?? [], [items]);
+  const defaultDescription = copy?.defaultDescription ?? '';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 interface Project {
@@ -74,6 +83,7 @@ export default function Projects() {
     <section ref={sectionRef} className="w-full theme-page transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
         <h2 className="text-center text-3xl sm:text-4xl font-bold italic tracking-wide mb-6 sm:mb-8">
+          {copy?.title?.toUpperCase() ?? (language === 'es' ? 'PROYECTOS' : 'PROJECTS')}
           {content.projects.title.toUpperCase()}
         </h2>
 
