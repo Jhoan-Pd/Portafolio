@@ -9,10 +9,6 @@ export default function LanguageToggle() {
   const label = nav?.languageLabel ?? (language === 'es' ? 'Cambiar idioma' : 'Switch language');
   const names = nav?.languageNames ?? { es: 'ES', en: 'EN' };
 
-export default function LanguageToggle() {
-  const { language, toggleLanguage, content } = useLanguage();
-  const { languageLabel, languageNames } = content.nav;
-
   return (
     <button
       type="button"
@@ -20,8 +16,6 @@ export default function LanguageToggle() {
       className="inline-flex h-10 items-center gap-1 rounded-2xl border border-black/10 bg-white/80 px-1 text-[11px] font-semibold uppercase tracking-[0.18em] shadow-sm transition hover:bg-white dark:border-white/10 dark:bg-neutral-900/70 dark:hover:bg-neutral-800/80"
       aria-label={label}
       title={label}
-      aria-label={languageLabel}
-      title={languageLabel}
     >
       <span
         className={`rounded-xl px-2 py-1 transition-colors ${
@@ -31,7 +25,6 @@ export default function LanguageToggle() {
         }`}
       >
         {names.es}
-        {languageNames.es}
       </span>
       <span
         className={`rounded-xl px-2 py-1 transition-colors ${
@@ -41,7 +34,6 @@ export default function LanguageToggle() {
         }`}
       >
         {names.en}
-        {languageNames.en}
       </span>
     </button>
   );

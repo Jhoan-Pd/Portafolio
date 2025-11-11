@@ -1,4 +1,5 @@
 'use client';
+
 import { useState, useEffect, useMemo, useRef } from 'react';
 import Image from 'next/image';
 import { motion, cubicBezier } from 'framer-motion';
@@ -11,19 +12,6 @@ export default function Projects() {
   const items = copy?.items as ProjectItem[] | undefined;
   const projects = useMemo(() => items ?? [], [items]);
   const defaultDescription = copy?.defaultDescription ?? '';
-import { useLanguage } from '@/contexts/LanguageContext';
-
-interface Project {
-  id: number;
-  title: string;
-  image: string;
-  description?: string;
-}
-
-export default function Projects() {
-  const { content } = useLanguage();
-  const projects = content.projects.items as Project[];
-  const defaultDescription = content.projects.defaultDescription;
   const [active, setActive] = useState(0);
   const sectionRef = useRef<HTMLDivElement | null>(null);
 
@@ -50,6 +38,10 @@ export default function Projects() {
     };
   }, [projects.length]);
 
+  useEffect(() => {
+    setActive(0);
+  }, [projects]);
+
   const staged = useMemo(() => projects.slice(0, 6), [projects]);
   const easeOutExpo = cubicBezier(0.22, 1, 0.36, 1);
 
@@ -74,21 +66,14 @@ export default function Projects() {
     };
   };
 
-  // ✅ Nos quedamos con este efecto de la IA
-  useEffect(() => {
-    setActive(0);
-  }, [projects]);
+  const title = copy?.title?.toUpperCase() ?? (language === 'es' ? 'PROYECTOS' : 'PROJECTS');
 
   return (
     <section ref={sectionRef} className="w-full theme-page transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
-        <h2 className="text-center text-3xl sm:text-4xl font-bold italic tracking-wide mb-6 sm:mb-8">
-          {copy?.title?.toUpperCase() ?? (language === 'es' ? 'PROYECTOS' : 'PROJECTS')}
-          {content.projects.title.toUpperCase()}
-        </h2>
+        <h2 className="text-center text-3xl sm:text-4xl font-bold italic tracking-wide mb-6 sm:mb-8">{title}</h2>
 
         <div className="grid grid-cols-1 md:grid-cols-[1fr_260px] lg:grid-cols-[1fr_300px] gap-6 sm:gap-8">
-          {/* Escenario (tarjeta grande) — cambia por modo */}
           <div className="relative rounded-[28px] border theme-card p-3 sm:p-5 md:p-8 shadow-[0_14px_40px_rgba(0,0,0,.12)] transition-colors">
             <div className="relative h-[62svh] md:h-[68svh] overflow-hidden rounded-3xl theme-glass transition-colors">
               <div className="absolute inset-0 rounded-3xl ring-1 ring-black/10 dark:ring-white/10" />
@@ -108,7 +93,6 @@ export default function Projects() {
                     initial={{ opacity: 0, y: 60, scale: 0.98 }}
                     style={style}
                   >
-                    {/* IMAGEN FULL COVER (sin descripción aquí) */}
                     <div className="relative inset-0 w-full h-full">
                       <Image
                         src={p.image}
@@ -118,11 +102,8 @@ export default function Projects() {
                         sizes="(min-width:1024px) 70vw, 100vw"
                         className="object-cover"
                       />
-                      {/* Etiqueta del título */}
                       <div className="absolute left-4 right-4 bottom-4">
-                        <div className="inline-flex max-w-[90%] items-center gap-2 rounded-xl px-3 py-2
-                                        bg-white/90 text-neutral-900 ring-1 ring-black/10
-                                        dark:bg-neutral-100/90 dark:text-neutral-900 dark:ring-black/20">
+                        <div className="inline-flex max-w-[90%] items-center gap-2 rounded-xl px-3 py-2 bg-white/90 text-neutral-900 ring-1 ring-black/10 dark:bg-neutral-100/90 dark:text-neutral-900 dark:ring-black/20">
                           <span className="text-sm sm:text-base font-semibold truncate">{p.title}</span>
                         </div>
                       </div>
@@ -133,7 +114,6 @@ export default function Projects() {
             </div>
           </div>
 
-          {/* Lista lateral — descripción aquí */}
           <div className="hidden md:block rounded-[24px] border theme-card p-3 sm:p-4 shadow-[0_14px_40px_rgba(0,0,0,.12)] h-[68svh] overflow-y-auto transition-colors">
             <div className="space-y-2.5">
               {projects.map((p, i) => {
@@ -157,9 +137,7 @@ export default function Projects() {
                         {p.description ?? defaultDescription}
                       </p>
                     </div>
-                    <span className="ml-2 text-[10px] font-semibold opacity-60 shrink-0">
-                      ({String(i + 1).padStart(2, '0')})
-                    </span>
+                    <span className="ml-2 text-[10px] font-semibold opacity-60 shrink-0">({String(i + 1).padStart(2, '0')})</span>
                   </button>
                 );
               })}

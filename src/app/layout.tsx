@@ -9,8 +9,8 @@ export const metadata: Metadata = {
   description: 'Mi portafolio con Next.js y Tailwind',
 }
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const cookieStore = await cookies();
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const cookieStore = cookies();
   const stored = cookieStore.get('portfolio-language');
   const initialLanguage: Language = stored && isLanguage(stored.value) ? stored.value : 'es';
 

@@ -1,31 +1,15 @@
 'use client';
+
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { usePortfolioSection } from '@/hooks/usePortfolioSection';
+import { usePortfolioSection, type InfoBlock } from '@/hooks/usePortfolioSection';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function Informacion() {
   const information = usePortfolioSection('information');
   const { language } = useLanguage();
-  const infoBlocks = information?.blocks ?? [];
+  const infoBlocks = (information?.blocks ?? []) as InfoBlock[];
   const title = information?.title ?? (language === 'es' ? 'Sobre mí' : 'About me');
-import { useLanguage } from '@/contexts/LanguageContext';
-
-interface InfoBlock {
-  id: number;
-  type: string;
-  title?: string;
-  value?: string;
-  subtitle?: string;
-  description?: string;
-  icon?: string;
-  span?: number;
-}
-
-export default function Informacion() {
-  const { content } = useLanguage();
-  const infoBlocks = content.information.blocks as InfoBlock[];
-  const title = content.information.title;
 
   const spanClass = (n?: number) =>
     n === 4 ? 'md:col-span-4'
@@ -56,11 +40,7 @@ export default function Informacion() {
               viewport={{ once: true, margin: '-10% 0px -10% 0px' }}
               transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
               whileHover={{ scale: 1.02 }}
-              className={`rounded-2xl p-6 sm:p-8 min-h-[200px] flex flex-col items-center justify-center text-center
-              className={`rounded-2xl p-6 sm:p-8 min-h[200px] flex flex-col items-center justify-center text-center
-                          border theme-card
-                          shadow-[0_14px_40px_rgba(0,0,0,.12)]
-                          transition-colors ${spanClass(block.span)}`}
+              className={`rounded-2xl p-6 sm:p-8 min-h-[200px] flex flex-col items-center justify-center text-center border theme-card shadow-[0_14px_40px_rgba(0,0,0,.12)] transition-colors ${spanClass(block.span)}`}
             >
               {block.icon ? (
                 <Image
