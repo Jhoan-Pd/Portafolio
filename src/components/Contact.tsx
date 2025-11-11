@@ -10,6 +10,11 @@ import { useLanguage } from '@/contexts/LanguageContext';
 export default function Contact() {
   const contact = usePortfolioSection('contact') as ContactCopy | null;
   const { language } = useLanguage();
+import { useLanguage } from '@/contexts/LanguageContext';
+
+export default function Contact() {
+  const { content } = useLanguage();
+  const copy = content.contact;
   const [formData, setFormData] = useState({ name: '', email: '', message: '', hp: '' }); // hp = honeypot
   const [sent, setSent] = useState<null | 'ok' | 'error'>(null);
   const prefersReduced = useReducedMotion();
@@ -36,6 +41,11 @@ export default function Contact() {
     success: language === 'es' ? '¡Gracias! Tu mensaje fue enviado.' : 'Thanks! Your message was sent.',
     validationError: language === 'es' ? 'Completa todos los campos.' : 'Please complete every field.',
   };
+  const title = copy.title;
+  const desc = copy.description;
+  const gh = copy.social.github;
+  const ln = copy.social.linkedin;
+  const em = copy.social.email ?? `mailto:${copy.email}`;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     setFormData((s) => ({ ...s, [e.target.name]: e.target.value }));
@@ -45,6 +55,7 @@ export default function Contact() {
     if (formData.hp) return; // bots out
     if (!formData.name || !formData.email || !formData.message) {
       alert(formCopy.validationError);
+      alert(copy.form.validationError);
       return;
     }
     // Aquí enviarías a tu backend/servicio. Por ahora simulamos éxito:
@@ -82,6 +93,7 @@ export default function Contact() {
         <div className="mb-4 inline-flex items-center gap-2 rounded-lg px-3 py-2 bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-200">
           <Check size={18} />
           <span>{formCopy.success}</span>
+          <span>{copy.form.success}</span>
         </div>
       )}
 
@@ -104,11 +116,13 @@ export default function Contact() {
         />
 
         <label className="sr-only" htmlFor="name">{formCopy.nameLabel}</label>
+        <label className="sr-only" htmlFor="name">{copy.form.nameLabel}</label>
         <input
           id="name"
           type="text"
           name="name"
           placeholder={formCopy.namePlaceholder}
+          placeholder={copy.form.namePlaceholder}
           value={formData.name}
           onChange={handleChange}
           autoComplete="name"
@@ -117,11 +131,13 @@ export default function Contact() {
         />
 
         <label className="sr-only" htmlFor="email">{formCopy.emailLabel}</label>
+        <label className="sr-only" htmlFor="email">{copy.form.emailLabel}</label>
         <input
           id="email"
           type="email"
           name="email"
           placeholder={formCopy.emailPlaceholder}
+          placeholder={copy.form.emailPlaceholder}
           value={formData.email}
           onChange={handleChange}
           autoComplete="email"
@@ -134,6 +150,11 @@ export default function Contact() {
           id="message"
           name="message"
           placeholder={formCopy.messagePlaceholder}
+        <label className="sr-only" htmlFor="message">{copy.form.messageLabel}</label>
+        <textarea
+          id="message"
+          name="message"
+          placeholder={copy.form.messagePlaceholder}
           value={formData.message}
           onChange={handleChange}
           rows={4}
@@ -146,6 +167,7 @@ export default function Contact() {
           className="inline-flex items-center justify-center gap-2 rounded-lg px-6 py-3 bg-blue-600 text-white hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-neutral-950 transition"
         >
           <Send size={18} /> {formCopy.submit}
+          <Send size={18} /> {copy.form.submit}
         </button>
       </motion.form>
 

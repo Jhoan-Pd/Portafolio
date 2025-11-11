@@ -9,6 +9,23 @@ export default function Informacion() {
   const { language } = useLanguage();
   const infoBlocks = information?.blocks ?? [];
   const title = information?.title ?? (language === 'es' ? 'Sobre mí' : 'About me');
+import { useLanguage } from '@/contexts/LanguageContext';
+
+interface InfoBlock {
+  id: number;
+  type: string;
+  title?: string;
+  value?: string;
+  subtitle?: string;
+  description?: string;
+  icon?: string;
+  span?: number;
+}
+
+export default function Informacion() {
+  const { content } = useLanguage();
+  const infoBlocks = content.information.blocks as InfoBlock[];
+  const title = content.information.title;
 
   const spanClass = (n?: number) =>
     n === 4 ? 'md:col-span-4'
@@ -40,6 +57,7 @@ export default function Informacion() {
               transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
               whileHover={{ scale: 1.02 }}
               className={`rounded-2xl p-6 sm:p-8 min-h-[200px] flex flex-col items-center justify-center text-center
+              className={`rounded-2xl p-6 sm:p-8 min-h[200px] flex flex-col items-center justify-center text-center
                           border theme-card
                           shadow-[0_14px_40px_rgba(0,0,0,.12)]
                           transition-colors ${spanClass(block.span)}`}

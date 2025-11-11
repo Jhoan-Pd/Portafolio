@@ -11,6 +11,19 @@ export default function Projects() {
   const items = copy?.items as ProjectItem[] | undefined;
   const projects = useMemo(() => items ?? [], [items]);
   const defaultDescription = copy?.defaultDescription ?? '';
+import { useLanguage } from '@/contexts/LanguageContext';
+
+interface Project {
+  id: number;
+  title: string;
+  image: string;
+  description?: string;
+}
+
+export default function Projects() {
+  const { content } = useLanguage();
+  const projects = content.projects.items as Project[];
+  const defaultDescription = content.projects.defaultDescription;
   const [active, setActive] = useState(0);
   const sectionRef = useRef<HTMLDivElement | null>(null);
 
@@ -61,6 +74,7 @@ export default function Projects() {
     };
   };
 
+  // ✅ Nos quedamos con este efecto de la IA
   useEffect(() => {
     setActive(0);
   }, [projects]);
@@ -70,6 +84,7 @@ export default function Projects() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
         <h2 className="text-center text-3xl sm:text-4xl font-bold italic tracking-wide mb-6 sm:mb-8">
           {copy?.title?.toUpperCase() ?? (language === 'es' ? 'PROYECTOS' : 'PROJECTS')}
+          {content.projects.title.toUpperCase()}
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-[1fr_260px] lg:grid-cols-[1fr_300px] gap-6 sm:gap-8">

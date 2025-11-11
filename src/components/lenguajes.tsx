@@ -12,6 +12,8 @@ export default function Lenguajes() {
   const { language } = useLanguage();
   const rawItems = languages?.items as LanguageItem[] | undefined;
   const items = useMemo(() => rawItems ?? [], [rawItems]);
+  const { content } = useLanguage();
+  const items = content.languages.items as Lang[];
   const controls = useAnimationControls();
   const mounted = useRef(false);
 
@@ -72,6 +74,7 @@ export default function Lenguajes() {
     <section id="lenguajes" className="space-y-6 py-10 theme-page transition-colors">
       <h2 className="text-center text-2xl sm:text-3xl font-bold italic tracking-wide">
         {languages?.title?.toUpperCase() ?? (language === 'es' ? 'LENGUAJES' : 'LANGUAGES')}
+        {content.languages.title.toUpperCase()}
       </h2>
 
       <div className="relative overflow-hidden">

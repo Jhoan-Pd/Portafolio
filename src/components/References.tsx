@@ -13,6 +13,19 @@ const References: React.FC = () => {
   const emptyLabel = testimonials?.empty ?? (language === 'es' ? 'No hay testimonios disponibles.' : 'No testimonials available.');
   const ariaPrefix = language === 'es' ? 'Testimonio de' : 'Testimonial from';
 
+interface Testimonio {
+  imagen: string;
+  nombre: string;
+  profesion: string;
+  mensaje: string;
+}
+
+const References: React.FC = () => {
+  const { content } = useLanguage();
+  const referencias = content.testimonials.items as Testimonio[];
+  const title = content.testimonials.title;
+  const emptyLabel = content.testimonials.empty;
+
   return (
     <section className="relative overflow-hidden py-14 sm:py-20 px-4 sm:px-6 theme-page transition-colors">
       <h2 className="text-3xl sm:text-4xl font-bold text-center mb-10 sm:mb-16 italic tracking-wide">
@@ -84,7 +97,7 @@ const FlipCard: React.FC<FlipCardProps> = ({ refData, rotation, ariaPrefix }) =>
         animate={{ rotateY: flipped && !prefersReduced ? 180 : 0 }}
         transition={{ duration: prefersReduced ? 0 : 0.7, ease: 'easeInOut' }}
       >
-        {/* Frente: blanco en light, oscuro en dark */}
+        {/* Frente */}
         <div
           className="
             absolute inset-0 flex flex-col justify-center items-center
@@ -107,7 +120,7 @@ const FlipCard: React.FC<FlipCardProps> = ({ refData, rotation, ariaPrefix }) =>
           <p className="text-xs sm:text-sm font-medium opacity-80">{refData.profesion}</p>
         </div>
 
-        {/* Reverso: claro en light, más oscuro en dark */}
+        {/* Reverso */}
         <div
           className="
             absolute inset-0 flex items-center justify-center rounded-3xl px-5 sm:px-6 text-center
