@@ -257,22 +257,22 @@
       "empty": "No hay testimonios disponibles.",
       "items": [
         {
-          "imagen": "/persona1.jpg",
-          "nombre": "Paul Frias",
-          "profesion": "Ingeniero de Sistemas",
-          "mensaje": "Trabajar con Jhoan fue una experiencia enriquecedora. Su enfoque y creatividad marcaron la diferencia."
+          "image": "/persona1.jpg",
+          "name": "Paul Frias",
+          "role": "Ingeniero de Sistemas",
+          "message": "Trabajar con Jhoan fue una experiencia enriquecedora. Su enfoque y creatividad marcaron la diferencia."
         },
         {
-          "imagen": "/persona2.jpg",
-          "nombre": "Jaime Acosta",
-          "profesion": "Ingeniero de Sistemas",
-          "mensaje": "Su compromiso y pasión por la tecnología hacen que cada proyecto sea exitoso."
+          "image": "/persona2.jpg",
+          "name": "Jaime Acosta",
+          "role": "Ingeniero de Sistemas",
+          "message": "Su compromiso y pasión por la tecnología hacen que cada proyecto sea exitoso."
         },
         {
-          "imagen": "/persona3.jpg",
-          "nombre": "María López",
-          "profesion": "Gestora de Proyectos",
-          "mensaje": "Jhoan demuestra un gran profesionalismo y capacidad para resolver problemas complejos."
+          "image": "/persona3.jpg",
+          "name": "María López",
+          "role": "Gestora de Proyectos",
+          "message": "Jhoan demuestra un gran profesionalismo y capacidad para resolver problemas complejos."
         }
       ]
     },
@@ -281,22 +281,22 @@
       "empty": "No testimonials available.",
       "items": [
         {
-          "imagen": "/persona1.jpg",
-          "nombre": "Paul Frias",
-          "profesion": "Systems Engineer",
-          "mensaje": "Working with Jhoan was an enriching experience. His focus and creativity made the difference."
+          "image": "/persona1.jpg",
+          "name": "Paul Frias",
+          "role": "Systems Engineer",
+          "message": "Working with Jhoan was an enriching experience. His focus and creativity made the difference."
         },
         {
-          "imagen": "/persona2.jpg",
-          "nombre": "Jaime Acosta",
-          "profesion": "Systems Engineer",
-          "mensaje": "His commitment and passion for technology make every project a success."
+          "image": "/persona2.jpg",
+          "name": "Jaime Acosta",
+          "role": "Systems Engineer",
+          "message": "His commitment and passion for technology make every project a success."
         },
         {
-          "imagen": "/persona3.jpg",
-          "nombre": "María López",
-          "profesion": "Project Manager",
-          "mensaje": "Jhoan shows great professionalism and skill in solving complex problems."
+          "image": "/persona3.jpg",
+          "name": "María López",
+          "role": "Project Manager",
+          "message": "Jhoan shows great professionalism and skill in solving complex problems."
         }
       ]
     }

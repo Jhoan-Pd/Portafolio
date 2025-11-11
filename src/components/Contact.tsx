@@ -1,64 +1,54 @@
-// src/components/Contact.tsx
 'use client';
 
 import { useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Mail, Send, Linkedin, Github, Check } from 'lucide-react';
-import { usePortfolioSection, type ContactCopy } from '@/hooks/usePortfolioSection';
+import { usePortfolioSection } from '@/hooks/usePortfolioSection';
 import { useLanguage } from '@/contexts/LanguageContext';
+import type { ContactCopy } from '@/types/portfolio';
 
 export default function Contact() {
   const contact = usePortfolioSection('contact') as ContactCopy | null;
   const { language } = useLanguage();
-import { useLanguage } from '@/contexts/LanguageContext';
-
-export default function Contact() {
-  const { content } = useLanguage();
-  const copy = content.contact;
-  const [formData, setFormData] = useState({ name: '', email: '', message: '', hp: '' }); // hp = honeypot
+  const [formData, setFormData] = useState({ name: '', email: '', message: '', hp: '' });
   const [sent, setSent] = useState<null | 'ok' | 'error'>(null);
   const prefersReduced = useReducedMotion();
 
-  const title = contact?.titulo ?? contact?.title ?? (language === 'es' ? 'Contacto' : 'Contact');
-  const desc = contact?.descripcion ?? contact?.description ??
+  const title = contact?.title ?? (language === 'es' ? 'Contacto' : 'Contact');
+  const desc =
+    contact?.description ??
     (language === 'es'
       ? 'Si tienes un proyecto o quieres colaborar, completa el formulario o envíame un correo.'
       : 'If you have a project or want to collaborate, fill out the form or send me an email.');
 
-  const social = contact?.redes ?? contact?.social ?? {};
-  const gh = social.github ?? 'https://github.com/tuusuario';
-  const ln = social.linkedin ?? 'https://linkedin.com/in/tuusuario';
-  const em = social.email ?? `mailto:${contact?.correo ?? contact?.email ?? 'tuemail@ejemplo.com'}`;
+  const social = contact?.social ?? {};
+  const githubUrl = social.github ?? 'https://github.com/tuusuario';
+  const linkedinUrl = social.linkedin ?? 'https://linkedin.com/in/tuusuario';
+  const emailUrl = social.email ?? `mailto:${contact?.email ?? 'tuemail@ejemplo.com'}`;
 
-  const formCopy = contact?.form ?? {
-    nameLabel: language === 'es' ? 'Nombre' : 'Name',
-    emailLabel: language === 'es' ? 'Correo' : 'Email',
-    messageLabel: language === 'es' ? 'Mensaje' : 'Message',
-    namePlaceholder: language === 'es' ? 'Tu nombre' : 'Your name',
-    emailPlaceholder: language === 'es' ? 'Tu correo' : 'Your email',
-    messagePlaceholder: language === 'es' ? 'Tu mensaje' : 'Your message',
-    submit: language === 'es' ? 'Enviar' : 'Send',
-    success: language === 'es' ? '¡Gracias! Tu mensaje fue enviado.' : 'Thanks! Your message was sent.',
-    validationError: language === 'es' ? 'Completa todos los campos.' : 'Please complete every field.',
-  };
-  const title = copy.title;
-  const desc = copy.description;
-  const gh = copy.social.github;
-  const ln = copy.social.linkedin;
-  const em = copy.social.email ?? `mailto:${copy.email}`;
+  const formCopy =
+    contact?.form ?? {
+      nameLabel: language === 'es' ? 'Nombre' : 'Name',
+      emailLabel: language === 'es' ? 'Correo' : 'Email',
+      messageLabel: language === 'es' ? 'Mensaje' : 'Message',
+      namePlaceholder: language === 'es' ? 'Tu nombre' : 'Your name',
+      emailPlaceholder: language === 'es' ? 'Tu correo' : 'Your email',
+      messagePlaceholder: language === 'es' ? 'Tu mensaje' : 'Your message',
+      submit: language === 'es' ? 'Enviar' : 'Send',
+      success: language === 'es' ? '¡Gracias! Tu mensaje fue enviado.' : 'Thanks! Your message was sent.',
+      validationError: language === 'es' ? 'Completa todos los campos.' : 'Please complete every field.',
+    };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     setFormData((s) => ({ ...s, [e.target.name]: e.target.value }));
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (formData.hp) return; // bots out
+    if (formData.hp) return;
     if (!formData.name || !formData.email || !formData.message) {
       alert(formCopy.validationError);
-      alert(copy.form.validationError);
       return;
     }
-    // Aquí enviarías a tu backend/servicio. Por ahora simulamos éxito:
     setSent('ok');
     setFormData({ name: '', email: '', message: '', hp: '' });
   };
@@ -88,12 +78,10 @@ export default function Contact() {
         {desc}
       </motion.p>
 
-      {/* Mensaje de éxito */}
       {sent === 'ok' && (
         <div className="mb-4 inline-flex items-center gap-2 rounded-lg px-3 py-2 bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-200">
           <Check size={18} />
           <span>{formCopy.success}</span>
-          <span>{copy.form.success}</span>
         </div>
       )}
 
@@ -104,7 +92,6 @@ export default function Contact() {
         animate={prefersReduced ? {} : { opacity: 1, y: 0 }}
         transition={{ delay: 0.4, duration: 0.6 }}
       >
-        {/* Honeypot */}
         <input
           type="text"
           name="hp"
@@ -116,13 +103,11 @@ export default function Contact() {
         />
 
         <label className="sr-only" htmlFor="name">{formCopy.nameLabel}</label>
-        <label className="sr-only" htmlFor="name">{copy.form.nameLabel}</label>
         <input
           id="name"
           type="text"
           name="name"
           placeholder={formCopy.namePlaceholder}
-          placeholder={copy.form.namePlaceholder}
           value={formData.name}
           onChange={handleChange}
           autoComplete="name"
@@ -131,13 +116,11 @@ export default function Contact() {
         />
 
         <label className="sr-only" htmlFor="email">{formCopy.emailLabel}</label>
-        <label className="sr-only" htmlFor="email">{copy.form.emailLabel}</label>
         <input
           id="email"
           type="email"
           name="email"
           placeholder={formCopy.emailPlaceholder}
-          placeholder={copy.form.emailPlaceholder}
           value={formData.email}
           onChange={handleChange}
           autoComplete="email"
@@ -150,11 +133,6 @@ export default function Contact() {
           id="message"
           name="message"
           placeholder={formCopy.messagePlaceholder}
-        <label className="sr-only" htmlFor="message">{copy.form.messageLabel}</label>
-        <textarea
-          id="message"
-          name="message"
-          placeholder={copy.form.messagePlaceholder}
           value={formData.message}
           onChange={handleChange}
           rows={4}
@@ -167,7 +145,6 @@ export default function Contact() {
           className="inline-flex items-center justify-center gap-2 rounded-lg px-6 py-3 bg-blue-600 text-white hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-neutral-950 transition"
         >
           <Send size={18} /> {formCopy.submit}
-          <Send size={18} /> {copy.form.submit}
         </button>
       </motion.form>
 
@@ -179,7 +156,7 @@ export default function Contact() {
         aria-label={language === 'es' ? 'Redes' : 'Social links'}
       >
         <a
-          href={gh}
+          href={githubUrl}
           target="_blank"
           rel="noreferrer"
           aria-label="GitHub"
@@ -188,7 +165,7 @@ export default function Contact() {
           <Github size={24} />
         </a>
         <a
-          href={ln}
+          href={linkedinUrl}
           target="_blank"
           rel="noreferrer"
           aria-label="LinkedIn"
@@ -197,7 +174,7 @@ export default function Contact() {
           <Linkedin size={24} />
         </a>
         <a
-          href={em}
+          href={emailUrl}
           target="_blank"
           rel="noreferrer"
           aria-label="Email"

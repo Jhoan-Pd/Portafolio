@@ -1,19 +1,19 @@
-import React from "react";
-import Hero from "@/components/Hero";
-import Projects from "@/components/Projects";
-import Informacion from "@/components/Informacion";
-import References from "@/components/References";
-import Contact from "@/components/Contact";
-import Lenguajes from "@/components/lenguajes";
+import React from 'react';
+import Hero from '@/components/Hero';
+import Projects from '@/components/Projects';
+import AboutSection from '@/components/AboutSection';
+import TestimonialsSection from '@/components/TestimonialsSection';
+import Contact from '@/components/Contact';
+import Languages from '@/components/Languages';
 
 export default function Home() {
   return (
     <main className="flex flex-col">
       <Hero />
       <Projects />
-      <Informacion />
-      <Lenguajes />
-      <References />
+      <AboutSection />
+      <Languages />
+      <TestimonialsSection />
       <Contact />
     </main>
   );

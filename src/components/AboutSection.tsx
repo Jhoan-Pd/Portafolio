@@ -1,47 +1,40 @@
 'use client';
+
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { usePortfolioSection } from '@/hooks/usePortfolioSection';
 import { useLanguage } from '@/contexts/LanguageContext';
+import type { InfoBlock } from '@/types/portfolio';
 
-export default function Informacion() {
+export default function AboutSection() {
   const information = usePortfolioSection('information');
   const { language } = useLanguage();
-  const infoBlocks = information?.blocks ?? [];
-  const title = information?.title ?? (language === 'es' ? 'Sobre mí' : 'About me');
-import { useLanguage } from '@/contexts/LanguageContext';
+  const infoBlocks = (information?.blocks ?? []) as InfoBlock[];
+  const fallbackTitle = language === 'es' ? 'Sobre mí' : 'About me';
+  const title = information?.title ?? fallbackTitle;
 
-interface InfoBlock {
-  id: number;
-  type: string;
-  title?: string;
-  value?: string;
-  subtitle?: string;
-  description?: string;
-  icon?: string;
-  span?: number;
-}
-
-export default function Informacion() {
-  const { content } = useLanguage();
-  const infoBlocks = content.information.blocks as InfoBlock[];
-  const title = content.information.title;
-
-  const spanClass = (n?: number) =>
-    n === 4 ? 'md:col-span-4'
-    : n === 3 ? 'md:col-span-3'
-    : n === 2 ? 'md:col-span-2'
-    : '';
+  const getSpanClass = (span?: number) => {
+    switch (span) {
+      case 4:
+        return 'md:col-span-4';
+      case 3:
+        return 'md:col-span-3';
+      case 2:
+        return 'md:col-span-2';
+      default:
+        return '';
+    }
+  };
 
   return (
     <section
-      id="sobre-mi"
+      id="about"
       className="w-full py-14 sm:py-20 theme-page transition-colors"
-      aria-labelledby="sobre-mi-title"
+      aria-labelledby="about-section-title"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2
-          id="sobre-mi-title"
+          id="about-section-title"
           className="text-center text-3xl sm:text-4xl font-bold tracking-wider mb-10 sm:mb-12"
         >
           {title.toUpperCase()}
@@ -56,16 +49,12 @@ export default function Informacion() {
               viewport={{ once: true, margin: '-10% 0px -10% 0px' }}
               transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
               whileHover={{ scale: 1.02 }}
-              className={`rounded-2xl p-6 sm:p-8 min-h-[200px] flex flex-col items-center justify-center text-center
-              className={`rounded-2xl p-6 sm:p-8 min-h[200px] flex flex-col items-center justify-center text-center
-                          border theme-card
-                          shadow-[0_14px_40px_rgba(0,0,0,.12)]
-                          transition-colors ${spanClass(block.span)}`}
+              className={`flex min-h-[200px] flex-col items-center justify-center rounded-2xl border p-6 text-center transition-colors sm:p-8 theme-card shadow-[0_14px_40px_rgba(0,0,0,.12)] ${getSpanClass(block.span)}`}
             >
               {block.icon ? (
                 <Image
                   src={block.icon}
-                  alt={block.title || block.subtitle || 'icono'}
+                  alt={block.title || block.subtitle || 'icon'}
                   width={72}
                   height={72}
                   className="mb-4 sm:mb-5"

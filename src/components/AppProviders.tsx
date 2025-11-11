@@ -12,12 +12,6 @@ export default function AppProviders({ children, initialLanguage }: AppProviders
   return (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
       <LanguageProvider initialLanguage={initialLanguage}>{children}</LanguageProvider>
-import { LanguageProvider } from '@/contexts/LanguageContext';
-
-export default function AppProviders({ children }: { children: React.ReactNode }) {
-  return (
-    <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-      <LanguageProvider>{children}</LanguageProvider>
     </ThemeProvider>
   );
 }
