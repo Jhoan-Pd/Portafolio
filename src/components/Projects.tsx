@@ -2,6 +2,7 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
 import Image from 'next/image';
 import { motion, cubicBezier } from 'framer-motion';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface Project {
   id: number;
@@ -11,16 +12,11 @@ interface Project {
 }
 
 export default function Projects() {
-  const [projects, setProjects] = useState<Project[]>([]);
+  const { content } = useLanguage();
+  const projects = content.projects.items as Project[];
+  const defaultDescription = content.projects.defaultDescription;
   const [active, setActive] = useState(0);
   const sectionRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    fetch('/data/data.json')
-      .then((r) => r.json())
-      .then((d) => setProjects(d.projects || []))
-      .catch((e) => console.error('Error cargando proyectos:', e));
-  }, []);
 
   useEffect(() => {
     if (!projects.length) return;
@@ -32,7 +28,7 @@ export default function Projects() {
       const viewportCenter = window.innerHeight / 2;
       const progress = clamp((viewportCenter - rect.top) / rect.height, 0, 1);
       const idx = Math.round(progress * Math.max(0, projects.length - 1));
-      if (idx !== active) setActive(idx);
+      setActive((prev) => (idx === prev ? prev : idx));
     };
     const onScroll = () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(compute); };
     window.addEventListener('scroll', onScroll, { passive: true });
@@ -69,25 +65,21 @@ export default function Projects() {
     };
   };
 
-  if (!projects.length) {
-    return (
-      <section className="w-full min-h-[60svh] grid place-items-center text-gray-500 dark:text-gray-400 bg-[var(--page-bg)]">
-        Cargando proyectos...
-      </section>
-    );
-  }
+  useEffect(() => {
+    setActive(0);
+  }, [projects]);
 
   return (
-    <section ref={sectionRef} className="w-full bg-[var(--page-bg)] text-[var(--page-fg)] transition-colors">
+    <section ref={sectionRef} className="w-full theme-page transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
         <h2 className="text-center text-3xl sm:text-4xl font-bold italic tracking-wide mb-6 sm:mb-8">
-          MIS PROYECTOS
+          {content.projects.title.toUpperCase()}
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-[1fr_260px] lg:grid-cols-[1fr_300px] gap-6 sm:gap-8">
           {/* Escenario (tarjeta grande) — cambia por modo */}
-          <div className="relative rounded-[28px] bg-white text-neutral-900 dark:bg-neutral-900 dark:text-white border border-black/10 dark:border-white/10 p-3 sm:p-5 md:p-8 shadow-[0_14px_40px_rgba(0,0,0,.12)] transition-colors">
-            <div className="relative h-[62svh] md:h-[68svh] overflow-hidden rounded-3xl bg-neutral-100 dark:bg-neutral-800 transition-colors">
+          <div className="relative rounded-[28px] border theme-card p-3 sm:p-5 md:p-8 shadow-[0_14px_40px_rgba(0,0,0,.12)] transition-colors">
+            <div className="relative h-[62svh] md:h-[68svh] overflow-hidden rounded-3xl theme-glass transition-colors">
               <div className="absolute inset-0 rounded-3xl ring-1 ring-black/10 dark:ring-white/10" />
               {staged.map((p, i) => {
                 const { animate, style } = layer(i);
@@ -131,7 +123,7 @@ export default function Projects() {
           </div>
 
           {/* Lista lateral — descripción aquí */}
-          <div className="hidden md:block rounded-[24px] bg-white text-neutral-900 dark:bg-neutral-900 dark:text-white border border-black/10 dark:border-white/10 p-3 sm:p-4 shadow-[0_14px_40px_rgba(0,0,0,.12)] h-[68svh] overflow-y-auto transition-colors">
+          <div className="hidden md:block rounded-[24px] border theme-card p-3 sm:p-4 shadow-[0_14px_40px_rgba(0,0,0,.12)] h-[68svh] overflow-y-auto transition-colors">
             <div className="space-y-2.5">
               {projects.map((p, i) => {
                 const isActive = i === active;
@@ -142,7 +134,7 @@ export default function Projects() {
                     className={`group relative w-full text-left flex items-start gap-3 rounded-2xl p-3 border transition-colors ${
                       isActive
                         ? 'border-blue-400 ring-1 ring-blue-300/60 bg-blue-50 dark:bg-blue-500/15 dark:ring-blue-400/50'
-                        : 'border-black/10 bg-white dark:border-white/10 dark:bg-neutral-800'
+                        : 'theme-card'
                     }`}
                   >
                     <div className="relative h-10 w-10 rounded-lg overflow-hidden bg-neutral-200 dark:bg-neutral-700 shrink-0 ring-1 ring-black/10 dark:ring-white/10">
@@ -151,7 +143,7 @@ export default function Projects() {
                     <div className="flex-1 min-w-0">
                       <p className="text-[13px] sm:text-[14px] font-semibold truncate">{p.title}</p>
                       <p className="mt-0.5 text-[11px] sm:text-[12px] text-neutral-600 dark:text-neutral-300 line-clamp-2">
-                        {p.description ?? 'Breve descripción del proyecto, tecnologías y objetivo.'}
+                        {p.description ?? defaultDescription}
                       </p>
                     </div>
                     <span className="ml-2 text-[10px] font-semibold opacity-60 shrink-0">
