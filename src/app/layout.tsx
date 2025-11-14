@@ -7,11 +7,11 @@ import { isLanguage, type Language } from '@/contexts/LanguageContext';
 export const metadata: Metadata = {
   title: 'Portafolio',
   description: 'Mi portafolio con Next.js y Tailwind',
-}
+};
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const cookieStore = cookies();
-  const stored = cookieStore.get('portfolio-language');
+  const stored = (await cookieStore).get('portfolio-language');
   const initialLanguage: Language = stored && isLanguage(stored.value) ? stored.value : 'es';
 
   return (
@@ -24,5 +24,5 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </AppProviders>
       </body>
     </html>
-  )
+  );
 }
