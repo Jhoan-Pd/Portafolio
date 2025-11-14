@@ -7,24 +7,28 @@ import LanguageToggle from '@/components/LanguageToggle';
 import { usePortfolioSection, type HeroCopy } from '@/hooks/usePortfolioSection';
 import { useLanguage } from '@/contexts/LanguageContext';
 
+const HERO_BOTTOM_RADIUS = 140;
+
+function renderHighlighted(text: string, highlight?: string) {
+  if (!highlight?.trim() || !text.includes(highlight)) return text;
+
+  const parts = text.split(highlight);
+
+  return parts.map((part, index) => (
+    <span key={index}>
+      {part}
+      {index < parts.length - 1 && (
+        <span className="font-semibold text-slate-100">
+          {highlight}
+        </span>
+      )}
+    </span>
+  ));
+}
+
 export default function Hero() {
   const hero = usePortfolioSection('hero') as HeroCopy | null;
   const { language } = useLanguage();
-
-  const rounded = 140;
-
-  const renderHighlighted = (text: string, hl?: string) => {
-    if (!hl) return text;
-    const i = text.indexOf(hl);
-    if (i === -1) return text;
-    return (
-      <>
-        {text.slice(0, i)}
-        <span className="font-semibold text-[#E9EEF3]">{hl}</span>
-        {text.slice(i + hl.length)}
-      </>
-    );
-  };
 
   if (!hero) {
     return (
@@ -36,16 +40,17 @@ export default function Hero() {
 
   return (
     <section className="relative w-full theme-page transition-colors duration-300">
+      {/* NAV FIJA */}
       <nav
         className="fixed top-4 sm:top-6 left-1/2 -translate-x-1/2 z-[60] w-full max-w-5xl px-4 sm:px-6 pointer-events-none"
-        aria-label="Barra de acciones"
+        aria-label="Barra de acciones del héroe"
       >
         <div className="flex items-center justify-between gap-3 sm:gap-4">
           <div className="pointer-events-auto flex items-center gap-3 sm:gap-4 rounded-2xl border theme-card px-4 sm:px-5 py-2.5 sm:py-3 shadow-lg backdrop-blur-sm transition-colors">
             <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full overflow-hidden bg-slate-200 ring-2 ring-black/10 dark:ring-white/10 shrink-0">
               <Image
                 src={hero.author.photo}
-                alt={hero.author.firstName}
+                alt={`Foto de ${hero.author.firstName} ${hero.author.lastName}`}
                 width={48}
                 height={48}
                 className="h-full w-full object-cover"
@@ -68,13 +73,14 @@ export default function Hero() {
         </div>
       </nav>
 
+      {/* HERO VISUAL */}
       <div
         className="relative overflow-hidden"
         style={{
           height: '68svh',
           minHeight: 520,
-          borderBottomLeftRadius: rounded,
-          borderBottomRightRadius: rounded,
+          borderBottomLeftRadius: HERO_BOTTOM_RADIUS,
+          borderBottomRightRadius: HERO_BOTTOM_RADIUS,
         }}
       >
         <Image
@@ -102,6 +108,7 @@ export default function Hero() {
         </div>
       </div>
 
+      {/* CARD INFERIOR */}
       <div className="relative z-20 -mt-14 sm:-mt-20">
         <div
           className="
@@ -120,12 +127,20 @@ export default function Hero() {
             <Link
               href={hero.cvLink}
               target="_blank"
+              rel="noreferrer noopener"
               className="
                 inline-flex items-center gap-2 rounded-full px-5 sm:px-6 py-2.5
                 text-white text-sm font-semibold tracking-wide
                 shadow hover:brightness-110 active:translate-y-[1px]
                 bg-[rgb(229,127,121)]
               "
+              aria-label={
+                hero.cvLabel
+                  ? `${hero.cvLabel} (se abre en una pestaña nueva)`
+                  : language === 'es'
+                    ? 'Ver o descargar CV (se abre en una pestaña nueva)'
+                    : 'View or download CV (opens in a new tab)'
+              }
             >
               <span className="text-base leading-none">↓</span>
               {hero.cvLabel ?? 'CV'}
@@ -134,6 +149,7 @@ export default function Hero() {
         </div>
       </div>
 
+      {/* BADGE FLOTANTE */}
       <div className="pointer-events-none absolute right-4 sm:right-6 bottom-4 sm:bottom-6 z-20">
         <div className="flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full shadow-lg backdrop-blur ring-1 ring-black/10 dark:ring-white/10 theme-card transition-colors">
           {hero.author.badge}
