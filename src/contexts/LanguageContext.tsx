@@ -2,11 +2,7 @@
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 
-export type Language = 'es' | 'en';
-
-export function isLanguage(value: unknown): value is Language {
-  return value === 'es' || value === 'en';
-}
+import { isLanguage, type Language } from '@/lib/language';
 
 export type LanguageContextValue = {
   language: Language;
