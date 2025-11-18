@@ -1,7 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useLanguage, type Language } from '@/contexts/LanguageContext';
+import { useLanguage } from '@/contexts/LanguageContext';
+import type { Language } from '@/lib/language';
 
 export type HeroCopy = {
   backgroundImage: string;
