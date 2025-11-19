@@ -1,188 +1,86 @@
 'use client';
 
-import { useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { Mail, Send, Linkedin, Github, Check } from 'lucide-react';
-import { usePortfolioSection, type ContactCopy } from '@/hooks/usePortfolioSection';
+import { ArrowRight } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function Contact() {
-  const contact = usePortfolioSection('contact') as ContactCopy | null;
   const { language } = useLanguage();
-  const [formData, setFormData] = useState({ name: '', email: '', message: '', hp: '' });
-  const [sent, setSent] = useState<null | 'ok' | 'error'>(null);
   const prefersReduced = useReducedMotion();
 
-  const title = contact?.title ?? contact?.titulo ?? (language === 'es' ? 'Contacto' : 'Contact');
-  const desc =
-    contact?.description ??
-    contact?.descripcion ??
-    (language === 'es'
-      ? 'Si tienes un proyecto o quieres colaborar, completa el formulario o envíame un correo.'
-      : 'If you have a project or want to collaborate, fill out the form or send me an email.');
+  const title = language === 'es' ? 'Contacto' : 'Contact';
 
-  const social = contact?.social ?? contact?.redes ?? {};
-  const gh = social.github ?? 'https://github.com/tuusuario';
-  const ln = social.linkedin ?? 'https://linkedin.com/in/tuusuario';
-  const em = social.email ?? `mailto:${contact?.email ?? contact?.correo ?? 'tuemail@ejemplo.com'}`;
-
-  const formCopy =
-    contact?.form ?? {
-      nameLabel: language === 'es' ? 'Nombre' : 'Name',
-      emailLabel: language === 'es' ? 'Correo' : 'Email',
-      messageLabel: language === 'es' ? 'Mensaje' : 'Message',
-      namePlaceholder: language === 'es' ? 'Tu nombre' : 'Your name',
-      emailPlaceholder: language === 'es' ? 'Tu correo' : 'Your email',
-      messagePlaceholder: language === 'es' ? 'Tu mensaje' : 'Your message',
-      submit: language === 'es' ? 'Enviar' : 'Send',
-      success: language === 'es' ? '¡Gracias! Tu mensaje fue enviado.' : 'Thanks! Your message was sent.',
-      validationError: language === 'es' ? 'Completa todos los campos.' : 'Please complete every field.',
-    };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-    setFormData((s) => ({ ...s, [e.target.name]: e.target.value }));
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (formData.hp) return;
-    if (!formData.name || !formData.email || !formData.message) {
-      alert(formCopy.validationError);
-      return;
-    }
-    setSent('ok');
-    setFormData({ name: '', email: '', message: '', hp: '' });
-  };
+  // Enlaces reales
+  const LINKEDIN = 'https://www.linkedin.com/in/jhoan-paredes-delgado-87755b249/';
+  const GITHUB   = 'https://github.com/Jhoan-Pd';
+  const EMAIL    = 'mailto:jhoan123paredes@gmail.com';
 
   return (
-    <section
-      id="contact"
-      className="py-16 sm:py-20 px-4 sm:px-6 flex flex-col items-center theme-page transition-colors"
-      aria-labelledby="contact-title"
-    >
-      <motion.h2
-        id="contact-title"
-        className="text-3xl sm:text-4xl font-bold mb-6 sm:mb-8 text-center"
-        initial={prefersReduced ? false : { opacity: 0, y: -30 }}
-        animate={prefersReduced ? {} : { opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-      >
-        {title}
-      </motion.h2>
-
-      <motion.p
-        className="text-base sm:text-lg mb-8 text-center max-w-xl text-gray-700 dark:text-gray-300"
-        initial={prefersReduced ? false : { opacity: 0 }}
-        animate={prefersReduced ? {} : { opacity: 1 }}
-        transition={{ delay: 0.2, duration: 0.6 }}
-      >
-        {desc}
-      </motion.p>
-
-      {sent === 'ok' && (
-        <div className="mb-4 inline-flex items-center gap-2 rounded-lg px-3 py-2 bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-200">
-          <Check size={18} />
-          <span>{formCopy.success}</span>
+    <section className="relative py-16 sm:py-24 bg-[var(--page-bg)] text-[var(--page-fg)]">
+      {/* Bloque principal con bordes súper redondeados arriba */}
+      <div className="relative mx-auto w-[min(92%,1080px)] rounded-t-[120px] sm:rounded-t-[140px] px-5 sm:px-10 pb-16 sm:pb-24 pt-20 sm:pt-28
+                      shadow-[0_30px_80px_rgba(0,0,0,.25)] ring-1 ring-black/10 dark:ring-white/10
+                      bg-neutral-900 text-white dark:bg-neutral-900">
+        {/* badge centrado */}
+        <div className="absolute -top-10 sm:-top-12 left-1/2 -translate-x-1/2 h-20 w-20 sm:h-24 sm:w-24
+                        rounded-full grid place-items-center shadow-xl ring-1 ring-black/10
+                        bg-[var(--pill-left)] dark:bg-neutral-800">
+          <span className="text-xl sm:text-2xl font-semibold tracking-[0.25em]">JPD</span>
         </div>
-      )}
 
-      <motion.form
-        onSubmit={handleSubmit}
-        className="w-full max-w-md border theme-card shadow-lg rounded-2xl p-6 sm:p-8 flex flex-col gap-4 transition-colors"
-        initial={prefersReduced ? false : { opacity: 0, y: 20 }}
-        animate={prefersReduced ? {} : { opacity: 1, y: 0 }}
-        transition={{ delay: 0.4, duration: 0.6 }}
-      >
-        <input
-          type="text"
-          name="hp"
-          value={formData.hp}
-          onChange={handleChange}
-          className="hidden"
-          tabIndex={-1}
-          autoComplete="off"
-        />
-
-        <label className="sr-only" htmlFor="name">{formCopy.nameLabel}</label>
-        <input
-          id="name"
-          type="text"
-          name="name"
-          placeholder={formCopy.namePlaceholder}
-          value={formData.name}
-          onChange={handleChange}
-          autoComplete="name"
-          className="w-full rounded-lg px-4 py-2 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 placeholder:text-neutral-400 border border-neutral-300 dark:border-neutral-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          required
-        />
-
-        <label className="sr-only" htmlFor="email">{formCopy.emailLabel}</label>
-        <input
-          id="email"
-          type="email"
-          name="email"
-          placeholder={formCopy.emailPlaceholder}
-          value={formData.email}
-          onChange={handleChange}
-          autoComplete="email"
-          className="w-full rounded-lg px-4 py-2 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 placeholder:text-neutral-400 border border-neutral-300 dark:border-neutral-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          required
-        />
-
-        <label className="sr-only" htmlFor="message">{formCopy.messageLabel}</label>
-        <textarea
-          id="message"
-          name="message"
-          placeholder={formCopy.messagePlaceholder}
-          value={formData.message}
-          onChange={handleChange}
-          rows={4}
-          className="w-full rounded-lg px-4 py-2 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 placeholder:text-neutral-400 border border-neutral-300 dark:border-neutral-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          required
-        />
-
-        <button
-          type="submit"
-          className="inline-flex items-center justify-center gap-2 rounded-lg px-6 py-3 bg-blue-600 text-white hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-neutral-950 transition"
+        {/* Título */}
+        <motion.h2
+          className="text-center text-3xl sm:text-5xl font-extrabold tracking-wide mb-10 sm:mb-12"
+          initial={prefersReduced ? false : { opacity: 0, y: -16 }}
+          animate={prefersReduced ? {} : { opacity: 1, y: 0 }}
+          transition={{ duration: 0.55 }}
         >
-          <Send size={18} /> {formCopy.submit}
-        </button>
-      </motion.form>
+          {title}
+        </motion.h2>
 
-      <motion.div
-        className="flex gap-5 sm:gap-6 mt-8 sm:mt-10"
-        initial={prefersReduced ? false : { opacity: 0 }}
-        animate={prefersReduced ? {} : { opacity: 1 }}
-        transition={{ delay: 0.8, duration: 0.6 }}
-        aria-label={language === 'es' ? 'Redes' : 'Social links'}
-      >
-        <a
-          href={gh}
-          target="_blank"
-          rel="noreferrer"
-          aria-label="GitHub"
-          className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition"
+        {/* Botones tipo píldora */}
+        <motion.div
+          className="mx-auto grid w-full max-w-2xl grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6 place-items-center"
+          initial={prefersReduced ? false : { opacity: 0, y: 10 }}
+          animate={prefersReduced ? {} : { opacity: 1, y: 0 }}
+          transition={{ delay: 0.1, duration: 0.5 }}
         >
-          <Github size={24} />
-        </a>
-        <a
-          href={ln}
-          target="_blank"
-          rel="noreferrer"
-          aria-label="LinkedIn"
-          className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition"
+          <Pill href={LINKEDIN} label="LinkedIn" />
+          <Pill href={EMAIL} label={language === 'es' ? 'Correo' : 'Email'} />
+        </motion.div>
+
+        {/* GitHub debajo centrado */}
+        <motion.div
+          className="mt-6 sm:mt-8 flex justify-center"
+          initial={prefersReduced ? false : { opacity: 0, y: 10 }}
+          animate={prefersReduced ? {} : { opacity: 1, y: 0 }}
+          transition={{ delay: 0.2, duration: 0.5 }}
         >
-          <Linkedin size={24} />
-        </a>
-        <a
-          href={em}
-          target="_blank"
-          rel="noreferrer"
-          aria-label="Email"
-          className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition"
-        >
-          <Mail size={24} />
-        </a>
-      </motion.div>
+          <Pill href={GITHUB} label="GitHub" />
+        </motion.div>
+      </div>
+
+      {/* Suavizado del fondo superior (opcional, para parecerse más a tu captura) */}
+      <div className="pointer-events-none absolute inset-x-0 -top-20 h-40 bg-gradient-to-b from-black/5 to-transparent dark:from-white/5" />
     </section>
+  );
+}
+
+/* ---------- Botón tipo píldora ---------- */
+function Pill({ href, label }: { href: string; label: string }) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noreferrer"
+      className="group inline-flex items-center gap-3 rounded-full px-6 sm:px-8 py-3 sm:py-4
+                 bg-teal-700/90 hover:bg-teal-600 text-white font-semibold tracking-wide
+                 ring-1 ring-white/10 shadow-md transition"
+    >
+      <span className="grid h-6 w-9 place-items-center rounded-full bg-white/15 backdrop-blur-sm">
+        <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+      </span>
+      {label.toLowerCase()}
+    </a>
   );
 }
