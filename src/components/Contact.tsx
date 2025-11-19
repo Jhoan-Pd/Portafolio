@@ -9,14 +9,13 @@ export default function Contact() {
   const { language } = useLanguage();
   const prefersReduced = useReducedMotion();
 
-  // Copia desde tu JSON (opcional) con fallback por idioma
   const contact = usePortfolioSection('contact') as ContactCopy | null;
   const title =
     contact?.title ??
     contact?.titulo ??
     (language === 'es' ? 'Contacto' : 'Contact');
 
-  // Enlaces reales con fallback a tu JSON si existiese
+
   const social = contact?.social ?? contact?.redes ?? {};
   const LINKEDIN =
     social.linkedin ??
@@ -25,7 +24,7 @@ export default function Contact() {
   const EMAIL =
     social.email ?? 'mailto:jhoan123paredes@gmail.com';
 
-  // Etiquetas por idioma
+
   const labels = {
     linkedin: 'LinkedIn',
     email: language === 'es' ? 'Correo' : 'Email',
@@ -38,7 +37,7 @@ export default function Contact() {
       className="relative theme-page transition-colors py-16 sm:py-24"
       aria-labelledby="contact-title"
     >
-      {/* Contenedor principal (tarjeta adaptable a tema) */}
+
       <div
         className="
           relative mx-auto w-[min(94%,1080px)]
@@ -48,7 +47,6 @@ export default function Contact() {
           transition-colors
         "
       >
-        {/* Badge superior */}
         <div className="
           absolute -top-10 sm:-top-12 left-1/2 -translate-x-1/2
           h-20 w-20 sm:h-24 sm:w-24 rounded-full
@@ -60,7 +58,6 @@ export default function Contact() {
           <span className="text-xl sm:text-2xl font-semibold tracking-[0.25em]">JPD</span>
         </div>
 
-        {/* Título */}
         <motion.h2
           id="contact-title"
           className="text-center text-3xl sm:text-5xl font-extrabold tracking-wide mb-10 sm:mb-12"
@@ -71,7 +68,6 @@ export default function Contact() {
           {title}
         </motion.h2>
 
-        {/* Botones tipo píldora */}
         <motion.div
           className="mx-auto grid w-full max-w-2xl grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6 place-items-center"
           initial={prefersReduced ? false : { opacity: 0, y: 10 }}
@@ -92,13 +88,13 @@ export default function Contact() {
         </motion.div>
       </div>
 
-      {/* Suavizado superior opcional */}
+
       <div className="pointer-events-none absolute inset-x-0 -top-16 h-32 bg-gradient-to-b from-black/5 to-transparent dark:from-white/5" />
     </section>
   );
 }
 
-/* ---------- Componente de píldora ---------- */
+
 function Pill({ href, label }: { href: string; label: string }) {
   return (
     <a
