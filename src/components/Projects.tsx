@@ -6,6 +6,9 @@ import { motion, cubicBezier } from 'framer-motion';
 import { usePortfolioSection, type Project as ProjectItem } from '@/hooks/usePortfolioSection';
 import { useLanguage } from '@/contexts/LanguageContext';
 
+/* Un color de acento por proyecto, cíclico */
+const PROJECT_COLORS = ['#E57F79', '#6366F1', '#10B981', '#F59E0B', '#EC4899', '#3B82F6'];
+
 export default function Projects() {
   const copy = usePortfolioSection('projects');
   const { language } = useLanguage();
@@ -52,6 +55,7 @@ export default function Projects() {
     const isFuture = depth < 0;
 
     return {
+      isCurrent,
       animate: {
         zIndex: 100 - i,
         opacity: isCurrent ? 1 : isPast ? 0 : 0.6,
@@ -66,19 +70,23 @@ export default function Projects() {
     };
   };
 
-  const title = copy?.title?.toUpperCase() ?? (language === 'es' ? 'PROYECTOS' : 'PROJECTS');
+  const title = copy?.title ?? (language === 'es' ? 'Mis proyectos' : 'My projects');
 
   return (
-    <section ref={sectionRef} className="w-full theme-page transition-colors">
+    <section id="projects" ref={sectionRef} className="w-full theme-page transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
-        <h2 className="text-center text-3xl sm:text-4xl font-bold italic tracking-wide mb-6 sm:mb-8">{title}</h2>
+        {/* MEJORA 2: título unificado */}
+        <h2 className="text-2xl sm:text-3xl font-semibold mb-6 sm:mb-8">{title}</h2>
 
         <div className="grid grid-cols-1 md:grid-cols-[1fr_260px] lg:grid-cols-[1fr_300px] gap-6 sm:gap-8">
+          {/* PANEL IZQUIERDO PRINCIPAL */}
           <div className="relative rounded-[28px] border theme-card p-3 sm:p-5 md:p-8 shadow-[0_14px_40px_rgba(0,0,0,.12)] transition-colors">
             <div className="relative h-[62svh] md:h-[68svh] overflow-hidden rounded-3xl theme-glass transition-colors">
               <div className="absolute inset-0 rounded-3xl ring-1 ring-black/10 dark:ring-white/10" />
               {staged.map((p, i) => {
-                const { animate, style } = layer(i);
+                const { isCurrent, animate, style } = layer(i);
+                const accentColor = p.accentColor ?? PROJECT_COLORS[i % PROJECT_COLORS.length];
+
                 return (
                   <motion.article
                     key={p.id}
@@ -93,7 +101,7 @@ export default function Projects() {
                     initial={{ opacity: 0, y: 60, scale: 0.98 }}
                     style={style}
                   >
-                    <div className="relative inset-0 w-full h-full">
+                    <div className="relative w-full h-full">
                       <Image
                         src={p.image}
                         alt={p.title}
@@ -102,10 +110,43 @@ export default function Projects() {
                         sizes="(min-width:1024px) 70vw, 100vw"
                         className="object-cover"
                       />
-                      <div className="absolute left-4 right-4 bottom-4">
-                        <div className="inline-flex max-w-[90%] items-center gap-2 rounded-xl px-3 py-2 bg-white/90 text-neutral-900 ring-1 ring-black/10 dark:bg-neutral-100/90 dark:text-neutral-900 dark:ring-black/20">
-                          <span className="text-sm sm:text-base font-semibold truncate">{p.title}</span>
+
+                      {/* MEJORA 4b: barra de información inferior con overlay */}
+                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/85 via-black/50 to-transparent pt-16 pb-4 px-4 rounded-b-3xl">
+                        {/* MEJORA 4d: chip permanente con número + nombre */}
+                        <div className="flex items-center gap-2 mb-2">
+                          <span
+                            className="shrink-0 text-[11px] font-bold px-2 py-0.5 rounded-full text-white"
+                            style={{ backgroundColor: accentColor }}
+                          >
+                            {String(i + 1).padStart(2, '0')}
+                          </span>
+                          <span className="text-white text-sm font-semibold truncate">{p.title}</span>
                         </div>
+
+                        {/* Stack chips — solo visibles en la card activa */}
+                        <div
+                          className={`flex flex-wrap gap-1 mb-1.5 transition-opacity duration-300 ${isCurrent ? 'opacity-100' : 'opacity-0'}`}
+                        >
+                          {p.stack?.map((s) => (
+                            <span
+                              key={s}
+                              className="text-[11px] px-2 py-0.5 rounded-full bg-white/20 text-white backdrop-blur-sm"
+                            >
+                              {s}
+                            </span>
+                          ))}
+                        </div>
+
+                        {/* Rol — solo visible en la card activa */}
+                        {p.role && (
+                          <p
+                            className={`text-xs font-medium transition-opacity duration-300 ${isCurrent ? 'opacity-100' : 'opacity-0'}`}
+                            style={{ color: accentColor }}
+                          >
+                            {p.role}
+                          </p>
+                        )}
                       </div>
                     </div>
                   </motion.article>
@@ -114,17 +155,26 @@ export default function Projects() {
             </div>
           </div>
 
+          {/* COLUMNA DERECHA DE NAVEGACIÓN */}
           <div className="hidden md:block rounded-[24px] border theme-card p-3 sm:p-4 shadow-[0_14px_40px_rgba(0,0,0,.12)] h-[68svh] overflow-y-auto transition-colors">
             <div className="space-y-2.5">
               {projects.map((p, i) => {
                 const isActive = i === active;
+                const accentColor = p.accentColor ?? PROJECT_COLORS[i % PROJECT_COLORS.length];
+
                 return (
                   <button
                     key={p.id}
                     onClick={() => setActive(i)}
-                    className={`group relative w-full text-left flex items-start gap-3 rounded-2xl p-3 border transition-colors ${
+                    style={{
+                      borderLeftColor: accentColor,
+                      ...(isActive
+                        ? { backgroundColor: `${accentColor}18` }
+                        : {}),
+                    }}
+                    className={`group relative w-full text-left flex items-start gap-3 rounded-2xl p-3 border-l-[4px] border-r border-t border-b transition-all duration-200 ${
                       isActive
-                        ? 'border-blue-400 ring-1 ring-blue-300/60 bg-blue-50 dark:bg-blue-500/15 dark:ring-blue-400/50'
+                        ? 'border-r-[var(--card-border)] border-t-[var(--card-border)] border-b-[var(--card-border)]'
                         : 'theme-card'
                     }`}
                   >
@@ -137,7 +187,12 @@ export default function Projects() {
                         {p.description ?? defaultDescription}
                       </p>
                     </div>
-                    <span className="ml-2 text-[10px] font-semibold opacity-60 shrink-0">({String(i + 1).padStart(2, '0')})</span>
+                    <span
+                      className="ml-2 text-[10px] font-bold opacity-70 shrink-0"
+                      style={{ color: accentColor }}
+                    >
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
                   </button>
                 );
               })}

@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import { Layers } from 'lucide-react';
 import { usePortfolioSection, type InfoBlock } from '@/hooks/usePortfolioSection';
 import { useLanguage } from '@/contexts/LanguageContext';
 
@@ -24,11 +25,12 @@ export default function Informacion() {
       aria-labelledby="sobre-mi-title"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* MEJORA 2: título unificado — semibold, sin uppercase, alineado izquierda */}
         <h2
           id="sobre-mi-title"
-          className="text-center text-3xl sm:text-4xl font-bold tracking-wider mb-10 sm:mb-12"
+          className="text-2xl sm:text-3xl font-semibold mb-10 sm:mb-12"
         >
-          {title.toUpperCase()}
+          {title}
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-5 sm:gap-6 lg:gap-8">
@@ -42,7 +44,32 @@ export default function Informacion() {
               whileHover={{ scale: 1.02 }}
               className={`rounded-2xl p-6 sm:p-8 min-h-[200px] flex flex-col items-center justify-center text-center border theme-card shadow-[0_14px_40px_rgba(0,0,0,.12)] transition-colors ${spanClass(block.span)}`}
             >
-              {block.icon ? (
+              {/* MEJORA 5d/5e: iconos especiales */}
+              {block.icon === 'layers-icon' ? (
+                <Layers
+                  size={64}
+                  className="mb-4 sm:mb-5 text-accent"
+                  aria-hidden="true"
+                />
+              ) : block.icon === 'java-python-logos' ? (
+                /* MEJORA 5e: logos reales Java + Python lado a lado */
+                <div className="flex items-center gap-4 mb-4 sm:mb-5">
+                  <img
+                    src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg"
+                    alt="Java"
+                    width={48}
+                    height={48}
+                    loading="lazy"
+                  />
+                  <img
+                    src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg"
+                    alt="Python"
+                    width={48}
+                    height={48}
+                    loading="lazy"
+                  />
+                </div>
+              ) : block.icon ? (
                 <Image
                   src={block.icon}
                   alt={block.title || block.subtitle || 'icono'}
@@ -53,19 +80,21 @@ export default function Informacion() {
                   decoding="async"
                 />
               ) : block.value ? (
-                <p className="mb-2 text-4xl sm:text-5xl md:text-6xl font-extrabold text-red-500 dark:text-red-400">
+                /* MEJORA 1: métricas en color acento */
+                <p className="mb-2 text-4xl sm:text-5xl md:text-6xl font-extrabold text-accent">
                   {block.value}
                 </p>
               ) : null}
 
               {block.subtitle && (
-                <p className="uppercase font-bold text-[10px] sm:text-xs tracking-wide leading-tight text-red-400 dark:text-red-300">
+                <p className="uppercase font-bold text-[10px] sm:text-xs tracking-wide leading-tight text-accent">
                   {block.subtitle}
                 </p>
               )}
 
               {block.title && (
-                <h3 className="mt-2 mb-3 sm:mb-4 text-xl sm:text-2xl font-bold italic text-cyan-600 dark:text-cyan-300">
+                /* MEJORA 1 + 2: sin itálica, sin cian — color foreground */
+                <h3 className="mt-2 mb-3 sm:mb-4 text-xl sm:text-2xl font-semibold">
                   {block.title}
                 </h3>
               )}

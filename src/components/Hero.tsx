@@ -9,23 +9,6 @@ import { useLanguage } from '@/contexts/LanguageContext';
 
 const HERO_BOTTOM_RADIUS = 140;
 
-function renderHighlighted(text: string, highlight?: string) {
-  if (!highlight?.trim() || !text.includes(highlight)) return text;
-
-  const parts = text.split(highlight);
-
-  return parts.map((part, index) => (
-    <span key={index}>
-      {part}
-      {index < parts.length - 1 && (
-        <span className="font-semibold text-slate-100">
-          {highlight}
-        </span>
-      )}
-    </span>
-  ));
-}
-
 export default function Hero() {
   const hero = usePortfolioSection('hero') as HeroCopy | null;
   const { language } = useLanguage();
@@ -37,6 +20,11 @@ export default function Hero() {
       </section>
     );
   }
+
+  const scrollToProjects = (e: { preventDefault(): void }) => {
+    e.preventDefault();
+    document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   return (
     <section className="relative w-full theme-page transition-colors duration-300">
@@ -91,21 +79,10 @@ export default function Hero() {
           sizes="100vw"
           className="object-cover object-center"
         />
-        <div className="absolute inset-0 bg-black/45 dark:bg-black/35" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/10 dark:from-black/25 dark:via-black/15 dark:to-black/5" />
-
-        <div className="absolute inset-0 z-10 flex items-center justify-center px-4 sm:px-6">
-          <h1
-            className="
-              max-w-5xl text-center italic font-light text-white
-              text-[26px] sm:text-[34px] md:text-[46px] lg:text-[56px]
-              leading-[1.15] tracking-tight drop-shadow-[0_1px_20px_rgba(0,0,0,.55)]
-            "
-            style={{ fontFamily: 'Merriweather, serif' }}
-          >
-            {renderHighlighted(hero.quote, hero.highlight)}
-          </h1>
-        </div>
+        {/* Overlay base */}
+        <div className="absolute inset-0 bg-black/40 dark:bg-black/30" />
+        {/* Gradiente que integra la imagen con la card inferior */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-[var(--page-bg)]" />
       </div>
 
       {/* CARD INFERIOR */}
@@ -119,11 +96,20 @@ export default function Hero() {
             transition-colors
           "
         >
-          <p className="text-center text-[14px] sm:text-[16px] leading-relaxed sm:leading-8 tracking-[0.14em] sm:tracking-[0.18em] uppercase">
+          {/* Etiqueta de ubicación y disponibilidad */}
+          <p className="text-center text-sm font-medium mb-4 text-accent">
+            {hero.locationTag ?? (language === 'es'
+              ? 'Pasto, Colombia · Disponible para proyectos'
+              : 'Pasto, Colombia · Available for projects')}
+          </p>
+
+          {/* Texto descriptivo — normal, sin uppercase, sin tracking extremo */}
+          <p className="text-center text-base leading-relaxed">
             {hero.intro}
           </p>
 
-          <div className="mt-6 sm:mt-7 flex justify-center">
+          {/* CTAs */}
+          <div className="mt-6 sm:mt-7 flex flex-wrap items-center justify-center gap-3">
             <Link
               href={hero.cvLink}
               target="_blank"
@@ -132,7 +118,7 @@ export default function Hero() {
                 inline-flex items-center gap-2 rounded-full px-5 sm:px-6 py-2.5
                 text-white text-sm font-semibold tracking-wide
                 shadow hover:brightness-110 active:translate-y-[1px]
-                bg-[rgb(229,127,121)]
+                bg-accent transition-[filter]
               "
               aria-label={
                 hero.cvLabel
@@ -145,6 +131,24 @@ export default function Hero() {
               <span className="text-base leading-none">↓</span>
               {hero.cvLabel ?? 'CV'}
             </Link>
+
+            <a
+              href="#projects"
+              onClick={scrollToProjects}
+              className="
+                inline-flex items-center gap-2 rounded-full px-5 sm:px-6 py-2.5
+                text-sm font-semibold tracking-wide border-2 border-accent text-accent
+                hover:bg-accent hover:text-white
+                active:translate-y-[1px] transition-colors
+              "
+            >
+              {hero.viewWorkLabel ?? (language === 'es' ? 'Ver proyectos →' : 'View work →')}
+            </a>
+          </div>
+
+          {/* Indicador de scroll */}
+          <div className="mt-6 flex justify-center opacity-50" aria-hidden="true">
+            <span className="text-xs animate-bounce select-none">↓ scroll</span>
           </div>
         </div>
       </div>

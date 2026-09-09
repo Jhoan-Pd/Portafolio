@@ -16,7 +16,7 @@ export default function Languages() {
 
   const track = useMemo(() => [...items, ...items], [items]);
 
-  const SPEED_S = 28;
+  const SPEED_S = 32;
 
   useEffect(() => {
     if (!items.length) return;
@@ -67,16 +67,19 @@ export default function Languages() {
     };
   }, [controls, items.length]);
 
-  const title = languages?.title?.toUpperCase() ?? (language === 'es' ? 'LENGUAJES' : 'LANGUAGES');
+  /* MEJORA 2: título unificado; MEJORA 6f: nuevo texto */
+  const title = languages?.title ?? (language === 'es' ? 'Tecnologías' : 'Tech Stack');
 
   return (
     <section id="languages" className="space-y-6 py-10 theme-page transition-colors">
-      <h2 className="text-center text-2xl sm:text-3xl font-bold italic tracking-wide">{title}</h2>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 className="text-2xl sm:text-3xl font-semibold">{title}</h2>
+      </div>
 
       <div className="relative overflow-hidden">
-        <motion.div className="flex gap-6 sm:gap-8 w-[200%] will-change-transform" animate={controls}>
+        <motion.div className="flex gap-5 sm:gap-6 w-[200%] will-change-transform" animate={controls}>
           {track.map((lang, i) => (
-            <Card key={`${lang.name}-${i}`} name={lang.name} icon={lang.icon} />
+            <Card key={`${lang.name}-${i}`} name={lang.name} icon={lang.icon} invertInDark={lang.invertInDark} />
           ))}
         </motion.div>
 
@@ -87,25 +90,26 @@ export default function Languages() {
   );
 }
 
-function Card({ name, icon }: LanguageItem) {
+function Card({ name, icon, invertInDark }: LanguageItem) {
   return (
-    <div className="shrink-0">
-      <div className="rounded-[26px] theme-pill p-3 sm:p-4 shadow-xl w-[200px] sm:w-[220px] md:w-[240px] transition-colors">
-        <div className="rounded-2xl border theme-card p-4 sm:p-5 ring-1 ring-black/10 dark:ring-white/10 transition-colors">
-          <div className="relative aspect-square">
-            <Image
-              src={icon}
-              alt={name}
-              fill
-              sizes="(min-width:1024px) 240px, (min-width:640px) 220px, 200px"
-              className="object-contain"
-            />
-          </div>
+    /* MEJORA 6e: border sutil + rounded-2xl, sin sombra de gradiente Windows XP */
+    <div className="group shrink-0 w-[140px] sm:w-[160px] md:w-[180px]">
+      <div className="rounded-2xl border border-[var(--card-border)] theme-card p-4 sm:p-5 flex flex-col items-center gap-3 transition-colors">
+        <div className="relative aspect-square w-full">
+          <Image
+            src={icon}
+            alt={name}
+            fill
+            sizes="(min-width:1024px) 180px, (min-width:640px) 160px, 140px"
+            /* MEJORA 6: invertir íconos negros (Next.js, GitHub) en dark mode */
+            className={`object-contain${invertInDark ? ' dark:invert dark:brightness-90' : ''}`}
+          />
         </div>
+        {/* MEJORA 6d: nombre visible solo en hover, con transición suave */}
+        <p className="text-xs sm:text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-center">
+          {name}
+        </p>
       </div>
-      <p className="mt-2 text-center text-sm sm:text-base font-medium text-neutral-800 dark:text-neutral-200 opacity-80">
-        {name}
-      </p>
     </div>
   );
 }

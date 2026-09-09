@@ -6,11 +6,13 @@ import type { Language } from '@/lib/language';
 
 export type HeroCopy = {
   backgroundImage: string;
-  quote: string;
+  quote?: string;
   highlight?: string;
   intro: string;
   cvLink: string;
   cvLabel?: string;
+  locationTag?: string;
+  viewWorkLabel?: string;
   author: { firstName: string; lastName: string; photo: string; badge: string };
 };
 
@@ -35,6 +37,9 @@ export type Project = {
   title: string;
   image: string;
   description?: string;
+  stack?: string[];
+  role?: string;
+  accentColor?: string;
 };
 
 export type ProjectsCopy = {
@@ -46,6 +51,7 @@ export type ProjectsCopy = {
 export type LanguageItem = {
   name: string;
   icon: string;
+  invertInDark?: boolean;
 };
 
 export type LanguagesCopy = {
@@ -85,6 +91,8 @@ export type ContactCopy = {
   description?: string;
   correo?: string;
   email?: string;
+  narrativeText?: string;
+  displayEmail?: string;
   redes?: { github?: string; linkedin?: string; email?: string };
   social?: { github?: string; linkedin?: string; email?: string };
   form?: ContactFormCopy;

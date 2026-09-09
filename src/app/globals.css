@@ -4,7 +4,6 @@
   :root {
     color-scheme: light;
 
-  
     --page-bg: #F4F1EB;
     --page-fg: #111827;
 
@@ -16,6 +15,9 @@
 
     --pill-left: #102535;
     --pill-right: #EFE6D2;
+
+    /* Único token de acento: coral/salmon */
+    --color-accent: #E57F79;
   }
 
   .dark {
@@ -32,6 +34,8 @@
 
     --pill-left: #0B2837;
     --pill-right: rgba(255, 255, 255, 0.08);
+
+    --color-accent: #E07571;
   }
 
   html, body { min-height: 100%; }
@@ -66,4 +70,8 @@
     background-image: linear-gradient(120deg, var(--pill-left), var(--pill-right));
     color: var(--card-foreground);
   }
+
+  .text-accent { color: var(--color-accent); }
+  .bg-accent { background-color: var(--color-accent); }
+  .border-accent { border-color: var(--color-accent); }
 }
