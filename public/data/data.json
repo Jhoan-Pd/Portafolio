@@ -53,16 +53,17 @@
       "blocks": [
         {
           "id": 1,
-          "type": "metric",
-          "value": "3+",
-          "subtitle": "PROYECTOS PUBLICADOS"
+          "type": "text",
+          "span": 3,
+          "subtitle": "NEXUS · ENE 2026 – ACTUALIDAD",
+          "title": "Consultor Técnico de Cuenta / Desarrollador",
+          "description": "Acompaño técnicamente a las cuentas de la empresa y desarrollo sobre sistemas en producción: levantamiento de requerimientos con el cliente, implementación de funcionalidades, soporte técnico y seguimiento de incidencias, cuidando la estabilidad del servicio."
         },
         {
           "id": 2,
-          "type": "text",
-          "span": 3,
-          "title": "Proyectos Académicos",
-          "description": "Proyectos desarrollados durante mi formación en Ingeniería de Software, aplicando arquitectura limpia, POO y patrones de diseño en soluciones funcionales reales."
+          "type": "metric",
+          "value": "2",
+          "subtitle": "ENTORNOS PROFESIONALES"
         },
         {
           "id": 3,
@@ -73,9 +74,10 @@
         {
           "id": 4,
           "type": "text",
-          "span": 2,
-          "title": "Experiencia Académica",
-          "description": "Participé en actividades académicas y seminarios especializados en arquitectura de software, construcción de aplicaciones escalables y liderazgo técnico de equipos."
+          "span": 3,
+          "subtitle": "SCANDATA · 2023 – 2024",
+          "title": "Desarrollador & Arquitecto de Software",
+          "description": "Lideré el equipo de desarrollo —delegación de tareas, coordinación y seguimiento de avances— y diseñé la arquitectura del sistema aplicando Clean Architecture y POO para garantizar escalabilidad. Desarrollé y mantuve el sistema de automatización de registro y escaneo de información, resolviendo errores funcionales y mejorando su estabilidad y rendimiento."
         },
         {
           "id": 5,
@@ -87,14 +89,31 @@
           "id": 6,
           "type": "text",
           "span": 3,
-          "title": "Experiencia Laboral",
-          "description": "Lideré el desarrollo de un sistema de automatización para escaneo de información, coordinando el equipo técnico y tomando decisiones de arquitectura en un entorno real."
+          "subtitle": "BASES DE DATOS",
+          "title": "Diseño y modelado de bases de datos relacionales",
+          "description": "Experiencia en modelado de datos, normalización, integridad referencial y diseño de sistemas transaccionales, aplicando buenas prácticas para garantizar consistencia y rendimiento en bases de datos relacionales (MySQL)."
         },
         {
           "id": 7,
+          "type": "text",
+          "span": 3,
+          "subtitle": "EN FORMACIÓN CONTINUA",
+          "title": "Diplomado en Arquitectura de Software",
+          "description": "Actualmente profundizando en patrones arquitectónicos, diseño de sistemas escalables y toma de decisiones técnicas de alto nivel, en complemento a mi formación en Ingeniería de Software."
+        },
+        {
+          "id": 8,
           "type": "icon",
           "icon": "java-python-logos",
           "subtitle": "JAVA Y PYTHON"
+        },
+        {
+          "id": 9,
+          "type": "text",
+          "span": 4,
+          "subtitle": "CALIDAD DE SOFTWARE",
+          "title": "Buenas prácticas de calidad y mantenibilidad",
+          "description": "Aplico principios de calidad de software y pruebas a lo largo del ciclo de desarrollo, buscando que cada solución no solo funcione, sino que sea mantenible y escalable en el tiempo — coherente con mi enfoque en una arquitectura sólida desde los cimientos."
         }
       ]
     },
@@ -103,16 +122,17 @@
       "blocks": [
         {
           "id": 1,
-          "type": "metric",
-          "value": "3+",
-          "subtitle": "PUBLISHED PROJECTS"
+          "type": "text",
+          "span": 3,
+          "subtitle": "NEXUS · JAN 2026 – PRESENT",
+          "title": "Technical Account Consultant / Developer",
+          "description": "I provide technical guidance to the company's accounts and develop on production systems: gathering requirements with the client, implementing features, providing technical support and following up on incidents while keeping the service stable."
         },
         {
           "id": 2,
-          "type": "text",
-          "span": 3,
-          "title": "Academic Projects",
-          "description": "Projects developed during my Software Engineering studies, applying clean architecture, OOP and design patterns in real functional solutions."
+          "type": "metric",
+          "value": "2",
+          "subtitle": "PROFESSIONAL ENVIRONMENTS"
         },
         {
           "id": 3,
@@ -123,9 +143,10 @@
         {
           "id": 4,
           "type": "text",
-          "span": 2,
-          "title": "Academic Experience",
-          "description": "Participated in academic activities and seminars focused on software architecture, scalable application development and technical team leadership."
+          "span": 3,
+          "subtitle": "SCANDATA · 2023 – 2024",
+          "title": "Software Developer & Architect",
+          "description": "Led the development team —task delegation, coordination and progress tracking— and designed the system architecture applying Clean Architecture and OOP to ensure scalability. Built and maintained the automation system for information recording and scanning, fixing functional bugs and improving its stability and performance."
         },
         {
           "id": 5,
@@ -137,14 +158,31 @@
           "id": 6,
           "type": "text",
           "span": 3,
-          "title": "Work Experience",
-          "description": "Led the development of an automation system for information scanning, coordinating the technical team and making architectural decisions in a real environment."
+          "subtitle": "DATABASES",
+          "title": "Relational database design and modeling",
+          "description": "Experience in data modeling, normalization, referential integrity and transactional system design, applying best practices to guarantee consistency and performance in relational databases (MySQL)."
         },
         {
           "id": 7,
+          "type": "text",
+          "span": 3,
+          "subtitle": "CONTINUOUS LEARNING",
+          "title": "Postgraduate course in Software Architecture",
+          "description": "Currently deepening my knowledge of architectural patterns, scalable system design and high-level technical decision making, complementing my Software Engineering degree."
+        },
+        {
+          "id": 8,
           "type": "icon",
           "icon": "java-python-logos",
           "subtitle": "JAVA AND PYTHON"
+        },
+        {
+          "id": 9,
+          "type": "text",
+          "span": 4,
+          "subtitle": "SOFTWARE QUALITY",
+          "title": "Quality and maintainability best practices",
+          "description": "I apply software quality and testing principles throughout the development cycle, aiming for solutions that not only work but stay maintainable and scalable over time — consistent with my focus on solid architecture from the ground up."
         }
       ]
     }
@@ -158,26 +196,53 @@
           "id": 1,
           "title": "AutoScan System",
           "image": "/trabajo1.jpg",
-          "description": "Sistema de automatización para escaneo y procesamiento de información, desarrollado en entorno laboral real con decisiones de arquitectura propias.",
-          "stack": ["Python", "Java", "MySQL"],
-          "role": "Líder técnico",
+          "description": "Sistema de automatización para escaneo y procesamiento de información desarrollado en Scandata. Previo al desarrollo realicé el levantamiento y análisis de requisitos con el equipo y los usuarios finales, lo que permitió tomar decisiones de arquitectura alineadas con las necesidades reales del negocio y no solo con la implementación técnica.",
+          "stack": [
+            "Python",
+            "Java",
+            "MySQL"
+          ],
+          "role": "Líder técnico · Scandata",
           "accentColor": "#E57F79"
         },
         {
           "id": 2,
+          "title": "ViAlerta",
+          "image": "/trabajo4.jpg",
+          "description": "Aplicación móvil para reportar y visualizar incidentes y accidentes viales geolocalizados. Un modelo de IA analiza la descripción escrita por el usuario y clasifica automáticamente el reporte por tipo y severidad, mientras el mapa muestra los reportes activos para advertir a otros conductores.",
+          "stack": [
+            "Flutter",
+            "Google Maps API",
+            "IA / NLP",
+            "Firebase"
+          ],
+          "role": "Desarrollador full-stack",
+          "accentColor": "#F59E0B"
+        },
+        {
+          "id": 3,
           "title": "Portafolio Personal",
           "image": "/trabajo2.jpg",
           "description": "Portafolio web con Next.js 15, React 19 y Tailwind CSS v4, soporte multiidioma, modo oscuro y diseño bento grid.",
-          "stack": ["Next.js", "React", "TypeScript", "Tailwind CSS"],
+          "stack": [
+            "Next.js",
+            "React",
+            "TypeScript",
+            "Tailwind CSS"
+          ],
           "role": "Desarrollador full-stack",
           "accentColor": "#6366F1"
         },
         {
-          "id": 3,
+          "id": 4,
           "title": "Clean Architecture API",
           "image": "/trabajo3.jpg",
           "description": "API REST aplicando arquitectura limpia, patrones de diseño y principios SOLID en Java, con persistencia en base de datos relacional.",
-          "stack": ["Java", "Spring Boot", "MySQL"],
+          "stack": [
+            "Java",
+            "Spring Boot",
+            "MySQL"
+          ],
           "role": "Desarrollador backend",
           "accentColor": "#10B981"
         }
@@ -191,26 +256,53 @@
           "id": 1,
           "title": "AutoScan System",
           "image": "/trabajo1.jpg",
-          "description": "Automation system for information scanning and processing, built in a real work environment with hands-on architectural decisions.",
-          "stack": ["Python", "Java", "MySQL"],
-          "role": "Tech lead",
+          "description": "Automation system for information scanning and processing built at Scandata. Before development I ran the requirements gathering and analysis with the team and end users, which made it possible to take architectural decisions aligned with real business needs, not only with the technical implementation.",
+          "stack": [
+            "Python",
+            "Java",
+            "MySQL"
+          ],
+          "role": "Tech lead · Scandata",
           "accentColor": "#E57F79"
         },
         {
           "id": 2,
+          "title": "ViAlerta",
+          "image": "/trabajo4.jpg",
+          "description": "Mobile app to report and visualize geolocated road incidents and crashes. An AI model analyzes the description written by the user and automatically classifies the report by type and severity, while the map shows active reports to warn other drivers.",
+          "stack": [
+            "Flutter",
+            "Google Maps API",
+            "AI / NLP",
+            "Firebase"
+          ],
+          "role": "Full-stack developer",
+          "accentColor": "#F59E0B"
+        },
+        {
+          "id": 3,
           "title": "Personal Portfolio",
           "image": "/trabajo2.jpg",
           "description": "Web portfolio built with Next.js 15, React 19 and Tailwind CSS v4, featuring multi-language support, dark mode and bento grid layout.",
-          "stack": ["Next.js", "React", "TypeScript", "Tailwind CSS"],
+          "stack": [
+            "Next.js",
+            "React",
+            "TypeScript",
+            "Tailwind CSS"
+          ],
           "role": "Full-stack developer",
           "accentColor": "#6366F1"
         },
         {
-          "id": 3,
+          "id": 4,
           "title": "Clean Architecture API",
           "image": "/trabajo3.jpg",
           "description": "REST API applying clean architecture, design patterns and SOLID principles in Java, with relational database persistence.",
-          "stack": ["Java", "Spring Boot", "MySQL"],
+          "stack": [
+            "Java",
+            "Spring Boot",
+            "MySQL"
+          ],
           "role": "Backend developer",
           "accentColor": "#10B981"
         }
