@@ -32,6 +32,11 @@ export type InformationCopy = {
   blocks: InfoBlock[];
 };
 
+export type ProjectLinks = {
+  demo?: string;
+  repo?: string;
+};
+
 export type Project = {
   id: number;
   title: string;
@@ -40,11 +45,13 @@ export type Project = {
   stack?: string[];
   role?: string;
   accentColor?: string;
+  links?: ProjectLinks;
 };
 
 export type ProjectsCopy = {
   title: string;
   defaultDescription?: string;
+  linkLabels?: { demo?: string; repo?: string };
   items: Project[];
 };
 

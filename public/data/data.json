@@ -20,8 +20,8 @@
   "hero": {
     "es": {
       "backgroundImage": "/cielo.jpg",
-      "locationTag": "Pasto, Colombia · Disponible para proyectos",
-      "intro": "La arquitectura de software es donde la creatividad se encuentra con la lógica. Diseño los cimientos antes de levantar los muros — cada capa del sistema pensada para que las aplicaciones crezcan sólidas y entreguen valor real.",
+      "locationTag": "Pasto, Colombia · Ingeniero de Software en Nexus",
+      "intro": "Construyo software que aguanta: diseño la arquitectura antes de levantar los muros. Hoy acompaño cuentas y desarrollo sobre sistemas en producción en Nexus, y en paralelo llevo mis propios proyectos de datos e IA — desde vigilancia epidemiológica predictiva hasta reportes viales en tiempo real.",
       "cvLink": "/cv.pdf",
       "cvLabel": "Descargar CV",
       "viewWorkLabel": "Ver proyectos →",
@@ -34,8 +34,8 @@
     },
     "en": {
       "backgroundImage": "/cielo.jpg",
-      "locationTag": "Pasto, Colombia · Available for projects",
-      "intro": "Software architecture is where creativity meets logic. I design the foundation before raising the walls — every layer of the system thought through so applications grow solid and deliver real value.",
+      "locationTag": "Pasto, Colombia · Software Engineer at Nexus",
+      "intro": "I build software that lasts: I design the architecture before raising the walls. Today I support accounts and develop on production systems at Nexus, while running my own data and AI projects on the side — from predictive epidemiological surveillance to real-time road incident reporting.",
       "cvLink": "/cv.pdf",
       "cvLabel": "Download CV",
       "viewWorkLabel": "View work →",
@@ -194,6 +194,23 @@
       "items": [
         {
           "id": 1,
+          "title": "SentinelaIA Nariño",
+          "image": "/trabajo5.jpg",
+          "description": "Plataforma de vigilancia epidemiológica predictiva en el área de influencia del Volcán Galeras (6 municipios de Nariño). Cruza más de 54.000 casos de IRA y EDA con las emisiones de SO₂ del volcán y clasifica el riesgo semanal por municipio con un modelo XGBoost (~82% de precisión), sobre canales endémicos y tableros comparativos.",
+          "stack": [
+            "Next.js",
+            "Python",
+            "XGBoost",
+            "Power BI"
+          ],
+          "role": "Desarrollador & analista de datos",
+          "accentColor": "#F97316",
+          "links": {
+            "demo": "https://volcano-ecru.vercel.app/"
+          }
+        },
+        {
+          "id": 2,
           "title": "AutoScan System",
           "image": "/trabajo1.jpg",
           "description": "Sistema de automatización para escaneo y procesamiento de información desarrollado en Scandata. Previo al desarrollo realicé el levantamiento y análisis de requisitos con el equipo y los usuarios finales, lo que permitió tomar decisiones de arquitectura alineadas con las necesidades reales del negocio y no solo con la implementación técnica.",
@@ -203,10 +220,11 @@
             "MySQL"
           ],
           "role": "Líder técnico · Scandata",
-          "accentColor": "#E57F79"
+          "accentColor": "#E57F79",
+          "links": {}
         },
         {
-          "id": 2,
+          "id": 3,
           "title": "ViAlerta",
           "image": "/trabajo4.jpg",
           "description": "Aplicación móvil para reportar y visualizar incidentes y accidentes viales geolocalizados. Un modelo de IA analiza la descripción escrita por el usuario y clasifica automáticamente el reporte por tipo y severidad, mientras el mapa muestra los reportes activos para advertir a otros conductores.",
@@ -217,10 +235,11 @@
             "Firebase"
           ],
           "role": "Desarrollador full-stack",
-          "accentColor": "#F59E0B"
+          "accentColor": "#F59E0B",
+          "links": {}
         },
         {
-          "id": 3,
+          "id": 4,
           "title": "Portafolio Personal",
           "image": "/trabajo2.jpg",
           "description": "Portafolio web con Next.js 15, React 19 y Tailwind CSS v4, soporte multiidioma, modo oscuro y diseño bento grid.",
@@ -231,10 +250,13 @@
             "Tailwind CSS"
           ],
           "role": "Desarrollador full-stack",
-          "accentColor": "#6366F1"
+          "accentColor": "#6366F1",
+          "links": {
+            "demo": "https://portafolio-mu-six-23.vercel.app"
+          }
         },
         {
-          "id": 4,
+          "id": 5,
           "title": "Clean Architecture API",
           "image": "/trabajo3.jpg",
           "description": "API REST aplicando arquitectura limpia, patrones de diseño y principios SOLID en Java, con persistencia en base de datos relacional.",
@@ -244,9 +266,14 @@
             "MySQL"
           ],
           "role": "Desarrollador backend",
-          "accentColor": "#10B981"
+          "accentColor": "#10B981",
+          "links": {}
         }
-      ]
+      ],
+      "linkLabels": {
+        "demo": "Ver en vivo",
+        "repo": "Código"
+      }
     },
     "en": {
       "title": "My projects",
@@ -254,6 +281,23 @@
       "items": [
         {
           "id": 1,
+          "title": "SentinelaIA Nariño",
+          "image": "/trabajo5.jpg",
+          "description": "Predictive epidemiological surveillance platform for the Galeras Volcano influence area (6 municipalities in Nariño). It cross-references more than 54,000 ARI and ADD cases with the volcano's SO₂ emissions and classifies weekly risk per municipality with an XGBoost model (~82% accuracy), on top of endemic channels and comparative dashboards.",
+          "stack": [
+            "Next.js",
+            "Python",
+            "XGBoost",
+            "Power BI"
+          ],
+          "role": "Developer & data analyst",
+          "accentColor": "#F97316",
+          "links": {
+            "demo": "https://volcano-ecru.vercel.app/"
+          }
+        },
+        {
+          "id": 2,
           "title": "AutoScan System",
           "image": "/trabajo1.jpg",
           "description": "Automation system for information scanning and processing built at Scandata. Before development I ran the requirements gathering and analysis with the team and end users, which made it possible to take architectural decisions aligned with real business needs, not only with the technical implementation.",
@@ -263,10 +307,11 @@
             "MySQL"
           ],
           "role": "Tech lead · Scandata",
-          "accentColor": "#E57F79"
+          "accentColor": "#E57F79",
+          "links": {}
         },
         {
-          "id": 2,
+          "id": 3,
           "title": "ViAlerta",
           "image": "/trabajo4.jpg",
           "description": "Mobile app to report and visualize geolocated road incidents and crashes. An AI model analyzes the description written by the user and automatically classifies the report by type and severity, while the map shows active reports to warn other drivers.",
@@ -277,10 +322,11 @@
             "Firebase"
           ],
           "role": "Full-stack developer",
-          "accentColor": "#F59E0B"
+          "accentColor": "#F59E0B",
+          "links": {}
         },
         {
-          "id": 3,
+          "id": 4,
           "title": "Personal Portfolio",
           "image": "/trabajo2.jpg",
           "description": "Web portfolio built with Next.js 15, React 19 and Tailwind CSS v4, featuring multi-language support, dark mode and bento grid layout.",
@@ -291,10 +337,13 @@
             "Tailwind CSS"
           ],
           "role": "Full-stack developer",
-          "accentColor": "#6366F1"
+          "accentColor": "#6366F1",
+          "links": {
+            "demo": "https://portafolio-mu-six-23.vercel.app"
+          }
         },
         {
-          "id": 4,
+          "id": 5,
           "title": "Clean Architecture API",
           "image": "/trabajo3.jpg",
           "description": "REST API applying clean architecture, design patterns and SOLID principles in Java, with relational database persistence.",
@@ -304,9 +353,14 @@
             "MySQL"
           ],
           "role": "Backend developer",
-          "accentColor": "#10B981"
+          "accentColor": "#10B981",
+          "links": {}
         }
-      ]
+      ],
+      "linkLabels": {
+        "demo": "Live demo",
+        "repo": "Code"
+      }
     }
   },
   "languages": {
@@ -339,8 +393,21 @@
           "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg"
         },
         {
+          "name": "Flutter",
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/flutter/flutter-original.svg"
+        },
+        {
           "name": "Python",
           "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg"
+        },
+        {
+          "name": "Pandas",
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/pandas/pandas-original.svg",
+          "invertInDark": true
+        },
+        {
+          "name": "scikit-learn",
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/scikitlearn/scikitlearn-original.svg"
         },
         {
           "name": "Java",
@@ -390,8 +457,21 @@
           "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg"
         },
         {
+          "name": "Flutter",
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/flutter/flutter-original.svg"
+        },
+        {
           "name": "Python",
           "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg"
+        },
+        {
+          "name": "Pandas",
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/pandas/pandas-original.svg",
+          "invertInDark": true
+        },
+        {
+          "name": "scikit-learn",
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/scikitlearn/scikitlearn-original.svg"
         },
         {
           "name": "Java",

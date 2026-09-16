@@ -3,6 +3,7 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
 import Image from 'next/image';
 import { motion, cubicBezier } from 'framer-motion';
+import { ExternalLink, Github } from 'lucide-react';
 import { usePortfolioSection, type Project as ProjectItem } from '@/hooks/usePortfolioSection';
 import { useLanguage } from '@/contexts/LanguageContext';
 
@@ -71,6 +72,9 @@ export default function Projects() {
   };
 
   const title = copy?.title ?? (language === 'es' ? 'Mis proyectos' : 'My projects');
+  const linkLabels =
+    copy?.linkLabels ??
+    (language === 'es' ? { demo: 'Ver en vivo', repo: 'Código' } : { demo: 'Live demo', repo: 'Code' });
 
   return (
     <section id="projects" ref={sectionRef} className="w-full theme-page transition-colors">
@@ -90,13 +94,14 @@ export default function Projects() {
                 return (
                   <motion.article
                     key={p.id}
-                    className="
+                    className={`
                       absolute inset-0 m-auto w-[92%] md:w-[88%] h-[86%]
                       rounded-3xl overflow-hidden
                       bg-black/5 dark:bg-white/5
                       border border-black/10 dark:border-white/10
                       transition-colors
-                    "
+                      ${isCurrent ? 'pointer-events-auto' : 'pointer-events-none'}
+                    `}
                     animate={animate}
                     initial={{ opacity: 0, y: 60, scale: 0.98 }}
                     style={style}
@@ -146,6 +151,35 @@ export default function Projects() {
                           >
                             {p.role}
                           </p>
+                        )}
+
+                        {/* Enlaces del proyecto — solo en la card activa */}
+                        {isCurrent && (p.links?.demo || p.links?.repo) && (
+                          <div className="mt-2.5 flex flex-wrap gap-2">
+                            {p.links?.demo && (
+                              <a
+                                href={p.links.demo}
+                                target="_blank"
+                                rel="noreferrer noopener"
+                                className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[11px] font-semibold text-white shadow-sm hover:brightness-110 transition-[filter]"
+                                style={{ backgroundColor: accentColor }}
+                              >
+                                <ExternalLink className="h-3 w-3" aria-hidden="true" />
+                                {linkLabels.demo}
+                              </a>
+                            )}
+                            {p.links?.repo && (
+                              <a
+                                href={p.links.repo}
+                                target="_blank"
+                                rel="noreferrer noopener"
+                                className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[11px] font-semibold text-white bg-white/15 backdrop-blur-sm ring-1 ring-white/25 hover:bg-white/25 transition-colors"
+                              >
+                                <Github className="h-3 w-3" aria-hidden="true" />
+                                {linkLabels.repo}
+                              </a>
+                            )}
+                          </div>
                         )}
                       </div>
                     </div>
