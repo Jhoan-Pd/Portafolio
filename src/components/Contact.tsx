@@ -26,7 +26,7 @@ export default function Contact() {
   const social = contact?.social ?? contact?.redes ?? {};
   const LINKEDIN =
     social.linkedin ??
-    'https://www.linkedin.com/in/jhoan-paredes-delgado-87755b249/';
+    'www.linkedin.com/in/jhoan-alexander-paredes-delgado-87755b249';
   const GITHUB = social.github ?? 'https://github.com/Jhoan-Pd';
   const EMAIL = social.email ?? 'mailto:jhoan123paredes@gmail.com';
 
