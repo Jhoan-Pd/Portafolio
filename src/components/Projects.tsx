@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo, useRef } from 'react';
 import Image from 'next/image';
-import { motion, cubicBezier } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { ExternalLink, Github } from 'lucide-react';
 import { usePortfolioSection, type Project as ProjectItem } from '@/hooks/usePortfolioSection';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -47,7 +47,6 @@ export default function Projects() {
   }, [projects]);
 
   const staged = useMemo(() => projects.slice(0, 6), [projects]);
-  const easeOutExpo = cubicBezier(0.22, 1, 0.36, 1);
 
   const layer = (i: number) => {
     const depth = active - i;
@@ -65,9 +64,9 @@ export default function Projects() {
         x: isCurrent ? 0 : isPast ? -16 : 12,
         rotate: isPast ? 0.3 : isFuture ? -0.15 : 0,
         filter: isPast ? 'blur(2px) saturate(0.9)' : 'none',
-        transition: { duration: 0.55, ease: easeOutExpo },
+        transition: { type: 'spring', stiffness: 260, damping: 30 },
       } as const,
-      style: { boxShadow: '0 18px 40px rgba(0,0,0,.18), 0 4px 10px rgba(0,0,0,.08)' } as const,
+      style: { boxShadow: 'var(--e3)' } as const,
     };
   };
 
@@ -78,15 +77,15 @@ export default function Projects() {
 
   return (
     <section id="projects" ref={sectionRef} className="w-full theme-page transition-colors">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 section-y">
         {/* MEJORA 2: título unificado */}
-        <h2 className="text-2xl sm:text-3xl font-semibold mb-6 sm:mb-8">{title}</h2>
+        <h2 className="t-title mb-8 sm:mb-10">{title}</h2>
 
         <div className="grid grid-cols-1 md:grid-cols-[1fr_260px] lg:grid-cols-[1fr_300px] gap-6 sm:gap-8">
           {/* PANEL IZQUIERDO PRINCIPAL */}
-          <div className="relative rounded-[28px] border theme-card p-3 sm:p-5 md:p-8 shadow-[0_14px_40px_rgba(0,0,0,.12)] transition-colors">
-            <div className="relative h-[62svh] md:h-[68svh] overflow-hidden rounded-3xl theme-glass transition-colors">
-              <div className="absolute inset-0 rounded-3xl ring-1 ring-black/10 dark:ring-white/10" />
+          <div className="relative radius-xl border theme-card p-3 sm:p-5 md:p-8 elev-2 transition-colors">
+            <div className="relative h-[62svh] md:h-[68svh] overflow-hidden radius-lg theme-glass transition-colors">
+              <div className="absolute inset-0 radius-lg ring-1 ring-black/10 dark:ring-white/10" />
               {staged.map((p, i) => {
                 const { isCurrent, animate, style } = layer(i);
                 const accentColor = p.accentColor ?? PROJECT_COLORS[i % PROJECT_COLORS.length];
@@ -96,7 +95,7 @@ export default function Projects() {
                     key={p.id}
                     className={`
                       absolute inset-0 m-auto w-[92%] md:w-[88%] h-[86%]
-                      rounded-3xl overflow-hidden
+                      radius-lg overflow-hidden
                       bg-black/5 dark:bg-white/5
                       border border-black/10 dark:border-white/10
                       transition-colors
@@ -117,16 +116,16 @@ export default function Projects() {
                       />
 
                       {/* MEJORA 4b: barra de información inferior con overlay */}
-                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/85 via-black/50 to-transparent pt-16 pb-4 px-4 rounded-b-3xl">
+                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/85 via-black/50 to-transparent pt-16 pb-4 px-4 rounded-b-[var(--r-lg)]">
                         {/* MEJORA 4d: chip permanente con número + nombre */}
                         <div className="flex items-center gap-2 mb-2">
                           <span
-                            className="shrink-0 text-[11px] font-bold px-2 py-0.5 rounded-full text-white"
+                            className="shrink-0 t-caption font-semibold px-2.5 py-0.5 rounded-full text-white"
                             style={{ backgroundColor: accentColor }}
                           >
                             {String(i + 1).padStart(2, '0')}
                           </span>
-                          <span className="text-white text-sm font-semibold truncate">{p.title}</span>
+                          <span className="text-white t-headline truncate">{p.title}</span>
                         </div>
 
                         {/* Stack chips — solo visibles en la card activa */}
@@ -136,7 +135,7 @@ export default function Projects() {
                           {p.stack?.map((s) => (
                             <span
                               key={s}
-                              className="text-[11px] px-2 py-0.5 rounded-full bg-white/20 text-white backdrop-blur-sm"
+                              className="t-caption px-2.5 py-1 rounded-full bg-white/20 text-white backdrop-blur-sm"
                             >
                               {s}
                             </span>
@@ -146,7 +145,7 @@ export default function Projects() {
                         {/* Rol — solo visible en la card activa */}
                         {p.role && (
                           <p
-                            className={`text-xs font-medium transition-opacity duration-300 ${isCurrent ? 'opacity-100' : 'opacity-0'}`}
+                            className={`t-footnote font-medium transition-opacity duration-300 ${isCurrent ? 'opacity-100' : 'opacity-0'}`}
                             style={{ color: accentColor }}
                           >
                             {p.role}
@@ -161,7 +160,7 @@ export default function Projects() {
                                 href={p.links.demo}
                                 target="_blank"
                                 rel="noreferrer noopener"
-                                className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[11px] font-semibold text-white shadow-sm hover:brightness-110 transition-[filter]"
+                                className="inline-flex items-center gap-1.5 rounded-full px-3.5 py-2 t-caption font-semibold text-white elev-1 hover:brightness-110 active:scale-[0.97] transition-[filter,transform] duration-150"
                                 style={{ backgroundColor: accentColor }}
                               >
                                 <ExternalLink className="h-3 w-3" aria-hidden="true" />
@@ -173,7 +172,7 @@ export default function Projects() {
                                 href={p.links.repo}
                                 target="_blank"
                                 rel="noreferrer noopener"
-                                className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[11px] font-semibold text-white bg-white/15 backdrop-blur-sm ring-1 ring-white/25 hover:bg-white/25 transition-colors"
+                                className="inline-flex items-center gap-1.5 rounded-full px-3.5 py-2 t-caption font-semibold text-white bg-white/15 backdrop-blur-sm ring-1 ring-white/25 hover:bg-white/25 active:scale-[0.97] transition-[colors,transform] duration-150"
                               >
                                 <Github className="h-3 w-3" aria-hidden="true" />
                                 {linkLabels.repo}
@@ -190,7 +189,7 @@ export default function Projects() {
           </div>
 
           {/* COLUMNA DERECHA DE NAVEGACIÓN */}
-          <div className="hidden md:block rounded-[24px] border theme-card p-3 sm:p-4 shadow-[0_14px_40px_rgba(0,0,0,.12)] h-[68svh] overflow-y-auto transition-colors">
+          <div className="hidden md:block radius-xl border theme-card p-3 sm:p-4 elev-2 h-[68svh] overflow-y-auto transition-colors">
             <div className="space-y-2.5">
               {projects.map((p, i) => {
                 const isActive = i === active;
@@ -206,23 +205,23 @@ export default function Projects() {
                         ? { backgroundColor: `${accentColor}18` }
                         : {}),
                     }}
-                    className={`group relative w-full text-left flex items-start gap-3 rounded-2xl p-3 border-l-[4px] border-r border-t border-b transition-all duration-200 ${
+                    className={`group relative w-full text-left flex items-start gap-3 radius-md p-3 border-l-[3px] border-r border-t border-b transition-all duration-200 ${
                       isActive
                         ? 'border-r-[var(--card-border)] border-t-[var(--card-border)] border-b-[var(--card-border)]'
                         : 'theme-card'
                     }`}
                   >
-                    <div className="relative h-10 w-10 rounded-lg overflow-hidden bg-neutral-200 dark:bg-neutral-700 shrink-0 ring-1 ring-black/10 dark:ring-white/10">
+                    <div className="relative h-10 w-10 radius-sm overflow-hidden bg-neutral-200 dark:bg-neutral-700 shrink-0 ring-1 ring-black/10 dark:ring-white/10">
                       <Image src={p.image} alt={p.title} fill className="object-cover" sizes="40px" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-[13px] sm:text-[14px] font-semibold truncate">{p.title}</p>
-                      <p className="mt-0.5 text-[11px] sm:text-[12px] text-neutral-600 dark:text-neutral-300 line-clamp-2">
+                      <p className="t-footnote font-semibold truncate">{p.title}</p>
+                      <p className="mt-0.5 t-caption text-secondary line-clamp-2">
                         {p.description ?? defaultDescription}
                       </p>
                     </div>
                     <span
-                      className="ml-2 text-[10px] font-bold opacity-70 shrink-0"
+                      className="ml-2 t-caption font-semibold opacity-70 shrink-0"
                       style={{ color: accentColor }}
                     >
                       {String(i + 1).padStart(2, '0')}

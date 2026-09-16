@@ -39,15 +39,15 @@ export default function Contact() {
   return (
     <section
       id="contact"
-      className="relative theme-page transition-colors py-16 sm:py-24"
+      className="relative theme-page transition-colors section-y"
       aria-labelledby="contact-title"
     >
       <div
         className="
           relative mx-auto w-[min(94%,1080px)]
-          rounded-t-[120px] sm:rounded-t-[140px]
-          px-5 sm:px-10 pt-24 pb-16 sm:pb-20
-          border theme-card shadow-[0_30px_80px_rgba(0,0,0,.25)]
+          rounded-t-[var(--r-hero)]
+          px-6 sm:px-10 pt-24 pb-16 sm:pb-20
+          border theme-card elev-3
           transition-colors
         "
       >
@@ -66,7 +66,7 @@ export default function Contact() {
         {/* MEJORA 2: título unificado */}
         <motion.h2
           id="contact-title"
-          className="text-center text-2xl sm:text-3xl font-semibold mb-4 sm:mb-5"
+          className="t-title text-center mb-4 sm:mb-5"
           initial={prefersReduced ? false : { opacity: 0, y: -12 }}
           animate={prefersReduced ? {} : { opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
@@ -76,7 +76,7 @@ export default function Contact() {
 
         {/* MEJORA 8c: texto narrativo que cierra el portafolio */}
         <motion.p
-          className="text-center text-sm sm:text-base opacity-70 mb-8 sm:mb-10"
+          className="t-body text-secondary text-center mb-8 sm:mb-10"
           initial={prefersReduced ? false : { opacity: 0 }}
           animate={prefersReduced ? {} : { opacity: 0.7 }}
           transition={{ duration: 0.5, delay: 0.1 }}
@@ -98,7 +98,7 @@ export default function Contact() {
 
         {/* MEJORA 8d: email seleccionable debajo de los botones */}
         <motion.p
-          className="mt-6 text-center text-sm opacity-50 hover:opacity-100 transition-opacity"
+          className="mt-6 t-footnote text-tertiary text-center hover:opacity-100 transition-opacity"
           initial={prefersReduced ? false : { opacity: 0 }}
           animate={prefersReduced ? {} : { opacity: 0.5 }}
           transition={{ duration: 0.45, delay: 0.25 }}
@@ -128,8 +128,9 @@ function Pill({ href, label }: { href: string; label: string }) {
         group inline-flex items-center gap-3
         rounded-full px-6 sm:px-7 py-3 sm:py-3.5
         bg-accent hover:brightness-110 text-white
-        font-semibold tracking-wide
-        ring-1 ring-white/10 shadow-md transition-[filter]
+        t-callout font-semibold
+        ring-1 ring-white/10 elev-1 active:scale-[0.97]
+        transition-[filter,transform] duration-150
         dark:ring-black/20
       "
       aria-label={label}

@@ -21,14 +21,14 @@ export default function Informacion() {
   return (
     <section
       id="sobre-mi"
-      className="w-full py-14 sm:py-20 theme-page transition-colors"
+      className="w-full section-y theme-page transition-colors"
       aria-labelledby="sobre-mi-title"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* MEJORA 2: título unificado — semibold, sin uppercase, alineado izquierda */}
         <h2
           id="sobre-mi-title"
-          className="text-2xl sm:text-3xl font-semibold mb-10 sm:mb-12"
+          className="t-title mb-8 sm:mb-10"
         >
           {title}
         </h2>
@@ -40,9 +40,9 @@ export default function Informacion() {
               initial={{ opacity: 0, y: 18 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-10% 0px -10% 0px' }}
-              transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ type: 'spring', stiffness: 260, damping: 30 }}
               whileHover={{ scale: 1.02 }}
-              className={`rounded-2xl p-6 sm:p-8 min-h-[200px] flex flex-col items-center justify-center text-center border theme-card shadow-[0_14px_40px_rgba(0,0,0,.12)] transition-colors ${spanClass(block.span)}`}
+              className={`radius-lg p-6 sm:p-8 min-h-[200px] flex flex-col items-center justify-center text-center border theme-card elev-2 transition-colors ${spanClass(block.span)}`}
             >
               {/* MEJORA 5d/5e: iconos especiales */}
               {block.icon === 'layers-icon' ? (
@@ -81,26 +81,26 @@ export default function Informacion() {
                 />
               ) : block.value ? (
                 /* MEJORA 1: métricas en color acento */
-                <p className="mb-2 text-4xl sm:text-5xl md:text-6xl font-extrabold text-accent">
+                <p className="mb-2 text-4xl sm:text-5xl md:text-6xl font-bold tracking-[-0.03em] text-accent">
                   {block.value}
                 </p>
               ) : null}
 
               {block.subtitle && (
-                <p className="uppercase font-bold text-[10px] sm:text-xs tracking-wide leading-tight text-accent">
+                <p className="t-grouphead text-accent">
                   {block.subtitle}
                 </p>
               )}
 
               {block.title && (
                 /* MEJORA 1 + 2: sin itálica, sin cian — color foreground */
-                <h3 className="mt-2 mb-3 sm:mb-4 text-xl sm:text-2xl font-semibold">
+                <h3 className="mt-2 mb-3 t-headline sm:text-xl">
                   {block.title}
                 </h3>
               )}
 
               {block.description && (
-                <p className="text-sm sm:text-[15px] leading-relaxed text-gray-700 dark:text-gray-300 max-w-prose">
+                <p className="t-callout text-secondary max-w-prose">
                   {block.description}
                 </p>
               )}

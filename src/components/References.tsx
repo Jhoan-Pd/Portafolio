@@ -16,9 +16,9 @@ const References: React.FC = () => {
   const ariaPrefix = language === 'es' ? 'Testimonio de' : 'Testimonial from';
 
   return (
-    <section className="relative overflow-hidden py-14 sm:py-20 px-4 sm:px-6 theme-page transition-colors">
+    <section className="relative overflow-hidden section-y px-4 sm:px-6 theme-page transition-colors">
       {/* MEJORA 2: título unificado */}
-      <h2 className="text-2xl sm:text-3xl font-semibold mb-10 sm:mb-16">
+      <h2 className="t-title mb-10 sm:mb-14">
         {title}
       </h2>
 
@@ -37,7 +37,7 @@ const References: React.FC = () => {
           })}
         </div>
       ) : (
-        <p className="text-center text-gray-500 dark:text-gray-400 mt-8">
+        <p className="t-callout text-center text-tertiary mt-8">
           {emptyLabel}
         </p>
       )}
@@ -65,10 +65,10 @@ const FlipCard: React.FC<FlipCardProps> = ({ refData, rotation, ariaPrefix }) =>
 
   return (
     <motion.div
-      className="relative w-64 sm:w-72 h-[360px] sm:h-[400px] cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:focus-visible:ring-blue-400 rounded-3xl"
+      className="relative w-64 sm:w-72 h-[360px] sm:h-[400px] cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] radius-xl"
       style={{ perspective: 1000, rotate: rotation }}
       whileHover={{ scale: 1.05, rotate: 0, zIndex: 10 }}
-      transition={{ type: 'spring', stiffness: 180 }}
+      transition={{ type: 'spring', stiffness: 260, damping: 30 }}
       onMouseEnter={() => !prefersReduced && setFlipped(true)}
       onMouseLeave={() => !prefersReduced && setFlipped(false)}
       onClick={toggle}
@@ -79,7 +79,7 @@ const FlipCard: React.FC<FlipCardProps> = ({ refData, rotation, ariaPrefix }) =>
       onKeyDown={onKey}
     >
       <motion.div
-        className="absolute inset-0 rounded-3xl p-5 sm:p-6 text-center shadow-2xl"
+        className="absolute inset-0 radius-xl p-5 sm:p-6 text-center elev-3"
         style={{ transformStyle: 'preserve-3d' as const }}
         animate={{ rotateY: flipped && !prefersReduced ? 180 : 0 }}
         transition={{ duration: prefersReduced ? 0 : 0.7, ease: 'easeInOut' }}
@@ -88,7 +88,7 @@ const FlipCard: React.FC<FlipCardProps> = ({ refData, rotation, ariaPrefix }) =>
         <div
           className="
             absolute inset-0 flex flex-col justify-center items-center
-            rounded-3xl border theme-card overflow-hidden
+            radius-xl border theme-card overflow-hidden
             transition-colors
           "
           style={{ backfaceVisibility: 'hidden' }}
@@ -112,27 +112,27 @@ const FlipCard: React.FC<FlipCardProps> = ({ refData, rotation, ariaPrefix }) =>
               loading="lazy"
             />
           </div>
-          <h3 className="font-bold text-base sm:text-lg">{refData.nombre}</h3>
-          <p className="text-xs sm:text-sm font-medium opacity-80">{refData.profesion}</p>
+          <h3 className="t-headline sm:text-xl">{refData.nombre}</h3>
+          <p className="t-footnote text-secondary">{refData.profesion}</p>
         </div>
 
         {/* CARA TRASERA */}
         <div
           className="
-            absolute inset-0 flex flex-col items-center justify-between rounded-3xl px-5 sm:px-6 py-6
+            absolute inset-0 flex flex-col items-center justify-between radius-xl px-5 sm:px-6 py-6
             border theme-card transition-colors
           "
           style={{ transform: 'rotateY(180deg)', backfaceVisibility: 'hidden' }}
         >
           {/* Cita */}
-          <p className="italic text-sm sm:text-[15px] leading-relaxed max-w-prose text-center flex-1 flex items-center">
+          <p className="t-callout italic max-w-prose text-center flex-1 flex items-center">
             &ldquo;{refData.mensaje}&rdquo;
           </p>
 
           {/* MEJORA 7a: atribución con nombre y cargo */}
           <div className="w-full pt-3 mt-3 border-t border-[var(--card-border)]">
-            <p className="text-sm font-semibold text-center">{refData.nombre}</p>
-            <p className="text-xs text-center opacity-70">{refData.profesion}</p>
+            <p className="t-footnote font-semibold text-center">{refData.nombre}</p>
+            <p className="t-caption text-center text-tertiary">{refData.profesion}</p>
           </div>
         </div>
       </motion.div>

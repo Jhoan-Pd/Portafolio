@@ -1,9 +1,17 @@
 import './globals.css';
 import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
 import { cookies } from 'next/headers';
 
 import AppProviders from '@/components/AppProviders';
 import { isLanguage, type Language } from '@/lib/language';
+
+/* Inter se carga y se autoaloja; en Apple gana SF Pro, que va primero en el stack */
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter',
+});
 
 export const metadata: Metadata = {
   title: 'Portafolio',
@@ -16,7 +24,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const initialLanguage: Language = stored && isLanguage(stored.value) ? stored.value : 'es';
 
   return (
-    <html lang={initialLanguage} suppressHydrationWarning>
+    <html lang={initialLanguage} className={inter.variable} suppressHydrationWarning>
       <body>
         <AppProviders initialLanguage={initialLanguage}>
           <div className="min-h-screen theme-page transition-colors duration-300">

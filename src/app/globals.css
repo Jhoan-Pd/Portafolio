@@ -1,41 +1,88 @@
 @import "tailwindcss";
 
+/* ============================================================
+   SISTEMA DE DISEÑO — refit iOS
+   Claro: crema (identidad propia) · Oscuro: grises iOS
+   ============================================================ */
+
 @layer base {
   :root {
     color-scheme: light;
 
+    /* --- Superficies --- */
     --page-bg: #F4F1EB;
-    --page-fg: #111827;
+    --page-fg: #1C1C1E;
 
-    --card-bg: #ffffff;
-    --card-foreground: #111827;
-    --card-border: rgba(0, 0, 0, 0.10);
+    --card-bg: #FFFFFF;
+    --card-foreground: #1C1C1E;
+    --card-border: rgba(60, 60, 67, 0.14);
+    --separator: rgba(60, 60, 67, 0.20);
 
-    --glass-bg: rgba(255, 255, 255, 0.65);
+    /* --- Jerarquía de texto (iOS label levels) --- */
+    --label-2: #57575C;
+    --label-3: #8A8A8E;
+
+    /* --- Materiales translúcidos --- */
+    --glass-bg: rgba(255, 255, 255, 0.72);
+    --material-bg: rgba(255, 255, 255, 0.72);
 
     --pill-left: #102535;
     --pill-right: #EFE6D2;
 
-    /* Único token de acento: coral/salmon */
+    /* --- Acento coral ---
+       accent      → rellenos y botones (texto blanco encima)
+       accent-text → texto pequeño sobre claro: 4.94:1, pasa WCAG AA */
     --color-accent: #E57F79;
+    --color-accent-text: #B0453F;
+    --color-accent-soft: rgba(229, 127, 121, 0.14);
   }
 
   .dark {
     color-scheme: dark;
 
-    --page-bg: #0A0A0A;
-    --page-fg: #ffffff;
+    --page-bg: #000000;
+    --page-fg: #F5F5F7;
 
-    --card-bg: rgba(17, 24, 39, 0.72);
-    --card-foreground: #ffffff;
-    --card-border: rgba(255, 255, 255, 0.10);
+    --card-bg: #1C1C1E;
+    --card-foreground: #F5F5F7;
+    --card-border: rgba(84, 84, 88, 0.42);
+    --separator: rgba(84, 84, 88, 0.60);
 
-    --glass-bg: rgba(255, 255, 255, 0.08);
+    --label-2: #A1A1A6;
+    --label-3: #7C7C80;
 
-    --pill-left: #0B2837;
+    --glass-bg: rgba(28, 28, 30, 0.72);
+    --material-bg: rgba(28, 28, 30, 0.72);
+
+    --pill-left: #1C1C1E;
     --pill-right: rgba(255, 255, 255, 0.08);
 
-    --color-accent: #E07571;
+    --color-accent: #E58A84;
+    --color-accent-text: #F0A29D;
+    --color-accent-soft: rgba(229, 138, 132, 0.18);
+  }
+
+  /* --- Tokens que no dependen del tema --- */
+  :root {
+    --r-sm: 12px;   /* controles pequeños  */
+    --r-md: 16px;   /* tarjetas internas   */
+    --r-lg: 22px;   /* tarjetas de sección */
+    --r-xl: 28px;   /* contenedores grandes*/
+    --r-hero: 40px; /* curvas del hero y contacto */
+
+    --e1: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --e2: 0 4px 14px rgba(0, 0, 0, 0.07);
+    --e3: 0 12px 32px rgba(0, 0, 0, 0.10);
+
+    --dur-fast: 150ms;
+    --dur-base: 250ms;
+    --dur-slow: 400ms;
+  }
+
+  .dark {
+    --e1: 0 1px 2px rgba(0, 0, 0, 0.45);
+    --e2: 0 4px 14px rgba(0, 0, 0, 0.50);
+    --e3: 0 12px 32px rgba(0, 0, 0, 0.60);
   }
 
   html, body { min-height: 100%; }
@@ -43,13 +90,26 @@
   body {
     background-color: var(--page-bg);
     color: var(--page-fg);
-    font-family: Arial, Helvetica, sans-serif;
+    /* SF Pro real en Apple · Inter cargada en el resto · Segoe/Roboto de respaldo */
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display",
+                 var(--font-inter, "Inter"), "Segoe UI Variable Text", "Segoe UI",
+                 Roboto, system-ui, sans-serif;
+    letter-spacing: -0.01em;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }
 
 @layer components {
+  /* ---------- Superficies ---------- */
   .theme-page {
     background-color: var(--page-bg);
     color: var(--page-fg);
@@ -66,12 +126,91 @@
     color: var(--card-foreground);
   }
 
+  /* Material translúcido de iOS: el contenido pasa por detrás con color vivo */
+  .theme-material {
+    background-color: var(--material-bg);
+    color: var(--card-foreground);
+    border-color: var(--card-border);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+  }
+
   .theme-pill {
     background-image: linear-gradient(120deg, var(--pill-left), var(--pill-right));
     color: var(--card-foreground);
   }
 
-  .text-accent { color: var(--color-accent); }
+  /* ---------- Color ---------- */
+  .text-accent { color: var(--color-accent-text); }
   .bg-accent { background-color: var(--color-accent); }
   .border-accent { border-color: var(--color-accent); }
+  .bg-accent-soft { background-color: var(--color-accent-soft); }
+  .text-secondary { color: var(--label-2); }
+  .text-tertiary { color: var(--label-3); }
+
+  /* ---------- Radios ---------- */
+  .radius-sm { border-radius: var(--r-sm); }
+  .radius-md { border-radius: var(--r-md); }
+  .radius-lg { border-radius: var(--r-lg); }
+  .radius-xl { border-radius: var(--r-xl); }
+
+  /* ---------- Elevación ---------- */
+  .elev-1 { box-shadow: var(--e1); }
+  .elev-2 { box-shadow: var(--e2); }
+  .elev-3 { box-shadow: var(--e3); }
+
+  /* ---------- Escala tipográfica ---------- */
+  .t-large-title {
+    font-size: clamp(28px, 6vw, 34px);
+    line-height: 1.16;
+    font-weight: 700;
+    letter-spacing: -0.026em;
+  }
+  .t-title {
+    font-size: clamp(22px, 4.2vw, 28px);
+    line-height: 1.2;
+    font-weight: 600;
+    letter-spacing: -0.022em;
+  }
+  .t-headline {
+    font-size: 17px;
+    line-height: 1.3;
+    font-weight: 600;
+    letter-spacing: -0.016em;
+  }
+  .t-body {
+    font-size: 17px;
+    line-height: 1.47;
+    letter-spacing: -0.01em;
+  }
+  .t-callout {
+    font-size: 15px;
+    line-height: 1.4;
+    letter-spacing: -0.008em;
+  }
+  .t-footnote {
+    font-size: 13px;
+    line-height: 1.38;
+    letter-spacing: -0.004em;
+  }
+  .t-caption {
+    font-size: 12px;
+    line-height: 1.33;
+    font-weight: 500;
+    letter-spacing: 0;
+  }
+  /* Encabezado de lista agrupada — el único uso de mayúsculas del sistema */
+  .t-grouphead {
+    font-size: 13px;
+    line-height: 1.3;
+    font-weight: 600;
+    letter-spacing: 0.035em;
+    text-transform: uppercase;
+  }
+
+  /* ---------- Ritmo vertical ---------- */
+  .section-y { padding-block: 64px; }
+  @media (min-width: 640px) {
+    .section-y { padding-block: 96px; }
+  }
 }

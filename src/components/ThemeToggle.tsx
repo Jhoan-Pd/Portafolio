@@ -23,7 +23,7 @@ export default function ThemeToggle() {
     <button
       type="button"
       onClick={() => setTheme(isDark ? 'light' : 'dark')}
-      className="relative inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-black/10 bg-white/80 text-neutral-900 shadow-sm transition hover:bg-white dark:border-white/10 dark:bg-neutral-900/70 dark:text-white dark:hover:bg-neutral-800/80"
+      className="relative inline-flex h-10 w-10 items-center justify-center radius-sm border theme-card elev-1 transition hover:brightness-95 active:scale-[0.94] duration-150"
       aria-label={themeLabel}
       title={themeLabel}
     >

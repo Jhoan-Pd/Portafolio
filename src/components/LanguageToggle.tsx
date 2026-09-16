@@ -13,24 +13,24 @@ export default function LanguageToggle() {
     <button
       type="button"
       onClick={toggleLanguage}
-      className="inline-flex h-10 items-center gap-1 rounded-2xl border border-black/10 bg-white/80 px-1 text-[11px] font-semibold uppercase tracking-[0.18em] shadow-sm transition hover:bg-white dark:border-white/10 dark:bg-neutral-900/70 dark:hover:bg-neutral-800/80"
+      className="inline-flex h-10 items-center gap-1 radius-sm border theme-card px-1 t-caption font-semibold uppercase tracking-[0.06em] elev-1 transition hover:brightness-95 duration-150"
       aria-label={label}
       title={label}
     >
       <span
-        className={`rounded-xl px-2 py-1 transition-colors ${
+        className={`radius-sm px-2.5 py-1.5 transition-colors duration-150 ${
           language === 'es'
             ? 'bg-neutral-900 text-white dark:bg-white dark:text-neutral-900'
-            : 'text-neutral-600 dark:text-neutral-300'
+            : 'text-secondary'
         }`}
       >
         {names.es}
       </span>
       <span
-        className={`rounded-xl px-2 py-1 transition-colors ${
+        className={`radius-sm px-2.5 py-1.5 transition-colors duration-150 ${
           language === 'en'
             ? 'bg-neutral-900 text-white dark:bg-white dark:text-neutral-900'
-            : 'text-neutral-600 dark:text-neutral-300'
+            : 'text-secondary'
         }`}
       >
         {names.en}

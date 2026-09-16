@@ -71,9 +71,9 @@ export default function Languages() {
   const title = languages?.title ?? (language === 'es' ? 'Tecnologías' : 'Tech Stack');
 
   return (
-    <section id="languages" className="space-y-6 py-10 theme-page transition-colors">
+    <section id="languages" className="space-y-8 section-y theme-page transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-2xl sm:text-3xl font-semibold">{title}</h2>
+        <h2 className="t-title">{title}</h2>
       </div>
 
       <div className="relative overflow-hidden">
@@ -92,9 +92,9 @@ export default function Languages() {
 
 function Card({ name, icon, invertInDark }: LanguageItem) {
   return (
-    /* MEJORA 6e: border sutil + rounded-2xl, sin sombra de gradiente Windows XP */
+    /* Tarjeta de tecnología: radius-lg + elevación nivel 1 */
     <div className="group shrink-0 w-[140px] sm:w-[160px] md:w-[180px]">
-      <div className="rounded-2xl border border-[var(--card-border)] theme-card p-4 sm:p-5 flex flex-col items-center gap-3 transition-colors">
+      <div className="radius-lg border border-[var(--card-border)] theme-card elev-1 p-4 sm:p-5 flex flex-col items-center gap-3 transition-colors">
         <div className="relative aspect-square w-full">
           <Image
             src={icon}
@@ -106,7 +106,7 @@ function Card({ name, icon, invertInDark }: LanguageItem) {
           />
         </div>
         {/* MEJORA 6d: nombre visible solo en hover, con transición suave */}
-        <p className="text-xs sm:text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-center">
+        <p className="t-caption text-secondary opacity-0 group-hover:opacity-100 transition-opacity duration-150 text-center">
           {name}
         </p>
       </div>
