@@ -149,8 +149,7 @@ export default function Hero() {
       <div
         className="relative overflow-hidden"
         style={{
-          height: '68svh',
-          minHeight: 520,
+          height: 'clamp(430px, 64svh, 580px)',
           borderBottomLeftRadius: HERO_BOTTOM_RADIUS,
           borderBottomRightRadius: HERO_BOTTOM_RADIUS,
         }}
@@ -160,9 +159,11 @@ export default function Hero() {
           className="absolute inset-0"
           initial={{
             scale: prefersReduced ? 1 : 1.09,
-            filter: prefersReduced ? 'brightness(1) saturate(1)' : 'brightness(0.5) saturate(0.65)',
+            filter: prefersReduced
+              ? 'brightness(1) saturate(1.08) contrast(1.04)'
+              : 'brightness(0.5) saturate(0.65) contrast(1.04)',
           }}
-          animate={{ scale: 1, filter: 'brightness(1) saturate(1)' }}
+          animate={{ scale: 1, filter: 'brightness(1) saturate(1.08) contrast(1.04)' }}
           transition={{
             duration: prefersReduced ? 0 : 1.9,
             ease: [0.22, 1, 0.36, 1],
@@ -184,41 +185,7 @@ export default function Hero() {
           </div>
         </motion.div>
 
-        {/* La cresta del Galeras se dibuja sola y queda como un trazo tenue */}
-        <svg
-          className="pointer-events-none absolute inset-0 h-full w-full"
-          viewBox="0 0 1280 721"
-          preserveAspectRatio="xMidYMid slice"
-          aria-hidden="true"
-        >
-          <motion.path
-            d={GALERAS_RIDGE}
-            fill="none"
-            stroke="#FFD9A8"
-            strokeWidth={2.4}
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            style={{ filter: 'drop-shadow(0 0 7px rgba(255, 190, 120, 0.7))' }}
-            initial={{
-              pathLength: prefersReduced ? 1 : 0,
-              opacity: prefersReduced ? 0.32 : 1,
-            }}
-            animate={{ pathLength: 1, opacity: 0.32 }}
-            transition={{
-              pathLength: {
-                duration: prefersReduced ? 0 : 1.8,
-                delay: prefersReduced ? 0 : 0.45,
-                ease: [0.33, 0.9, 0.3, 1],
-              },
-              opacity: {
-                duration: prefersReduced ? 0 : 1.4,
-                delay: prefersReduced ? 0 : 2.25,
-              },
-            }}
-          />
-        </svg>
-
-        {/* La bruma sobre la ciudad */}
+        {/* La bruma sobre la ciudad — suave: el cielo real ya es pálido */}
         <motion.div
           className="pointer-events-none absolute inset-0"
           initial={{ opacity: 0 }}
@@ -229,19 +196,67 @@ export default function Hero() {
           }}
         >
           <div
-            className="hero-haze absolute bottom-0 h-[42%]"
+            className="hero-haze absolute bottom-0 h-[34%]"
             style={{
               left: '-25%',
               right: '-25%',
               background:
-                'linear-gradient(to top, rgba(244,225,205,0.42), rgba(244,225,205,0.10) 55%, transparent)',
+                'linear-gradient(to top, rgba(244,225,205,0.20), rgba(244,225,205,0.05) 55%, transparent)',
             }}
           />
         </motion.div>
 
         {/* Velos: apenas lo necesario para que la nav se lea y la foto entregue a la página */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-transparent" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/18 via-transparent to-transparent" />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[var(--page-bg)]" />
+
+        {/* La cresta del Galeras: va ENCIMA de la bruma y de los velos, si no se pierde.
+            Repite las mismas animaciones de escala que la foto — el amanecer y la deriva
+            ambiental — para que la línea nunca se despegue de la montaña. */}
+        <motion.div
+          className="pointer-events-none absolute inset-0"
+          initial={{ scale: prefersReduced ? 1 : 1.09 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: prefersReduced ? 0 : 1.9, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <div className="hero-drift absolute inset-0">
+            <svg
+              className="h-full w-full"
+              viewBox="0 0 1280 721"
+              preserveAspectRatio="xMidYMid slice"
+              aria-hidden="true"
+            >
+              <motion.path
+                d={GALERAS_RIDGE}
+                fill="none"
+                stroke="#FFE1B4"
+                strokeWidth={3}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                style={{
+                  filter:
+                    'drop-shadow(0 0 5px rgba(255,170,90,0.95)) drop-shadow(0 0 14px rgba(255,140,60,0.55))',
+                }}
+                initial={{
+                  pathLength: prefersReduced ? 1 : 0,
+                  opacity: prefersReduced ? 0.6 : 1,
+                }}
+                animate={{ pathLength: 1, opacity: 0.6 }}
+                transition={{
+                  pathLength: {
+                    duration: prefersReduced ? 0 : 1.8,
+                    delay: prefersReduced ? 0 : 0.45,
+                    ease: [0.33, 0.9, 0.3, 1],
+                  },
+                  opacity: {
+                    duration: prefersReduced ? 0 : 1.4,
+                    delay: prefersReduced ? 0 : 2.25,
+                  },
+                }}
+              />
+            </svg>
+          </div>
+        </motion.div>
 
         {/* Etiqueta del lugar: la foto pasa de fondo bonito a dato */}
         <motion.div
@@ -275,9 +290,9 @@ export default function Hero() {
       <div className="relative z-20 -mt-14 sm:-mt-20">
         <div
           className="
-            mx-auto w-[min(94%,960px)] radius-xl
+            mx-auto w-[min(92%,760px)] radius-xl
             border theme-material
-            px-6 py-8 sm:px-10 sm:py-11
+            px-6 py-8 sm:px-9 sm:py-9
             elev-3
             transition-colors
           "
