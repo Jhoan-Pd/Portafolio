@@ -208,6 +208,29 @@
     text-transform: uppercase;
   }
 
+  /* ---------- Hero: amanecer sobre Pasto ---------- */
+  /* La foto respira: deriva lenta e infinita, arranca cuando termina el amanecer */
+  @keyframes hero-drift {
+    from { transform: scale(1); }
+    to   { transform: scale(1.05); }
+  }
+  .hero-drift { animation: hero-drift 26s ease-in-out 2s infinite alternate; }
+
+  /* La bruma sobre la ciudad va y viene */
+  @keyframes hero-haze-drift {
+    from { transform: translateX(-3%); }
+    to   { transform: translateX(3%); }
+  }
+  .hero-haze { animation: hero-haze-drift 34s ease-in-out 2.3s infinite alternate; }
+
+  /* El punto de la etiqueta de ubicación late */
+  @keyframes hero-pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(255, 193, 120, 0.55); }
+    70%  { box-shadow: 0 0 0 11px rgba(255, 193, 120, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 193, 120, 0); }
+  }
+  .hero-pulse { animation: hero-pulse 2.6s ease-out 2s infinite; }
+
   /* ---------- Ritmo vertical ---------- */
   .section-y { padding-block: 64px; }
   @media (min-width: 640px) {
