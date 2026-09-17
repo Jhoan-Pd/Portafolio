@@ -9,8 +9,6 @@ import LanguageToggle from '@/components/LanguageToggle';
 import { usePortfolioSection, type HeroCopy } from '@/hooks/usePortfolioSection';
 import { useLanguage } from '@/contexts/LanguageContext';
 
-const HERO_BOTTOM_RADIUS = 40;
-
 /* Escena pintada del amanecer sobre Pasto (viewBox 1200 × 560).
    Tres planos de cordillera + la cresta del Galeras que se dibuja sola. */
 const RIDGE_FAR =
@@ -156,11 +154,7 @@ export default function Hero() {
       {/* HERO VISUAL — amanece sobre Pasto */}
       <div
         className="relative overflow-hidden"
-        style={{
-          height: 'clamp(430px, 64svh, 580px)',
-          borderBottomLeftRadius: HERO_BOTTOM_RADIUS,
-          borderBottomRightRadius: HERO_BOTTOM_RADIUS,
-        }}
+        style={{ height: 'clamp(430px, 64svh, 580px)' }}
       >
         {/* El cielo amanece y queda respirando */}
         <div className="hero-sky absolute inset-0" />
@@ -188,6 +182,9 @@ export default function Hero() {
 
         {/* La bruma sobre la ciudad */}
         <div className="hero-haze pointer-events-none" />
+
+        {/* La escena se deshace en la página: sin borde, sin corte */}
+        <div className="hero-dissolve" />
 
         {/* Etiqueta del lugar: la escena pasa de fondo bonito a dato */}
         <motion.div
