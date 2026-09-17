@@ -208,20 +208,107 @@
     text-transform: uppercase;
   }
 
-  /* ---------- Hero: amanecer sobre Pasto ---------- */
-  /* La foto respira: deriva lenta e infinita, arranca cuando termina el amanecer */
+  /* ---------- Hero: amanecer sobre Pasto (escena pintada) ---------- */
+
+  /* El cielo: amanece y después queda con una deriva lenta e infinita */
+  .hero-sky {
+    background: radial-gradient(120% 82% at 62% 92%,
+      #F6C99A 0%, #E8823F 26%, #B8543C 52%, #5B3352 76%, #241B3C 100%);
+    transform-origin: 58% 72%;
+    animation: hero-dawn 1900ms cubic-bezier(0.22, 1, 0.36, 1) both,
+               hero-drift 26s ease-in-out 2s infinite alternate;
+  }
+  @keyframes hero-dawn {
+    from { transform: scale(1.09); filter: brightness(0.5) saturate(0.65); }
+    to   { transform: scale(1);    filter: brightness(1)   saturate(1); }
+  }
   @keyframes hero-drift {
     from { transform: scale(1); }
     to   { transform: scale(1.05); }
   }
-  .hero-drift { animation: hero-drift 26s ease-in-out 2s infinite alternate; }
 
-  /* La bruma sobre la ciudad va y viene */
+  /* El sol asomando detrás de la cumbre */
+  .hero-sun {
+    position: absolute;
+    left: 50%;
+    top: 46%;
+    width: 150px;
+    height: 150px;
+    margin-left: -75px;
+    border-radius: 999px;
+    background: radial-gradient(circle,
+      #FFE9C4 0%, #FFC178 42%, rgba(255, 160, 90, 0) 72%);
+    animation: hero-sunrise 2200ms cubic-bezier(0.22, 1, 0.36, 1) 200ms both;
+  }
+  @keyframes hero-sunrise {
+    from { transform: translateY(70px) scale(0.8); opacity: 0; }
+    to   { transform: translateY(0)    scale(1);   opacity: 0.95; }
+  }
+
+  /* La bruma sobre la ciudad, con su vaivén */
+  .hero-haze {
+    position: absolute;
+    left: -25%;
+    right: -25%;
+    bottom: 0;
+    height: 48%;
+    background: linear-gradient(to top,
+      rgba(244, 225, 205, 0.62), rgba(244, 225, 205, 0.16) 55%, transparent);
+    animation: hero-haze-in 1400ms ease-out 900ms both,
+               hero-haze-drift 34s ease-in-out 2.3s infinite alternate;
+  }
+  @keyframes hero-haze-in { from { opacity: 0; } to { opacity: 1; } }
   @keyframes hero-haze-drift {
     from { transform: translateX(-3%); }
     to   { transform: translateX(3%); }
   }
-  .hero-haze { animation: hero-haze-drift 34s ease-in-out 2.3s infinite alternate; }
+
+  /* Los tres planos de la cordillera */
+  .hero-ridge-far {
+    fill: rgba(92, 66, 104, 0.52);
+    filter: blur(1.6px);
+    animation: hero-ridge-in 1600ms cubic-bezier(0.22, 1, 0.36, 1) 200ms both;
+  }
+  .hero-ridge-mid {
+    fill: rgba(28, 20, 42, 0.93);
+    animation: hero-ridge-in 1500ms cubic-bezier(0.22, 1, 0.36, 1) 250ms both;
+  }
+  .hero-ridge-near {
+    fill: rgba(14, 10, 22, 0.96);
+    animation: hero-ridge-in 1400ms cubic-bezier(0.22, 1, 0.36, 1) 400ms both;
+  }
+  @keyframes hero-ridge-in {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* La línea de luz que recorre la cresta del Galeras.
+     pathLength="1" normaliza el trazo: el barrido es exacto mida lo que mida. */
+  .hero-ridge-line {
+    fill: none;
+    stroke: #FFD9A8;
+    stroke-width: 2.1;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    filter: drop-shadow(0 0 7px rgba(255, 190, 120, 0.7));
+    animation: hero-draw 1800ms cubic-bezier(0.33, 0.9, 0.3, 1) 450ms forwards,
+               hero-glow-out 1400ms ease-out 2250ms forwards;
+  }
+  @keyframes hero-draw { to { stroke-dashoffset: 0; } }
+  @keyframes hero-glow-out { to { opacity: 0.32; } }
+
+  /* La antena de la loma */
+  .hero-mast {
+    stroke: rgba(12, 8, 18, 0.88);
+    stroke-width: 1.5;
+    fill: none;
+    stroke-linecap: round;
+    animation: hero-mast-in 1000ms ease-out 1600ms both;
+  }
+  .hero-mast-guy { stroke: rgba(12, 8, 18, 0.45); stroke-width: 1; }
+  @keyframes hero-mast-in { from { opacity: 0; } to { opacity: 1; } }
 
   /* El punto de la etiqueta de ubicación late */
   @keyframes hero-pulse {

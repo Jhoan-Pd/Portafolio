@@ -11,23 +11,31 @@ import { useLanguage } from '@/contexts/LanguageContext';
 
 const HERO_BOTTOM_RADIUS = 40;
 
-/* Cresta del Galeras calcada sobre cielo.jpg (1280 × 721).
-   El SVG usa ese mismo viewBox con preserveAspectRatio="xMidYMid slice",
-   que recorta igual que object-cover + object-center: la línea sigue
-   pegada a la montaña en cualquier ancho de pantalla. */
-const GALERAS_RIDGE =
-  'M0,471 C8,470.5 33,468.3 50,468 C67,467.7 83,469.0 100,469 C117,469.0 133,468.3 150,468 ' +
-  'C167,467.7 183,467.7 200,467 C217,466.3 233,465.0 250,464 C267,463.0 283,462.2 300,461 ' +
-  'C317,459.8 333,458.5 350,457 C367,455.5 385,453.8 400,452 C415,450.2 427,449.0 440,446 ' +
-  'C453,443.0 469,436.7 480,434 C491,431.3 497,431.2 505,430 C513,428.8 522,428.0 530,427 ' +
-  'C538,426.0 547,424.3 555,424 C563,423.7 572,424.7 580,425 C588,425.3 597,426.3 605,426 ' +
-  'C613,425.7 622,423.7 630,423 C638,422.3 647,422.3 655,422 C663,421.7 672,421.3 680,421 ' +
-  'C688,420.7 697,420.3 705,420 C713,419.7 722,419.5 730,419 C738,418.5 747,417.8 755,417 ' +
-  'C763,416.2 772,414.7 780,414 C788,413.3 797,413.0 805,413 C813,413.0 822,413.0 830,414 ' +
-  'C838,415.0 847,416.5 855,419 C863,421.5 872,425.5 880,429 C888,432.5 897,436.5 905,440 ' +
-  'C913,443.5 921,446.5 930,450 C939,453.5 950,457.3 960,461 C970,464.7 980,468.8 990,472 ' +
-  'C1000,475.2 1009,477.3 1020,480 C1031,482.7 1045,485.3 1057,488 C1069,490.7 1080,493.3 1090,496 ' +
-  'C1100,498.7 1111,501.7 1120,504 C1129,506.3 1141,509.0 1145,510';
+/* Escena pintada del amanecer sobre Pasto (viewBox 1200 × 560).
+   Tres planos de cordillera + la cresta del Galeras que se dibuja sola. */
+const RIDGE_FAR =
+  'M0,356 C40,348 76,330 116,318 C152,306 188,316 222,330 ' +
+  'C260,345 300,360 340,372 C400,390 460,400 520,404 ' +
+  'C600,410 680,404 740,392 C800,380 850,360 900,340 ' +
+  'C940,324 980,306 1024,296 C1060,288 1100,292 1140,302 ' +
+  'C1164,308 1182,314 1200,320 L1200,560 L0,560 Z';
+
+const GALERAS_CREST =
+  'M0,402 C42,398 78,390 112,378 C146,366 172,358 200,364 ' +
+  'C224,369 244,372 268,366 C300,358 330,350 358,344 ' +
+  'C392,336 414,326 438,310 C468,290 492,268 516,246 ' +
+  'C538,226 556,212 576,206 C584,203 590,208 596,213 ' +
+  'C599,212 604,213 612,208 C620,203 634,206 646,214 ' +
+  'C664,226 678,242 694,258 C712,276 728,290 746,300 ' +
+  'C764,310 778,306 792,298 C804,291 816,292 828,300 ' +
+  'C846,312 866,322 888,328 C912,335 938,334 962,330 ' +
+  'C990,325 1016,328 1042,336 C1074,346 1112,352 1148,356 ' +
+  'C1168,358 1184,360 1200,364';
+
+const RIDGE_NEAR =
+  'M0,470 C80,462 150,452 230,456 C300,459 360,470 430,474 ' +
+  'C520,479 610,470 700,462 C790,454 880,458 960,466 ' +
+  'C1050,475 1130,480 1200,476 L1200,560 L0,560 Z';
 
 export default function Hero() {
   const hero = usePortfolioSection('hero') as HeroCopy | null;
@@ -154,111 +162,34 @@ export default function Hero() {
           borderBottomRightRadius: HERO_BOTTOM_RADIUS,
         }}
       >
-        {/* La foto entra oscura y ampliada, y sube a luz plena mientras se asienta */}
-        <motion.div
-          className="absolute inset-0"
-          initial={{
-            scale: prefersReduced ? 1 : 1.09,
-            filter: prefersReduced
-              ? 'brightness(1) saturate(1.08) contrast(1.04)'
-              : 'brightness(0.5) saturate(0.65) contrast(1.04)',
-          }}
-          animate={{ scale: 1, filter: 'brightness(1) saturate(1.08) contrast(1.04)' }}
-          transition={{
-            duration: prefersReduced ? 0 : 1.9,
-            ease: [0.22, 1, 0.36, 1],
-          }}
+        {/* El cielo amanece y queda respirando */}
+        <div className="hero-sky absolute inset-0" />
+
+        {/* El sol asoma detrás de la cumbre */}
+        <div className="hero-sun" />
+
+        {/* La cordillera: lejana difusa, el Galeras, y las lomas del frente */}
+        <svg
+          className="pointer-events-none absolute inset-0 h-full w-full"
+          viewBox="0 0 1200 560"
+          preserveAspectRatio="none"
+          aria-hidden="true"
         >
-          <div className="absolute inset-0 hero-drift">
-            <Image
-              src={hero.backgroundImage}
-              alt={
-                language === 'es'
-                  ? 'Amanecer sobre Pasto, con el Volcán Galeras al fondo'
-                  : 'Sunrise over Pasto, with the Galeras Volcano in the background'
-              }
-              fill
-              priority
-              sizes="100vw"
-              className="object-cover object-center"
-            />
-          </div>
-        </motion.div>
+          <path className="hero-ridge-far" d={RIDGE_FAR} />
+          <path className="hero-ridge-mid" d={GALERAS_CREST + ' L1200,560 L0,560 Z'} />
+          <path className="hero-ridge-line" pathLength={1} d={GALERAS_CREST} />
+          <path className="hero-ridge-near" d={RIDGE_NEAR} />
+          <g className="hero-mast">
+            <path d="M742,462 L742,96" />
+            <path d="M730,150 L754,150 M732,212 L752,212 M734,284 L750,284 M736,356 L748,356" />
+            <path className="hero-mast-guy" d="M742,152 L698,462 M742,152 L786,462" />
+          </g>
+        </svg>
 
-        {/* La bruma sobre la ciudad — suave: el cielo real ya es pálido */}
-        <motion.div
-          className="pointer-events-none absolute inset-0"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{
-            duration: prefersReduced ? 0 : 1.4,
-            delay: prefersReduced ? 0 : 0.9,
-          }}
-        >
-          <div
-            className="hero-haze absolute bottom-0 h-[34%]"
-            style={{
-              left: '-25%',
-              right: '-25%',
-              background:
-                'linear-gradient(to top, rgba(244,225,205,0.20), rgba(244,225,205,0.05) 55%, transparent)',
-            }}
-          />
-        </motion.div>
+        {/* La bruma sobre la ciudad */}
+        <div className="hero-haze pointer-events-none" />
 
-        {/* Velos: apenas lo necesario para que la nav se lea y la foto entregue a la página */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/18 via-transparent to-transparent" />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[var(--page-bg)]" />
-
-        {/* La cresta del Galeras: va ENCIMA de la bruma y de los velos, si no se pierde.
-            Repite las mismas animaciones de escala que la foto — el amanecer y la deriva
-            ambiental — para que la línea nunca se despegue de la montaña. */}
-        <motion.div
-          className="pointer-events-none absolute inset-0"
-          initial={{ scale: prefersReduced ? 1 : 1.09 }}
-          animate={{ scale: 1 }}
-          transition={{ duration: prefersReduced ? 0 : 1.9, ease: [0.22, 1, 0.36, 1] }}
-        >
-          <div className="hero-drift absolute inset-0">
-            <svg
-              className="h-full w-full"
-              viewBox="0 0 1280 721"
-              preserveAspectRatio="xMidYMid slice"
-              aria-hidden="true"
-            >
-              <motion.path
-                d={GALERAS_RIDGE}
-                fill="none"
-                stroke="#FFE1B4"
-                strokeWidth={3}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                style={{
-                  filter:
-                    'drop-shadow(0 0 5px rgba(255,170,90,0.95)) drop-shadow(0 0 14px rgba(255,140,60,0.55))',
-                }}
-                initial={{
-                  pathLength: prefersReduced ? 1 : 0,
-                  opacity: prefersReduced ? 0.6 : 1,
-                }}
-                animate={{ pathLength: 1, opacity: 0.6 }}
-                transition={{
-                  pathLength: {
-                    duration: prefersReduced ? 0 : 1.8,
-                    delay: prefersReduced ? 0 : 0.45,
-                    ease: [0.33, 0.9, 0.3, 1],
-                  },
-                  opacity: {
-                    duration: prefersReduced ? 0 : 1.4,
-                    delay: prefersReduced ? 0 : 2.25,
-                  },
-                }}
-              />
-            </svg>
-          </div>
-        </motion.div>
-
-        {/* Etiqueta del lugar: la foto pasa de fondo bonito a dato */}
+        {/* Etiqueta del lugar: la escena pasa de fondo bonito a dato */}
         <motion.div
           className="absolute left-1/2 top-24 sm:top-28 flex items-center gap-2.5 rounded-full border border-white/20 px-4 py-2.5 backdrop-blur-xl"
           style={{ background: 'rgba(20, 14, 30, 0.42)', color: '#FFF3E4', x: '-50%' }}
