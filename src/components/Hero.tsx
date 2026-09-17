@@ -1,7 +1,9 @@
 'use client';
 
+import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { motion, useScroll, useMotionValueEvent, useReducedMotion } from 'framer-motion';
 import ThemeToggle from '@/components/ThemeToggle';
 import LanguageToggle from '@/components/LanguageToggle';
 import { usePortfolioSection, type HeroCopy } from '@/hooks/usePortfolioSection';
@@ -12,6 +14,33 @@ const HERO_BOTTOM_RADIUS = 40;
 export default function Hero() {
   const hero = usePortfolioSection('hero') as HeroCopy | null;
   const { language } = useLanguage();
+  const prefersReduced = useReducedMotion();
+
+  /* Nav que colapsa: con histéresis para que no parpadee en el umbral */
+  const [compact, setCompact] = useState(false);
+  const { scrollY } = useScroll();
+  useMotionValueEvent(scrollY, 'change', (y) => {
+    setCompact((prev) => (prev ? y > 56 : y > 88));
+  });
+
+  const navSpring = prefersReduced
+    ? { duration: 0 }
+    : { type: 'spring' as const, stiffness: 400, damping: 40 };
+
+  /* Revelado con desenfoque — sin movimiento cuando el sistema lo pide */
+  const reveal = (delay: number) => ({
+    initial: {
+      opacity: 0,
+      y: prefersReduced ? 0 : 10,
+      filter: prefersReduced ? 'blur(0px)' : 'blur(6px)',
+    },
+    animate: { opacity: 1, y: 0, filter: 'blur(0px)' },
+    transition: {
+      duration: prefersReduced ? 0 : 0.5,
+      delay: prefersReduced ? 0 : delay,
+      ease: 'easeOut' as const,
+    },
+  });
 
   if (!hero) {
     return (
@@ -34,8 +63,22 @@ export default function Hero() {
         aria-label="Barra de acciones del héroe"
       >
         <div className="flex items-center justify-between gap-3 sm:gap-4">
-          <div className="pointer-events-auto flex items-center gap-3 sm:gap-4 radius-md border theme-material px-4 sm:px-5 py-2.5 sm:py-3 elev-2 transition-colors">
-            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full overflow-hidden bg-slate-200 ring-2 ring-black/10 dark:ring-white/10 shrink-0">
+          <motion.div
+            className="pointer-events-auto flex items-center radius-md border theme-material elev-2 transition-colors"
+            animate={{
+              paddingLeft: compact ? 10 : 16,
+              paddingRight: compact ? 14 : 20,
+              paddingTop: compact ? 8 : 10,
+              paddingBottom: compact ? 8 : 10,
+              gap: compact ? 10 : 14,
+            }}
+            transition={navSpring}
+          >
+            <motion.div
+              className="rounded-full overflow-hidden bg-slate-200 ring-2 ring-black/10 dark:ring-white/10 shrink-0"
+              animate={{ width: compact ? 30 : 42, height: compact ? 30 : 42 }}
+              transition={navSpring}
+            >
               <Image
                 src={hero.author.photo}
                 alt={`Foto de ${hero.author.firstName} ${hero.author.lastName}`}
@@ -43,16 +86,22 @@ export default function Hero() {
                 height={48}
                 className="h-full w-full object-cover"
               />
-            </div>
+            </motion.div>
+
             <div className="leading-tight">
-              <div className="t-footnote font-semibold">
+              <div className="t-footnote font-semibold whitespace-nowrap">
                 {hero.author.firstName}
               </div>
-              <div className="t-caption text-secondary">
+              {/* El apellido se pliega igual que el título grande de iOS */}
+              <motion.div
+                className="t-caption text-secondary whitespace-nowrap overflow-hidden"
+                animate={{ height: compact ? 0 : 'auto', opacity: compact ? 0 : 1 }}
+                transition={navSpring}
+              >
                 {hero.author.lastName}
-              </div>
+              </motion.div>
             </div>
-          </div>
+          </motion.div>
 
           <div className="pointer-events-auto flex items-center gap-2 sm:gap-3 radius-md border theme-material px-2.5 sm:px-3 py-2 elev-2 transition-colors">
             <LanguageToggle />
@@ -97,16 +146,22 @@ export default function Hero() {
           "
         >
           {/* Etiqueta de ubicación y disponibilidad */}
-          <p className="t-footnote text-center font-semibold mb-4 text-accent">
+          <motion.p
+            {...reveal(0)}
+            className="t-footnote text-center font-semibold mb-4 text-accent"
+          >
             {hero.locationTag ?? (language === 'es'
               ? 'Pasto, Colombia · Disponible para proyectos'
               : 'Pasto, Colombia · Available for projects')}
-          </p>
+          </motion.p>
 
           {/* Texto descriptivo — normal, sin uppercase, sin tracking extremo */}
-          <p className="t-body text-center mx-auto max-w-[62ch]">
+          <motion.p
+            {...reveal(0.08)}
+            className="t-body text-center mx-auto max-w-[62ch]"
+          >
             {hero.intro}
-          </p>
+          </motion.p>
 
           {/* CTAs */}
           <div className="mt-6 sm:mt-7 flex flex-wrap items-center justify-center gap-3">
