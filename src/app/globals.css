@@ -338,35 +338,66 @@
       var(--page-bg) 100%);
   }
 
-  /* ---------- Franja entre secciones: aurora sin forma ----------
-     Tres brochazos desenfocados de la rampa del atardecer. Sin geometría:
-     nunca compite con el contenido que separa. */
-  .dawn-aurora {
-    position: relative;
-    height: 132px;
+  /* ---------- Fondo del amanecer ----------
+     Franjas largas e inclinadas que cruzan la página entera por detrás de las
+     secciones. Viven en una sola capa a nivel de <main>, no entre secciones:
+     así ningún recorte las corta y el color nunca se interrumpe.
+     Para que se vean, las secciones NO pintan fondo — el crema lo pone el
+     contenedor de layout.tsx, una sola vez. */
+  .dawn-backdrop {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
     overflow: hidden;
     pointer-events: none;
   }
-  .dawn-aurora span { position: absolute; border-radius: 999px; }
-  .dawn-aurora span:nth-child(1) {
-    left: -8%; right: 34%; top: 20%; height: 32px;
-    background: linear-gradient(to right, transparent, #5B3352, #B8543C, transparent);
-    filter: blur(28px);
-    opacity: calc(var(--dawn-glow) * 0.55);
-    transform: rotate(-2.2deg);
+  .dawn-backdrop span {
+    position: absolute;
+    left: -18%;
+    right: -18%;
+    border-radius: 999px;
   }
-  .dawn-aurora span:nth-child(2) {
-    left: 18%; right: -6%; top: 46%; height: 38px;
-    background: linear-gradient(to right, transparent, #B8543C, #E8823F, transparent);
-    filter: blur(30px);
-    opacity: calc(var(--dawn-glow) * 0.6);
-    transform: rotate(1.6deg);
+  .dawn-backdrop span:nth-child(1) {
+    top: 15%; height: 88px;
+    background: linear-gradient(to right, transparent, #5B3352 24%, #B8543C 60%, transparent);
+    filter: blur(56px);
+    opacity: calc(var(--dawn-glow) * 0.32);
+    transform: rotate(-2.6deg);
   }
-  .dawn-aurora span:nth-child(3) {
-    left: 38%; right: 6%; top: 66%; height: 24px;
-    background: linear-gradient(to right, transparent, #E8823F, #F6C99A, transparent);
-    filter: blur(24px);
-    opacity: calc(var(--dawn-glow) * 0.5);
+  .dawn-backdrop span:nth-child(2) {
+    top: 29%; height: 104px;
+    background: linear-gradient(to right, transparent, #B8543C 30%, #E8823F 68%, transparent);
+    filter: blur(62px);
+    opacity: calc(var(--dawn-glow) * 0.30);
+    transform: rotate(1.8deg);
+  }
+  .dawn-backdrop span:nth-child(3) {
+    top: 43%; height: 76px;
+    background: linear-gradient(to right, transparent, #E8823F 26%, #F6C99A 64%, transparent);
+    filter: blur(50px);
+    opacity: calc(var(--dawn-glow) * 0.26);
+    transform: rotate(-3.4deg);
+  }
+  .dawn-backdrop span:nth-child(4) {
+    top: 57%; height: 96px;
+    background: linear-gradient(to right, transparent, #241B3C 22%, #5B3352 62%, transparent);
+    filter: blur(58px);
+    opacity: calc(var(--dawn-glow) * 0.30);
+    transform: rotate(2.2deg);
+  }
+  .dawn-backdrop span:nth-child(5) {
+    top: 71%; height: 84px;
+    background: linear-gradient(to right, transparent, #B8543C 28%, #E8823F 66%, transparent);
+    filter: blur(54px);
+    opacity: calc(var(--dawn-glow) * 0.28);
+    transform: rotate(-1.4deg);
+  }
+  .dawn-backdrop span:nth-child(6) {
+    top: 85%; height: 70px;
+    background: linear-gradient(to right, transparent, #5B3352 30%, #B8543C 70%, transparent);
+    filter: blur(48px);
+    opacity: calc(var(--dawn-glow) * 0.24);
+    transform: rotate(3deg);
   }
 
   /* ---------- Cierre de la página: niebla ascendente ----------

@@ -71,7 +71,7 @@ export default function Languages() {
   const title = languages?.title ?? (language === 'es' ? 'Tecnologías' : 'Tech Stack');
 
   return (
-    <section id="languages" className="space-y-8 section-y theme-page transition-colors">
+    <section id="languages" className="relative z-10 space-y-8 section-y transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="t-title">{title}</h2>
       </div>

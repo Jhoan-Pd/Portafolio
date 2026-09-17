@@ -21,7 +21,7 @@ export default function Informacion() {
   return (
     <section
       id="sobre-mi"
-      className="w-full section-y theme-page transition-colors"
+      className="relative z-10 w-full section-y transition-colors"
       aria-labelledby="sobre-mi-title"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

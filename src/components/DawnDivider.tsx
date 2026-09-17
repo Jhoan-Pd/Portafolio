@@ -14,14 +14,14 @@ type Props = {
 export default function DawnDivider({ variant = 'aurora' }: Props) {
   if (variant === 'fog') {
     return (
-      <div className="dawn-fog theme-page" aria-hidden="true">
+      <div className="dawn-fog relative z-10" aria-hidden="true">
         <span />
       </div>
     );
   }
 
   return (
-    <div className="dawn-aurora theme-page" aria-hidden="true">
+    <div className="dawn-aurora relative z-10" aria-hidden="true">
       <span />
       <span />
       <span />

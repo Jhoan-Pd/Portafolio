@@ -39,7 +39,7 @@ export default function Contact() {
   return (
     <section
       id="contact"
-      className="relative theme-page transition-colors section-y"
+      className="relative z-10 transition-colors section-y"
       aria-labelledby="contact-title"
     >
       <div

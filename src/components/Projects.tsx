@@ -76,7 +76,7 @@ export default function Projects() {
     (language === 'es' ? { demo: 'Ver en vivo', repo: 'Código' } : { demo: 'Live demo', repo: 'Code' });
 
   return (
-    <section id="projects" ref={sectionRef} className="w-full theme-page transition-colors">
+    <section id="projects" ref={sectionRef} className="relative z-10 w-full transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 section-y">
         {/* MEJORA 2: título unificado */}
         <h2 className="t-title mb-8 sm:mb-10">{title}</h2>

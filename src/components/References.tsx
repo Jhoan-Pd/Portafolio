@@ -16,7 +16,7 @@ const References: React.FC = () => {
   const ariaPrefix = language === 'es' ? 'Testimonio de' : 'Testimonial from';
 
   return (
-    <section className="relative overflow-hidden section-y px-4 sm:px-6 theme-page transition-colors">
+    <section className="relative z-10 overflow-hidden section-y px-4 sm:px-6 transition-colors">
       {/* MEJORA 2: título unificado */}
       <h2 className="t-title mb-10 sm:mb-14">
         {title}
