@@ -417,6 +417,21 @@
     mask-image: linear-gradient(to top, #000 5%, transparent 88%);
   }
 
+  /* ---------- Proyectos: pista de scroll ----------
+     El panel queda pegado (sticky) mientras la sección corre por debajo.
+     El alto depende de cuántos proyectos haya, así cada uno recibe el mismo
+     tramo de scroll — antes los cinco se repartían menos de una pantalla y el
+     primero y el último apenas se alcanzaban a ver. En móvil el tramo es más
+     corto para que la sección no se haga eterna. */
+  .projects-track {
+    height: calc(var(--projects-count) * 52svh + 26svh);
+  }
+  @media (min-width: 768px) {
+    .projects-track {
+      height: calc(var(--projects-count) * 60svh + 30svh);
+    }
+  }
+
   /* ---------- Ritmo vertical ---------- */
   .section-y { padding-block: 64px; }
   @media (min-width: 640px) {

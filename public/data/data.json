@@ -21,7 +21,7 @@
     "es": {
       "backgroundImage": "/cielo.jpg",
       "locationTag": "Pasto, Colombia · Ingeniero de Software en Nexus",
-      "intro": "Construyo software que aguanta: diseño la arquitectura antes de levantar los muros. Hoy acompaño cuentas y desarrollo sobre sistemas en producción en Nexus, y en paralelo llevo mis propios proyectos de datos e IA — desde vigilancia epidemiológica predictiva hasta reportes viales en tiempo real.",
+      "intro": "La arquitectura de software es donde la creatividad se encuentra con la lógica. Diseño los cimientos antes de levantar los muros — cada capa del sistema pensada para que las aplicaciones crezcan sólidas y entreguen valor real.",
       "cvLink": "/cv.pdf",
       "cvLabel": "Descargar CV",
       "viewWorkLabel": "Ver proyectos →",
@@ -35,7 +35,7 @@
     "en": {
       "backgroundImage": "/cielo.jpg",
       "locationTag": "Pasto, Colombia · Software Engineer at Nexus",
-      "intro": "I build software that lasts: I design the architecture before raising the walls. Today I support accounts and develop on production systems at Nexus, while running my own data and AI projects on the side — from predictive epidemiological surveillance to real-time road incident reporting.",
+      "intro": "Software architecture is where creativity meets logic. I design the foundation before raising the walls — every layer of the system thought through so applications grow solid and deliver real value.",
       "cvLink": "/cv.pdf",
       "cvLabel": "Download CV",
       "viewWorkLabel": "View work →",
@@ -111,6 +111,14 @@
           "id": 9,
           "type": "text",
           "span": 4,
+          "subtitle": "IA APLICADA",
+          "title": "Integración de modelos de IA",
+          "description": "He integrado modelos de lenguaje —Grok, DeepSeek y Kimi— en proyectos propios, y modelos predictivos donde el problema lo pedía: XGBoost para clasificar riesgo epidemiológico semanal en SentinelaIA, y clasificación automática de reportes por tipo y severidad en ViAlerta. Me interesa el lado de ingeniería del asunto: dónde conviene meter un modelo dentro del flujo, cómo se integra por API, y qué hacer cuando responde distinto de lo esperado."
+        },
+        {
+          "id": 10,
+          "type": "text",
+          "span": 4,
           "subtitle": "CALIDAD DE SOFTWARE",
           "title": "Buenas prácticas de calidad y mantenibilidad",
           "description": "Aplico principios de calidad de software y pruebas a lo largo del ciclo de desarrollo, buscando que cada solución no solo funcione, sino que sea mantenible y escalable en el tiempo — coherente con mi enfoque en una arquitectura sólida desde los cimientos."
@@ -178,6 +186,14 @@
         },
         {
           "id": 9,
+          "type": "text",
+          "span": 4,
+          "subtitle": "APPLIED AI",
+          "title": "Integrating AI models",
+          "description": "I have integrated language models —Grok, DeepSeek and Kimi— into my own projects, and predictive models where the problem called for them: XGBoost to classify weekly epidemiological risk in SentinelaIA, and automatic classification of reports by type and severity in ViAlerta. What interests me is the engineering side: where a model belongs in the flow, how it is integrated over an API, and what to do when it answers differently than expected."
+        },
+        {
+          "id": 10,
           "type": "text",
           "span": 4,
           "subtitle": "SOFTWARE QUALITY",

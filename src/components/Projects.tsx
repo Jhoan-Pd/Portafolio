@@ -26,8 +26,11 @@ export default function Projects() {
       const sec = sectionRef.current;
       if (!sec) return;
       const rect = sec.getBoundingClientRect();
-      const viewportCenter = window.innerHeight / 2;
-      const progress = clamp((viewportCenter - rect.top) / rect.height, 0, 1);
+      /* La pista mide más que la pantalla; lo que sobra es el recorrido real.
+         En 0 el primer proyecto, en 1 el último — cada uno con el mismo tramo. */
+      const total = rect.height - window.innerHeight;
+      if (total <= 0) return;
+      const progress = clamp(-rect.top / total, 0, 1);
       const idx = Math.round(progress * Math.max(0, projects.length - 1));
       setActive((prev) => (idx === prev ? prev : idx));
     };
@@ -76,15 +79,21 @@ export default function Projects() {
     (language === 'es' ? { demo: 'Ver en vivo', repo: 'Código' } : { demo: 'Live demo', repo: 'Code' });
 
   return (
-    <section id="projects" ref={sectionRef} className="relative z-10 w-full transition-colors">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 section-y">
-        {/* MEJORA 2: título unificado */}
-        <h2 className="t-title mb-8 sm:mb-10">{title}</h2>
+    <section
+      id="projects"
+      ref={sectionRef}
+      className="projects-track relative z-10 w-full transition-colors"
+      style={{ '--projects-count': projects.length || 1 } as React.CSSProperties}
+    >
+      {/* El panel se queda quieto mientras la pista corre por detrás */}
+      <div className="sticky top-0 flex h-[100svh] items-center">
+        <div className="w-full max-w-7xl mx-auto px-4 sm:px-6">
+        <h2 className="t-title mb-5 sm:mb-7">{title}</h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-[1fr_260px] lg:grid-cols-[1fr_300px] gap-6 sm:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_230px] lg:grid-cols-[1fr_260px] gap-5 sm:gap-7">
           {/* PANEL IZQUIERDO PRINCIPAL */}
-          <div className="relative radius-xl border theme-card p-3 sm:p-5 md:p-8 elev-2 transition-colors">
-            <div className="relative h-[62svh] md:h-[68svh] overflow-hidden radius-lg theme-glass transition-colors">
+          <div className="relative radius-xl border theme-card p-2 sm:p-3 md:p-4 elev-2 transition-colors">
+            <div className="relative h-[64svh] md:h-[70svh] overflow-hidden radius-lg theme-glass transition-colors">
               <div className="absolute inset-0 radius-lg ring-1 ring-black/10 dark:ring-white/10" />
               {staged.map((p, i) => {
                 const { isCurrent, animate, style } = layer(i);
@@ -94,7 +103,7 @@ export default function Projects() {
                   <motion.article
                     key={p.id}
                     className={`
-                      absolute inset-0 m-auto w-[92%] md:w-[88%] h-[86%]
+                      absolute inset-0 m-auto w-[97%] md:w-[96%] h-[94%]
                       radius-lg overflow-hidden
                       bg-black/5 dark:bg-white/5
                       border border-black/10 dark:border-white/10
@@ -189,7 +198,7 @@ export default function Projects() {
           </div>
 
           {/* COLUMNA DERECHA DE NAVEGACIÓN */}
-          <div className="hidden md:block radius-xl border theme-card p-3 sm:p-4 elev-2 h-[68svh] overflow-y-auto transition-colors">
+          <div className="hidden md:block radius-xl border theme-card p-3 sm:p-4 elev-2 h-[70svh] overflow-y-auto transition-colors">
             <div className="space-y-2.5">
               {projects.map((p, i) => {
                 const isActive = i === active;
@@ -231,6 +240,7 @@ export default function Projects() {
               })}
             </div>
           </div>
+        </div>
         </div>
       </div>
     </section>

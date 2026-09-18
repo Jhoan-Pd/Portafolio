@@ -85,7 +85,7 @@ export default function Hero() {
       : 'Pasto, Nariño · Galeras Volcano';
 
   return (
-    <section className="relative z-10 w-full transition-colors duration-300">
+    <section className="relative w-full transition-colors duration-300">
       {/* NAV FIJA */}
       <nav
         className="fixed top-4 sm:top-6 left-1/2 -translate-x-1/2 z-[60] w-full max-w-5xl px-4 sm:px-6 pointer-events-none"
