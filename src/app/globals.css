@@ -339,10 +339,15 @@
       var(--page-bg) 100%);
   }
 
-  /* ---------- Fondo del amanecer ----------
-     Franjas largas e inclinadas que cruzan la página entera por detrás de las
-     secciones. Viven en una sola capa a nivel de <main>, no entre secciones:
-     así ningún recorte las corta y el color nunca se interrumpe.
+  /* ---------- Fondo del amanecer: corrientes ----------
+     Cinco curvas casi paralelas que se juntan y se abren, como corrientes de
+     aire. El grupo se repite cuatro veces a lo alto de la página, espejado y
+     volteado para que no se note la repetición.
+
+     Cada grupo tiene ALTO FIJO en píxeles, no porcentual: si fuera porcentual,
+     en una página larga las curvas se estirarían hasta quedar planas y se
+     perdería el ondulado. Los extremos van siempre fuera de cuadro.
+
      Para que se vean, las secciones NO pintan fondo — el crema lo pone el
      contenedor de layout.tsx, una sola vez. */
   .dawn-backdrop {
@@ -352,54 +357,37 @@
     overflow: hidden;
     pointer-events: none;
   }
-  .dawn-backdrop span {
+
+  .dawn-backdrop .stream {
     position: absolute;
-    left: -18%;
-    right: -18%;
-    border-radius: 999px;
+    left: -14%;
+    right: -14%;
+    height: 560px;
   }
-  .dawn-backdrop span:nth-child(1) {
-    top: 15%; height: 104px;
-    background: linear-gradient(to right, transparent, #5B3352 24%, #B8543C 60%, transparent);
-    filter: blur(46px);
-    opacity: calc(var(--dawn-glow) * 0.58);
-    transform: rotate(-2.6deg);
+  .dawn-backdrop .stream svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
   }
-  .dawn-backdrop span:nth-child(2) {
-    top: 29%; height: 124px;
-    background: linear-gradient(to right, transparent, #B8543C 30%, #E8823F 68%, transparent);
-    filter: blur(50px);
-    opacity: calc(var(--dawn-glow) * 0.55);
-    transform: rotate(1.8deg);
+
+  .dawn-backdrop path {
+    fill: none;
+    stroke-linecap: round;
+    filter: blur(14px);
   }
-  .dawn-backdrop span:nth-child(3) {
-    top: 43%; height: 92px;
-    background: linear-gradient(to right, transparent, #E8823F 26%, #F6C99A 64%, transparent);
-    filter: blur(42px);
-    opacity: calc(var(--dawn-glow) * 0.48);
-    transform: rotate(-3.4deg);
-  }
-  .dawn-backdrop span:nth-child(4) {
-    top: 57%; height: 114px;
-    background: linear-gradient(to right, transparent, #241B3C 22%, #5B3352 62%, transparent);
-    filter: blur(48px);
-    opacity: calc(var(--dawn-glow) * 0.55);
-    transform: rotate(2.2deg);
-  }
-  .dawn-backdrop span:nth-child(5) {
-    top: 71%; height: 100px;
-    background: linear-gradient(to right, transparent, #B8543C 28%, #E8823F 66%, transparent);
-    filter: blur(44px);
-    opacity: calc(var(--dawn-glow) * 0.52);
-    transform: rotate(-1.4deg);
-  }
-  .dawn-backdrop span:nth-child(6) {
-    top: 85%; height: 86px;
-    background: linear-gradient(to right, transparent, #5B3352 30%, #B8543C 70%, transparent);
-    filter: blur(40px);
-    opacity: calc(var(--dawn-glow) * 0.46);
-    transform: rotate(3deg);
-  }
+  .dawn-backdrop .c1 { stroke: url(#dawn-h);  stroke-width: 9;  opacity: calc(var(--dawn-glow) * 0.44); }
+  .dawn-backdrop .c2 { stroke: url(#dawn-h2); stroke-width: 13; opacity: calc(var(--dawn-glow) * 0.50); }
+  .dawn-backdrop .c3 { stroke: url(#dawn-h);  stroke-width: 7;  opacity: calc(var(--dawn-glow) * 0.36); }
+  .dawn-backdrop .c4 { stroke: url(#dawn-h2); stroke-width: 16; opacity: calc(var(--dawn-glow) * 0.42); }
+  .dawn-backdrop .c5 { stroke: url(#dawn-h);  stroke-width: 6;  opacity: calc(var(--dawn-glow) * 0.30); }
+
+  /* Espejar y voltear reutiliza los mismos trazos sin que se repitan a la vista,
+     y de paso invierte el degradado: un grupo va de violeta a ámbar y el otro al revés. */
+  .dawn-backdrop .s1 { top: 6%; }
+  .dawn-backdrop .s2 { top: 30%; transform: scaleX(-1); }
+  .dawn-backdrop .s3 { top: 54%; transform: scaleY(-1); }
+  .dawn-backdrop .s4 { top: 78%; transform: scaleX(-1) scaleY(-1); }
 
   /* ---------- Cierre de la página: niebla ascendente ----------
      La disolución del hero al revés: allá el cielo baja a la página,
