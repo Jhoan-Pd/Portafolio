@@ -245,7 +245,7 @@
   }
   @keyframes hero-sunrise {
     from { transform: translateY(70px) scale(0.8); opacity: 0; }
-    to   { transform: translateY(0)    scale(1);   opacity: 0.95; }
+    to   { transform: translateY(0)    scale(1);   opacity: 0.72; }
   }
 
   /* La bruma sobre la ciudad, con su vaivén */
@@ -254,9 +254,9 @@
     left: -25%;
     right: -25%;
     bottom: 0;
-    height: 48%;
+    height: 30%;
     background: linear-gradient(to top,
-      rgba(244, 225, 205, 0.62), rgba(244, 225, 205, 0.16) 55%, transparent);
+      rgba(244, 225, 205, 0.26), rgba(244, 225, 205, 0.07) 55%, transparent);
     animation: hero-haze-in 1400ms ease-out 900ms both,
                hero-haze-drift 34s ease-in-out 2.3s infinite alternate;
   }
@@ -329,12 +329,13 @@
     left: 0;
     right: 0;
     bottom: 0;
-    height: 38%;
+    height: 46%;
     pointer-events: none;
     background: linear-gradient(to bottom,
       rgba(36, 27, 60, 0) 0%,
-      color-mix(in srgb, var(--page-bg) 40%, #3A2846) 38%,
-      color-mix(in srgb, var(--page-bg) 82%, #4A3350) 70%,
+      color-mix(in srgb, var(--page-bg) 12%, #2E2038) 42%,
+      color-mix(in srgb, var(--page-bg) 48%, #4A3350) 72%,
+      color-mix(in srgb, var(--page-bg) 88%, #5B3352) 90%,
       var(--page-bg) 100%);
   }
 
@@ -358,45 +359,45 @@
     border-radius: 999px;
   }
   .dawn-backdrop span:nth-child(1) {
-    top: 15%; height: 88px;
+    top: 15%; height: 104px;
     background: linear-gradient(to right, transparent, #5B3352 24%, #B8543C 60%, transparent);
-    filter: blur(56px);
-    opacity: calc(var(--dawn-glow) * 0.32);
+    filter: blur(46px);
+    opacity: calc(var(--dawn-glow) * 0.58);
     transform: rotate(-2.6deg);
   }
   .dawn-backdrop span:nth-child(2) {
-    top: 29%; height: 104px;
+    top: 29%; height: 124px;
     background: linear-gradient(to right, transparent, #B8543C 30%, #E8823F 68%, transparent);
-    filter: blur(62px);
-    opacity: calc(var(--dawn-glow) * 0.30);
+    filter: blur(50px);
+    opacity: calc(var(--dawn-glow) * 0.55);
     transform: rotate(1.8deg);
   }
   .dawn-backdrop span:nth-child(3) {
-    top: 43%; height: 76px;
+    top: 43%; height: 92px;
     background: linear-gradient(to right, transparent, #E8823F 26%, #F6C99A 64%, transparent);
-    filter: blur(50px);
-    opacity: calc(var(--dawn-glow) * 0.26);
+    filter: blur(42px);
+    opacity: calc(var(--dawn-glow) * 0.48);
     transform: rotate(-3.4deg);
   }
   .dawn-backdrop span:nth-child(4) {
-    top: 57%; height: 96px;
+    top: 57%; height: 114px;
     background: linear-gradient(to right, transparent, #241B3C 22%, #5B3352 62%, transparent);
-    filter: blur(58px);
-    opacity: calc(var(--dawn-glow) * 0.30);
+    filter: blur(48px);
+    opacity: calc(var(--dawn-glow) * 0.55);
     transform: rotate(2.2deg);
   }
   .dawn-backdrop span:nth-child(5) {
-    top: 71%; height: 84px;
+    top: 71%; height: 100px;
     background: linear-gradient(to right, transparent, #B8543C 28%, #E8823F 66%, transparent);
-    filter: blur(54px);
-    opacity: calc(var(--dawn-glow) * 0.28);
+    filter: blur(44px);
+    opacity: calc(var(--dawn-glow) * 0.52);
     transform: rotate(-1.4deg);
   }
   .dawn-backdrop span:nth-child(6) {
-    top: 85%; height: 70px;
+    top: 85%; height: 86px;
     background: linear-gradient(to right, transparent, #5B3352 30%, #B8543C 70%, transparent);
-    filter: blur(48px);
-    opacity: calc(var(--dawn-glow) * 0.24);
+    filter: blur(40px);
+    opacity: calc(var(--dawn-glow) * 0.46);
     transform: rotate(3deg);
   }
 
