@@ -417,24 +417,12 @@
     mask-image: linear-gradient(to top, #000 5%, transparent 88%);
   }
 
-  /* ---------- Proyectos: pista de scroll ----------
-     El panel queda pegado (sticky) mientras la sección corre por debajo.
-     El alto depende de cuántos proyectos haya, así cada uno recibe el mismo
-     tramo de scroll — antes los cinco se repartían menos de una pantalla y el
-     primero y el último apenas se alcanzaban a ver. En móvil el tramo es más
-     corto para que la sección no se haga eterna. */
-  .projects-track {
-    height: calc(var(--projects-count) * 52svh + 26svh);
-  }
-  @media (min-width: 768px) {
-    .projects-track {
-      height: calc(var(--projects-count) * 60svh + 30svh);
-    }
-  }
-
   /* ---------- Ritmo vertical ---------- */
-  .section-y { padding-block: 64px; }
+  /* Ojo: el hueco entre dos secciones es el DOBLE de este valor, porque cada
+     una lo aplica arriba y abajo. 48/72 deja 96px en móvil y 144px en
+     escritorio entre sección y sección, que es aire suficiente sin vacío. */
+  .section-y { padding-block: 48px; }
   @media (min-width: 640px) {
-    .section-y { padding-block: 96px; }
+    .section-y { padding-block: 72px; }
   }
 }

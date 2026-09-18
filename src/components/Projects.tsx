@@ -26,12 +26,17 @@ export default function Projects() {
       const sec = sectionRef.current;
       if (!sec) return;
       const rect = sec.getBoundingClientRect();
-      /* La pista mide más que la pantalla; lo que sobra es el recorrido real.
-         En 0 el primer proyecto, en 1 el último — cada uno con el mismo tramo. */
-      const total = rect.height - window.innerHeight;
-      if (total <= 0) return;
-      const progress = clamp(-rect.top / total, 0, 1);
-      const idx = Math.round(progress * Math.max(0, projects.length - 1));
+      const vh = window.innerHeight;
+      /* El recorrido va desde que la sección asoma por abajo hasta que sale por
+         arriba, no solo mientras cruza el centro: así hay tramo de sobra sin
+         tener que alargar la sección. */
+      const total = rect.height + vh;
+      const travelled = vh - rect.top;
+      const progress = clamp(travelled / total, 0, 1);
+      /* floor y no round: con round el primero y el último se llevaban medio
+         tramo cada uno y por eso se iban antes de tiempo. Así los N reciben lo mismo. */
+      const n = projects.length;
+      const idx = Math.min(n - 1, Math.floor(progress * n));
       setActive((prev) => (idx === prev ? prev : idx));
     };
     const onScroll = () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(compute); };
@@ -79,16 +84,9 @@ export default function Projects() {
     (language === 'es' ? { demo: 'Ver en vivo', repo: 'Código' } : { demo: 'Live demo', repo: 'Code' });
 
   return (
-    <section
-      id="projects"
-      ref={sectionRef}
-      className="projects-track relative z-10 w-full transition-colors"
-      style={{ '--projects-count': projects.length || 1 } as React.CSSProperties}
-    >
-      {/* El panel se queda quieto mientras la pista corre por detrás */}
-      <div className="sticky top-0 flex h-[100svh] items-center">
-        <div className="w-full max-w-7xl mx-auto px-4 sm:px-6">
-        <h2 className="t-title mb-5 sm:mb-7">{title}</h2>
+    <section id="projects" ref={sectionRef} className="relative z-10 w-full transition-colors">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 section-y">
+        <h2 className="t-title mb-6 sm:mb-8">{title}</h2>
 
         <div className="grid grid-cols-1 md:grid-cols-[1fr_230px] lg:grid-cols-[1fr_260px] gap-5 sm:gap-7">
           {/* PANEL IZQUIERDO PRINCIPAL */}
@@ -240,7 +238,6 @@ export default function Projects() {
               })}
             </div>
           </div>
-        </div>
         </div>
       </div>
     </section>
