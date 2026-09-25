@@ -227,6 +227,23 @@
         },
         {
           "id": 2,
+          "title": "Nexus IoTechnology",
+          "image": "/trabajo6.jpg",
+          "description": "Sitio corporativo de Nexus IoTechnology, la empresa donde trabajo: consultoría e implementación de tecnologías 4.0, IoT, inteligencia artificial, analítica de datos y desarrollo de software a medida. Diseñé y desarrollé el sitio completo —interfaz, redacción de los textos y despliegue— alrededor de una idea: del sensor a la decisión.",
+          "stack": [
+            "Next.js",
+            "React",
+            "TypeScript",
+            "Tailwind CSS"
+          ],
+          "role": "Diseño, contenido y desarrollo",
+          "accentColor": "#3BA9F5",
+          "links": {
+            "demo": "https://nexusiotechnology.com/"
+          }
+        },
+        {
+          "id": 3,
           "title": "AutoScan System",
           "image": "/trabajo1.jpg",
           "description": "Sistema de automatización para escaneo y procesamiento de información desarrollado en Scandata. Previo al desarrollo realicé el levantamiento y análisis de requisitos con el equipo y los usuarios finales, lo que permitió tomar decisiones de arquitectura alineadas con las necesidades reales del negocio y no solo con la implementación técnica.",
@@ -240,7 +257,7 @@
           "links": {}
         },
         {
-          "id": 3,
+          "id": 4,
           "title": "ViAlerta",
           "image": "/trabajo4.jpg",
           "description": "Aplicación móvil para reportar y visualizar incidentes y accidentes viales geolocalizados. Un modelo de IA analiza la descripción escrita por el usuario y clasifica automáticamente el reporte por tipo y severidad, mientras el mapa muestra los reportes activos para advertir a otros conductores.",
@@ -255,7 +272,7 @@
           "links": {}
         },
         {
-          "id": 4,
+          "id": 5,
           "title": "Portafolio Personal",
           "image": "/trabajo2.jpg",
           "description": "Portafolio web con Next.js 15, React 19 y Tailwind CSS v4, soporte multiidioma, modo oscuro y diseño bento grid.",
@@ -272,7 +289,7 @@
           }
         },
         {
-          "id": 5,
+          "id": 6,
           "title": "Clean Architecture API",
           "image": "/trabajo3.jpg",
           "description": "API REST aplicando arquitectura limpia, patrones de diseño y principios SOLID en Java, con persistencia en base de datos relacional.",
@@ -314,6 +331,23 @@
         },
         {
           "id": 2,
+          "title": "Nexus IoTechnology",
+          "image": "/trabajo6.jpg",
+          "description": "Corporate site for Nexus IoTechnology, the company I work at: consulting and implementation of Industry 4.0, IoT, artificial intelligence, data analytics and custom software. I designed and built the whole site —interface, copywriting and deployment— around a single idea: from the sensor to the decision.",
+          "stack": [
+            "Next.js",
+            "React",
+            "TypeScript",
+            "Tailwind CSS"
+          ],
+          "role": "Design, copy and development",
+          "accentColor": "#3BA9F5",
+          "links": {
+            "demo": "https://nexusiotechnology.com/"
+          }
+        },
+        {
+          "id": 3,
           "title": "AutoScan System",
           "image": "/trabajo1.jpg",
           "description": "Automation system for information scanning and processing built at Scandata. Before development I ran the requirements gathering and analysis with the team and end users, which made it possible to take architectural decisions aligned with real business needs, not only with the technical implementation.",
@@ -327,7 +361,7 @@
           "links": {}
         },
         {
-          "id": 3,
+          "id": 4,
           "title": "ViAlerta",
           "image": "/trabajo4.jpg",
           "description": "Mobile app to report and visualize geolocated road incidents and crashes. An AI model analyzes the description written by the user and automatically classifies the report by type and severity, while the map shows active reports to warn other drivers.",
@@ -342,7 +376,7 @@
           "links": {}
         },
         {
-          "id": 4,
+          "id": 5,
           "title": "Personal Portfolio",
           "image": "/trabajo2.jpg",
           "description": "Web portfolio built with Next.js 15, React 19 and Tailwind CSS v4, featuring multi-language support, dark mode and bento grid layout.",
@@ -359,7 +393,7 @@
           }
         },
         {
-          "id": 5,
+          "id": 6,
           "title": "Clean Architecture API",
           "image": "/trabajo3.jpg",
           "description": "REST API applying clean architecture, design patterns and SOLID principles in Java, with relational database persistence.",
